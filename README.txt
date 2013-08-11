@@ -1,31 +1,36 @@
 INFO:
+Infos2 is information system for elementary and high schools which are running on Google Apps for education. More info later.
 
-ZNAME BUGY:
+BUGS:
 
 TO-DO:
 	- Google OAuth -> spravit celu auorizaciu cez Google
-	- Google Blogger API -> register GoogleApi, prisposobit autorizacii
+	- Google Calendar API -> register GoogleApi, terminovnik globalny + suplovanie kazdeho osobne
 
 FIXES:
 
 SUMMARY:
-	AUTH		[100%]
-	INDEX		[0%]
-	ARTICLES	[0%]
-	PRINT		[0%]
-	PROFILE		[0%]
-	MEMBERS		[0%]
+	AUTH			[0%]
+	USER			[0%]
+	INDEX			[0%]
+	SUPLO			[0%]
+	EVENTS			[0%]
+	DOCS			[0%]
+	ANNOUNCEMENTS	[0%]
 
 COLORS:
-	modra: 	#3299BB
-	seda: 	#5A5A5A
-	text:	#333
+	blue: 			#3299bb
+	gray: 			#eeeeee
+	text:			#5a5a5a
+	background:		#ffffff
+	
 
 FONTS:
-	Nadpis: Arial
-	Meno: 	BigNoodleTitling
-	Text:	Georgia
+	Header:			Arial
+	Name: 			BigNoodleTitling
+	Text:			Georgia
 
+API LINKS:
 https://developers.google.com/apis-explorer/#p/
 https://developers.google.com/accounts/docs/OAuth2Login
 https://developers.google.com/
