@@ -1,0 +1,321 @@
+body {
+	background: #fff;
+	color: #5A5A5A;
+	font-family: OpenSansRegular;
+}
+
+h1 {
+	font-family: OpenSansRegular;
+	margin: 0;
+}
+
+h2 {
+	color: #3299BB;
+	font-family: BigNoodleTitling;
+	margin-bottom: 10px;
+	font-size: 2.4em;
+}
+
+h3 {
+	color: #3299BB;
+	font-family: OpenSansRegular;
+	/*font-family: BigNoodleTitling;*/
+	margin: 0 0 10px;
+	font-size: 2.3em;
+}
+
+.blue {
+	color: #3299BB !important;
+}
+
+.white {
+	color: #fff !important;
+}
+
+.gray {
+	color: #5A5A5A !important;
+}
+
+.red {
+	color: red !important;
+}
+
+.green {
+	color: green !important;
+}
+
+img {
+	max-width: 100%;
+}
+
+.centered {
+	margin: 0 auto;
+}
+
+p {
+	margin-top: 0px;
+}
+
+a:visited, a{
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+body > header {
+	width: 100%;
+	background: #5A5A5A;
+	line-height: 60px;
+	z-index: 50;
+}
+
+progress, table {
+	width: 100%;
+}
+
+/* NAVIGATION */
+
+#main-nav {
+	list-style: none;
+	margin: 0;
+	width: 100%;
+	padding: 0;
+	text-align: right;
+}
+
+#main-nav li {
+	display: inline-block;
+	margin: 0px 10px; 
+	color: white;
+}
+
+#main-nav li  a:visited, #main-nav li  a{
+	color: inherit;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+#main-nav li  a:hover {
+	color: #3299BB;
+}
+
+.side-nav {
+	list-style: none;
+	margin: 0;
+	width: 100%;
+	padding: 0;
+}
+
+.side-nav li {
+	display: block;
+	margin: 10px 0;
+}
+
+.side-nav li hr{
+	width: 100%;
+	border-top: 1px solid gray;
+	border-bottom: 0;
+}
+
+/* HOME */
+
+#welcome {
+	font-family: BigNoodleTitling;
+	font-size: 8em;
+	margin: 0;
+	text-align: right;
+	line-height: 1em;
+}
+
+/* ABOUT ME */
+
+p {
+	line-height: 1.4em;
+	font-size: 1.5em;
+	text-align: justify;
+}
+
+#home {
+	margin-top: 80px;
+}
+
+/* SKILLS */
+
+#skills h3 {
+	text-align: center;
+}
+
+.skill {
+	padding: 20px 15px;
+	text-align: center;
+	height: 150px;
+}
+
+.skill img {
+	width: 80%;
+	height: auto;
+}
+
+.skill h4 {
+	margin: 10px 0 8px;
+	font-size: 20pt;
+}
+
+.skill span {
+	font-family: OpenSansItalic;
+}
+
+/* PORTFOLIO */
+
+.screenshot {
+	text-align: center;
+}
+
+.screenshot .pleaseZoom{
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: relative;
+}
+
+.zoom {
+	display: none;
+	background-image: url('../images/zoom.png');
+	background-color: rgba(100%, 100%, 100%, 0.4);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%; 
+	height: 100%;
+	position: absolute;
+	top: 0;
+}
+
+.websiteInfo {
+	width: 100%;
+	font-size: 1.5em;
+}
+
+.websiteInfo td {
+	padding: 5px 0;
+}
+
+.websiteInfo .value {
+	color: #3299BB;
+}
+
+.technologies {
+	text-align: right;
+}
+
+.technologies a img {
+	width: 48px;
+}
+
+.technologies a{
+	display: inline-block;
+	margin: 3px;
+}
+
+.website p {
+	font-family: OpenSansLightItalic;
+}
+
+.website {
+	padding: 20px 10px 0;
+}
+
+/* CONTACT */
+.field {
+	width: 50%;
+	padding: 5px;
+	margin: 0 auto;
+}
+
+.field label {
+	display: block;
+	margin: 10px 0;
+}
+
+.field input , .field select{
+	width: 100%;
+	margin: 5px 0;
+	border: 0;
+	background: #3299BB;
+	padding: 5px;
+}
+
+.field textarea{
+	min-width: 100%;
+	max-width: 100%;
+	background: #3299BB;
+	border: 0;
+	padding: 5px;
+	min-height: 200px;
+}
+
+.field button {
+	border: 0;
+	width: 50%;
+	padding: 8px;
+	margin: 10px auto;
+	background: #3299BB;
+	display: block;
+}
+
+.socialSites {
+	width: 100%;
+}
+
+.socialSites td{
+	padding: 10px 5px;
+}
+
+.socialSites tr[data-redirect-url]:hover{
+	background: rgba(50, 153, 187, 0.8);
+	cursor: pointer;
+	animation-name: toBlue;
+	animation-duration: 1s;
+}
+
+.socialSites tr[data-redirect-url]{
+	animation-name: fromBlue;
+	animation-duration: 1s;
+}
+
+.socialSites .socialIcon img{
+	width: 40px;
+}
+
+#contact small {
+	font-size: 60%;
+}
+
+#contactThanks img {
+	height: 300px; 
+	margin: 0 auto; 
+	display: block;
+}
+
+.invisible {
+	display: none;
+}
+
+/* FOOTER */
+body > footer {
+	margin-top: 50px;
+	min-height: 100px;
+	background: #5A5A5A;
+	color: white;
+	padding: 20px 0 0;
+	text-align: center;
+}
+
+.citate p{
+	text-align: center;
+	font-family: OpenSansLightItalic;
+	font-size: large;
+	width: 100%;
+}
