@@ -26,6 +26,18 @@
 	<div class="large-5 columns">
 		<section class="userPanel" id="panelUser">
 			<header><h2>Jakub Dubec</h2></header>
+			<time datetime="" id="serverTime">13. 8. 2013 - 11:47</time>
+			<table id="aktualne">
+				<tr>
+					<td>Aktualne:</td>
+					<td>5. hodina</td>
+				</tr>
+				<tr>
+					<td>Nasleduje:</td>
+					<td>10min. prestavka</td>
+				</tr>
+			</table>
+			<hr />
 		</section>
 		
 		<section class="boardPanel" id="panelSuplo">

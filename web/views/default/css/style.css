@@ -17,15 +17,6 @@ h1 {
 	line-height: 40px;
 }
 
-#panelUser h2 {
-	margin: 0 10px;
-	color: #fff;
-	font-family: BigNoodleTitling;
-	margin: 0 10px;
-	font-size: 34pt;
-	font-weight: normal;
-}
-
 h3 {
 	color: #5a5a5a;
 	font-family: Arial;
@@ -87,6 +78,8 @@ a:hover {
 
 #panelUser {
 	background: #3299BB !important;
+	padding: 10px;
+
 }
 
 /* ANNOUNCEMENTS */
@@ -106,6 +99,45 @@ a:hover {
 	text-align: justify;
 	padding: 5px 10px;
 	font-weight: normal;
+}
+
+/* USER */
+#aktualne {
+	width: 100%;
+	border: 0;
+	margin-top: 5px;
+}
+
+#aktualne td {
+	background: #3299BB;
+	padding: 5px;
+	font-size: 12pt;
+}
+
+#aktualne td:first-child {
+	color: #fff;
+	font-weight: bold;
+}
+
+#aktualne td:last-child {
+	color: #fff;
+	font-style:italic;
+}
+
+#panelUser h2 {
+	color: #fff;
+	font-family: BigNoodleTitling;
+	font-size: 34pt;
+	font-weight: normal;
+	margin: 0;
+}
+
+#panelUser time {
+	font-size: 14pt;
+	margin: 10px 3px;
+	color: #fff;
+	/*font-style:italic;*/
+	font-family: DigitalDream;
 }
 
 /* FOOTER */
