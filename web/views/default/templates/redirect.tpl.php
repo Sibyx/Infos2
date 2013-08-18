@@ -1,2 +1,2 @@
-<div class="{class}">{message}</div>
-<script>setTimeout(function() {$(window.location).attr('href', "{url}");}, 2000);</script>
+<div class="alert-box {class}">{message}</div>
+<script>setTimeout(function() {$(window.location).attr('href', "{url}");}, 3000);</script>

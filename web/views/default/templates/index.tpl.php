@@ -25,16 +25,16 @@
 	
 	<div class="large-5 columns">
 		<section class="userPanel" id="panelUser">
-			<header><h2>Jakub Dubec</h2></header>
-			<time datetime="" id="serverTime">13. 8. 2013 - 11:47</time>
+			<header><h2>{userFullName}</h2></header>
+			<time datetime="{serverTime}" id="serverTime">{serverTimeFormated}</time>
 			<table id="aktualne">
 				<tr>
-					<td>Aktualne:</td>
-					<td>5. hodina</td>
+					<td>Aktuálne:</td>
+					<td id="actual">{actual}</td>
 				</tr>
 				<tr>
 					<td>Nasleduje:</td>
-					<td>10min. prestavka</td>
+					<td id="next">{next}</td>
 				</tr>
 			</table>
 			<hr />

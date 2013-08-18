@@ -4,26 +4,25 @@
 	DEFINE("FRAMEWORK_PATH", dirname(__FILE__) . "/");
 	require(FRAMEWORK_PATH . 'config/config.php');
 	require(FRAMEWORK_PATH . 'registry/registry.php');
-	require_once('FirePHPCore/FirePHP.class.php');
-	require_once('FirePHPCore/fb.php');
+	require_once(FRAMEWORK_PATH . 'libs/FirePHPCore/FirePHP.class.php');
+	require_once(FRAMEWORK_PATH . 'libs/FirePHPCore/fb.php');
 	$registry = new Registry();
 	$registry->setDebugging(true);
 	$registry->createAndStoreObject('logger', 'log');
 	$registry->createAndStoreObject('mysqldb', 'db');
 	$registry->getObject('db')->newConnection($configs['db_host'], $configs['db_user'], $configs['db_pass'], $configs['db_database']);
 	$registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
-	$registry->createAndStoreObject('urlprocessor', 'url');
-	$registry->createAndStoreObject('googleApi', 'google');
-	$registry->createAndStoreObject('authenticate', 'auth');
-	//$registry->createAndStoreObject('user', 'user');
-	$registry->createAndStoreObject('renderer', 'render');
-	$registry->createAndStoreObject('template', 'template');
-	$registry->getObject('url')->getURLData();
 	$settings = "SELECT * FROM settings";
 	$registry->getObject('db')->executeQuery($settings);
 	while ($setting = $registry->getObject('db')->getRows()) {
 		$registry->storeSetting($setting['value'], $setting['key']);
 	}
+	$registry->createAndStoreObject('urlprocessor', 'url');
+	$registry->createAndStoreObject('googleApi', 'google');
+	$registry->createAndStoreObject('authenticate', 'auth');
+	$registry->createAndStoreObject('renderer', 'render');
+	$registry->createAndStoreObject('template', 'template');
+	$registry->getObject('url')->getURLData();
 	$controllers = array();
 	$registry->getObject('db')->executeQuery("SELECT * FROM controllers WHERE active = 1");
 	while ($controller = $registry->getObject('db')->getRows()) {

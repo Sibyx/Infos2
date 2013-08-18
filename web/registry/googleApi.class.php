@@ -8,7 +8,7 @@
 */
 
 require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/Google_Client.php';
-//require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/contrib/apiCalendarService.php';
+require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/contrib/Google_CalendarService.php';
 require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/contrib/Google_Oauth2Service.php';
 
 class googleApi {
@@ -24,7 +24,6 @@ class googleApi {
 		$this->client->setClientSecret($this->registry->getSetting('googleClientSecret'));
 		$this->client->setRedirectUri($this->registry->getObject('url')->buildURL(array('authenticate', 'login')));
 		$scopes = array (
-			'https://www.googleapis.com/auth/admin.directory.user.readonly',
 			'https://www.googleapis.com/auth/calendar',
 			'https://www.googleapis.com/auth/userinfo.profile',
 			'https://www.googleapis.com/auth/userinfo.email'

@@ -44,6 +44,7 @@ class AuthenticateController {
 		if (isset($_GET['code'])) {
 			$this->registry->getObject('google')->getGoogleClient()->authenticate($_GET['code']);
 			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
+			//$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'Systém zamietol Vaše konto. Prisím kontaktujte správcu systému.', 'alert');
 			header('Location: ' . filter_var($this->registry->getObject('url')->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
 			return;
 		}
@@ -52,13 +53,14 @@ class AuthenticateController {
 			$this->registry->redirectURL($this->registry->buildURL(array()), 'You was succesfully logged in!', 'success');
 		}
 		else {
-			$this->uiLogin();
+			//$this->uiLogin();
+			header('Location: ' . filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
 		}
 	}
 	
 	private function uiLogin() {
 		$tags = array();
-		$tags['title'] = 'Login - Jakub Dubec';
+		$tags['title'] = 'Login - Infos2';
 		$tags['loginUrl'] = $this->registry->getObject('google')->getGoogleClient()->createAuthUrl();
 		$this->registry->getObject('template')->buildFromTemplate('login');
 		$this->registry->getObject('template')->replaceTags($tags);
@@ -71,7 +73,7 @@ class AuthenticateController {
 			$this->registry->redirectURL($this->registry->buildURL(array()), 'You was succesfully logged out!', 'success');
 		}
 		else {
-			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'You are not logged in!', 'error');
+			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'You are not logged in!', 'alert');
 		}
 	}
 }

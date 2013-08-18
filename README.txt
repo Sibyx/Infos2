@@ -4,7 +4,6 @@ Infos2 is information system for elementary and high schools which are running o
 BUGS:
 
 TO-DO:
-	- Google OAuth -> spravit celu auorizaciu cez Google
 	- Google Calendar API -> register GoogleApi, terminovnik globalny + suplovanie kazdeho osobne
 
 FIXES:

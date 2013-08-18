@@ -45,7 +45,7 @@ class User {
 	}
 	
 	public function getFirstName() {
-		return $this->first_name;
+		return $this->firstName;
 	}
 	
 	public function getFullName() {
