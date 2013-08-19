@@ -30,7 +30,7 @@
 			<table id="aktualne">
 				<tr>
 					<td>Aktuálne:</td>
-					<td id="actual">{actual}</td>
+					<td id="current">{current}</td>
 				</tr>
 				<tr>
 					<td>Nasleduje:</td>
@@ -53,3 +53,6 @@
 		</section>
 	</div>
 </div>
+<script>
+	var t = window.setInterval(updateClock, 1000);
+</script>

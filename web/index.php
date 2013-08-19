@@ -44,11 +44,6 @@
 			echo json_encode($result);
 		}
 	}
-	elseif ($registry->getObject('url')->getURLBit(0) == 'repository' && $registry->getObject('url')->getURLBit(1) == 'view') {
-		require_once(FRAMEWORK_PATH . 'controllers/repository/controller.php');
-		$controllerInc = $controller . 'Controller';
-		$controller = new $controllerInc($registry, true);
-	}
 	else {
 		if(in_array($controller, $controllers)) {
 			require_once(FRAMEWORK_PATH . 'controllers/' . $controller . '/controller.php');

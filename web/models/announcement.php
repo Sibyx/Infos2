@@ -1,5 +1,5 @@
 <?php
-class Article {
+class Announcement {
 	
 	private $registry;
 	private $id;

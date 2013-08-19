@@ -12,7 +12,7 @@ class AuthenticateController {
 	private $registry;
 	private $model;
 	
-	public function __construct(Registry $registry, $directCall) {
+	public function __construct(Registry $registry) {
 		$this->registry = $registry;
 		$urlBits = $this->registry->getObject('url')->getURLBits();
 		if (isset($urlBits[1])) {
