@@ -23,6 +23,20 @@ class defaultController {
 	private function uiIndex() {
 		$tags = array();
 		$tags['title'] = 'Infos Dashboard';
+		$tags = array_merge(
+			$tags,
+			$this->createUserboard()
+		);
+		$this->registry->getObject('template')->buildFromTemplate('index');
+		$this->registry->getObject('template')->replaceTags($tags);
+		$this->registry->getObject('template')->parseOutput();
+	}
+	
+	private function createAnnouncements() {
+	
+	}
+	
+	private function createUserboard() {
 		$tags['userFullName'] = $this->registry->getObject('auth')->getUser()->getFullName();
 		$serverTime = new DateTime();
 		$tags['serverTimeFormated'] = $serverTime->format("d. m. Y - H:i");
@@ -31,9 +45,7 @@ class defaultController {
 		$timetable = new Timetable($this->registry);
 		$tags['current'] = $timetable->getCurrent();
 		$tags['next'] = $timetable->getNext();
-		$this->registry->getObject('template')->buildFromTemplate('index');
-		$this->registry->getObject('template')->replaceTags($tags);
-		$this->registry->getObject('template')->parseOutput();
+		return $tags;
 	}
 	
 	private function getCurrentTime() {

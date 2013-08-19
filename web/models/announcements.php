@@ -1,17 +1,17 @@
 <?php
-class Articles {
+class Announcements {
 	private $registry;
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
 	}
 	
-	public function listArticles($offset = 0) {
+	public function listAnnouncements($offset = 0) {
 		require_once(FRAMEWORK_PATH . 'libs/pagination/pagination.class.php');
 		$paginatedMembers = new Pagination($this->registry);
 		$paginatedMembers->setLimit(5);
 		$paginatedMembers->setOffset($offset);
-		$query = "SELECT articles.*, users.firstName, users.lastName, users.id_user, categories.* DATE_FORMAT(articles.article_date, '%d. %m. %Y o %H:%i') AS dateFriendly FROM articles LEFT JOIN users ON users.id_user = articles.id_user LEFT JOIN categories ON categories.id_category = articles.id_category ORDER BY articles.article_date DESC";
+		$query = "SELECT * FROM listAnnouncements";
 		$paginatedMembers->setQuery($query);
 		$paginatedMembers->setMethod('cache');
 		$paginatedMembers->generatePagination();
