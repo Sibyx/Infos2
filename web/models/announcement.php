@@ -3,33 +3,31 @@ class Announcement {
 	
 	private $registry;
 	private $id;
-	private $categoryId;
-	private $categoryTitle;
-	private $title;
-	private $date;
-	private $dateFriendly;
+	private $created;
+	private $createdFriendly;
+	private $updated;
+	private $updatedFriendly;
 	private $ownerName;
 	private $ownerId;
+	private $title;
 	private $text;
-	private $keywords;
 	private $valid;
 	
 	public function __construct(Registry $registry, $id = 0) {
 		$this->registry = $registry;
 		if ($id > 0) {
-			$this->registry->getObject('db')->executeQuery("SELECT articles.*, users.firstName, users.lastName, users.id_user, categories.* DATE_FORMAT(articles.article_date, '%d. %m. %Y o %H:%i') AS dateFriendly FROM articles LEFT JOIN users ON users.id_user = articles.id_user LEFT JOIN categories ON categories.id_category = articles.id_category WHERE articles.id_article = $id");
+			$this->registry->getObject('db')->executeQuery("SELECT * FROM selectAnnouncement WHERE id_announcement = $id");
 			if ($this->registry->getObject('db')->numRows() == 1) {
 				$row = $this->registry->getObject('db')->getRows();
 				$this->id = $id;
-				$this->title = $row['article_title'];
-				$this->date = $row['article_date'];
-				$this->dateFriendly = $row['dateFriendly'];
+				$this->title = $row['ann_title'];
+				$this->created = $row['ann_created'];
+				$this->createdFriendly = $row['createdFriendly'];
+				$this->updated = $row['ann_updated'];
+				$this->updatedFriendly = $row['updatedFriendly'];
 				$this->ownerName = $row['user_firstName'] . ' ' . $row['user_lastName'];
 				$this->ownerId = $row['id_user'];
-				$this->text = $row['article_text'];
-				$this->categoryId = $row['id_category'];
-				$this->categoryTitle = $row['category_title'];
-				$this->keywords = $row['article_keywords'];
+				$this->text = $row['ann_text'];
 				$this->valid = true;
 			}
 			else {
@@ -46,12 +44,14 @@ class Announcement {
 		return $this->valid;
 	}
 	
-	public function getId() {
-		return $this->id;
+	public function isUpdated() {
+		$created = new Datetime($this->created);
+		$updated = new Datetime($this->updated);
+		return ($updated > $created);
 	}
 	
-	public function getURLTitle() {
-		return preg_replace('/[^A-Za-z0-9\-]/', '', strtolower($this->remove_accents(str_replace(' ', '-', $this->title))));
+	public function getId() {
+		return $this->id;
 	}
 	
 	public function toArray() {
@@ -70,14 +70,6 @@ class Announcement {
 	
 	public function setText($value) {
 		$this->text = $this->registry->getObject('db')->sanitizeData($value);
-	}
-	
-	public function setCategory($value) {
-		$this->categoryId = intval($value);
-	}
-	
-	public function setKeywords($value) {
-		$this->keywords = $value;
 	}
 	
 	public function save() {

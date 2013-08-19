@@ -9,7 +9,7 @@ TO-DO:
 FIXES:
 
 SUMMARY:
-	AUTH			[0%]
+	AUTH			[100%]
 	USER			[0%]
 	INDEX			[0%]
 	SUPLO			[0%]
