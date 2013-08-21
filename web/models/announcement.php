@@ -5,8 +5,10 @@ class Announcement {
 	private $id;
 	private $created;
 	private $createdFriendly;
+	private $createdRaw;
 	private $updated;
 	private $updatedFriendly;
+	private $updatedRaw;
 	private $ownerName;
 	private $ownerId;
 	private $title;
@@ -23,8 +25,10 @@ class Announcement {
 				$this->title = $row['ann_title'];
 				$this->created = $row['ann_created'];
 				$this->createdFriendly = $row['createdFriendly'];
+				$this->createdRaw = $row['createdRaw'];
 				$this->updated = $row['ann_updated'];
 				$this->updatedFriendly = $row['updatedFriendly'];
+				$this->updatedRaw = $row['updatedRaw'];
 				$this->ownerName = $row['user_firstName'] . ' ' . $row['user_lastName'];
 				$this->ownerId = $row['id_user'];
 				$this->text = $row['ann_text'];
@@ -79,21 +83,52 @@ class Announcement {
 				$data['ann_updated'] = date('Y-m-d H:i:s');
 				$data['ann_text'] = $this->text;
 				$data['ann_title'] = $this->title;
-				return $this->registry->getObject('db')->updateRecords('announcements', $data, 'id_announcement = ' . $this->id);
+				if ($this->registry->getObject('db')->updateRecords('announcements', $data, 'id_announcement = ' . $this->id)) {
+					$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::save] - Upravený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					return true;
+				}
+				else {
+					$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[Announcement:save] - SQL chyba pri pokuse o úpravu oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					return false;
+				}
 			}
 			else {
 				$data['id_user'] = $this->registry->getObject('auth')->getUser()->getId();
 				$data['ann_title'] = $this->title;
 				$data['ann_text'] = $this->text;
 				$data['ann_created'] = date('Y-m-d H:i:s');
-				$data['article_updated'] = date('Y-m-d H:i:s');
-				$result = $this->registry->getObject('db')->insertRecords('announcements', $data);
-				$this->id = $this->registry->getObject('db')->lastInsertID();
-				return $result;
+				$data['ann_updated'] = date('Y-m-d H:i:s');
+				if ($this->registry->getObject('db')->insertRecords('announcements', $data)) {
+					$this->id = $this->registry->getObject('db')->lastInsertID();
+					$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::save] - Vytvorený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					return true;
+				}
+				else {
+					$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[Announcement:save] - SQL chyba pri pokuse o vytvorenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					return false;
+				}
 			}
 		}
 		else {
 			return false;
+		}
+	}
+	
+	public function remove() {
+		if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+			if ($this->registry->getObject('db')->deleteRecords('announcements', "id_announcement = " . $this->id)) {
+				$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::remove] - Odstránený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+				return true;
+			}
+			else {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[Announcement::remove] - SQL chyba pri pokuse o odstránenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+				return false;
+			}
+		}
+		else {
+			$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[Announcement::remove] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť oznam "' . $this->title . '"[' . $this->id . ']');
+			$redirectBits = array();
+			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na odstránenie oznamu!', 'alert');
 		}
 	}
 }

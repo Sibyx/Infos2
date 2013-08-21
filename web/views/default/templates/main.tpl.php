@@ -16,12 +16,10 @@
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/fonts.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/jquery-ui-1.10.2.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/style.css" />
-	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/jquery.fancybox.css?v=2.1.4" />
 		
 	<!-- JS -->
 	<script src="{siteurl}/views/{defaultView}/js/jquery-2.0.0.min.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/jquery-ui-1.10.2.min.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/jquery.fancybox.pack.js?v=2.1.4"></script>
 	<script src="{siteurl}/views/{defaultView}/js/scripts.js"></script>
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/vendor/custom.modernizr.js"></script>

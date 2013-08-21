@@ -12,7 +12,7 @@ SUMMARY
 
 - **USER**			[0%]
 
-- **INDEX**			[0%]
+- **INDEX**			[20%]
 
 - **SUPLO**			[0%]
 
@@ -20,7 +20,7 @@ SUMMARY
 
 - **DOCS**			[0%]
 
-- **ANNOUNCEMENTS**	[0%]
+- **ANNOUNCEMENTS**	[80%]
 
 COLORS
 --------------

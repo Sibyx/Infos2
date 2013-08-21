@@ -3,23 +3,7 @@
 	<div class="large-7 columns">
 		<section class="boardPanel" id="panelAnnouncements">
 			<header><h2>Oznamy</h2></header>
-			<article>
-				<header><h3>Lorem ipsum</h3></header>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc volutpat blandit ligula. Aenean suscipit nibh purus, id pharetra purus euismod a. Cras auctor purus ut orci blandit, sit amet suscipit neque lobortis. Nulla in imperdiet velit. Ut imperdiet nunc non nunc blandit iaculis. Morbi eu orci at nisl bibendum euismod. Maecenas pellentesque orci ac ornare tincidunt. Donec nunc leo, ornare et ligula eget, tempor rhoncus risus. Nulla viverra tincidunt nisl eu ullamcorper. Suspendisse ligula lacus, malesuada quis tempus a, interdum ac odio. Aenean consequat erat in malesuada consectetur. 
-				</p>
-				<hr />
-				<footer><small>11. 8. 2013</small></footer>
-			</article>
-			
-			<article>
-				<header><h3>Lorem ipsum</h3></header>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc volutpat blandit ligula. Aenean suscipit nibh purus, id pharetra purus euismod a. Cras auctor purus ut orci blandit, sit amet suscipit neque lobortis. Nulla in imperdiet velit. Ut imperdiet nunc non nunc blandit iaculis. Morbi eu orci at nisl bibendum euismod. Maecenas pellentesque orci ac ornare tincidunt. Donec nunc leo, ornare et ligula eget, tempor rhoncus risus. Nulla viverra tincidunt nisl eu ullamcorper. Suspendisse ligula lacus, malesuada quis tempus a, interdum ac odio. Aenean consequat erat in malesuada consectetur. 
-				</p>
-				<hr />
-				<footer><small>11. 8. 2013</small></footer>
-			</article>
+				{announcements}
 		</section>
 	</div>
 	

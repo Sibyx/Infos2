@@ -1,17 +1,20 @@
 <div class="row">
-	<div class="large-9 columns">
-		<section class="row">
-			<div id="disqus_thread"></div>
+	<div class="large-12 columns">
+		<section class="boardPanel" id="panelAnnouncements">
+			<header><h2>Oznamy</h2></header>
+			<article>
+				<header><h3>{ann_title}</h3></header>
+				{ann_text}
+				<hr />
+				<footer>
+					<small> <a href="https://plus.google.com/u/1/{author_id}/about" target="_blank">{author_name}</a> - <time pubdate="{ann_createdRaw}">{ann_createdFriendly}</time></small>
+				</footer>
+				<br />
+				<div id="disqus_thread"></div>
+				<br />
+			</article>
 		</section>
 	</div>
-	<aside class="large-3 columns">
-		{userPanel}
-		<section class="row">
-			<div class="large-12 columns">
-				<header><h2><small>Categories</small></h2></header>
-			</div>
-		</section>
-	</aside>
 </div>
 <script type="text/javascript">
 	var disqus_shortname = 'jakubdubecsblog';
@@ -22,4 +25,6 @@
 	})();
 </script>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
+<!--
+	-- Komentare --
+-->

@@ -14,9 +14,10 @@ class User {
 	private $firstName;
 	private $lastName;
 	private $email;
-	private $googleProfile;
-	private $avatar;
 	private $registry;
+	private $admin;
+	private $calendarSuplo;
+	private $nick;
 	private $valid = false;
 	
 	public function __construct(Registry $registry, $googleUserInfo) {
@@ -26,12 +27,14 @@ class User {
 		$sql = "SELECT * FROM users WHERE user_email = '$email'";
 		$this->registry->getObject('db')->executeQuery($sql);
 		if ($this->registry->getObject('db')->numRows() == 1) {
-			$this->id = $data['id'];;
-			$this->firstName = $data['given_name'];;
-			$this->lastName = $data['family_name'];;
-			$this->email = $data['email'];;
-			$this->googleProfile = $data['link'];; //{link}?sz=50
-			$this->avatar = $data['picture'];;
+			$row = $this->registry->getObject('db')->getRows();
+			$this->id = $data['id'];
+			$this->firstName = $data['given_name'];
+			$this->lastName = $data['family_name'];
+			$this->email = $data['email'];
+			$this->admin = $row['user_admin'];
+			$this->calendarSuplo = $row['user_calendarSuplo'];
+			$this->nick = $row['user_nick'];
 			$this->valid = true;
 			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 		}
@@ -66,6 +69,10 @@ class User {
 	
 	public function isValid() {
 		return $this->valid;
+	}
+	
+	public function isAdmin() {
+		return $this->admin;
 	}
 }
 ?>

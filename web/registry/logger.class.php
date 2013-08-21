@@ -33,7 +33,7 @@ class Logger {
 		elseif ($dest == 'SQL') {
 			$values = array();
 			$values[] = $type;
-			$values[] = $message;
+			$values[] = $this->registry->getObject('db')->sanitizeData($message);
 			return $this->registry->getObject('db')->callRutine('insertLog', $values);
 		}
 		else {

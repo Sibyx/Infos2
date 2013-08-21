@@ -58,8 +58,11 @@ a:hover {
 	text-decoration: underline;
 }
 
-.invisible {
-	display: none;
+#timer {
+	font-size: 128pt;
+	font-family: Arial;
+	color: #5a5a5a;
+	margin: 20px 0;
 }
 
 /* DASHBOARD */
@@ -79,7 +82,6 @@ a:hover {
 #panelUser {
 	background: #3299BB !important;
 	padding: 10px;
-
 }
 
 /* ANNOUNCEMENTS */

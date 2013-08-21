@@ -16,7 +16,7 @@ class defaultController {
 			}
 		}
 		else {
-			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'Please log in', 'error');
+			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'Prosím najprv sa autorizuj!', 'alert');
 		}
 	}
 	
@@ -25,7 +25,8 @@ class defaultController {
 		$tags['title'] = 'Infos Dashboard';
 		$tags = array_merge(
 			$tags,
-			$this->createUserboard()
+			$this->createUserboard(),
+			$this->createAnnouncements()
 		);
 		$this->registry->getObject('template')->buildFromTemplate('index');
 		$this->registry->getObject('template')->replaceTags($tags);
@@ -33,7 +34,30 @@ class defaultController {
 	}
 	
 	private function createAnnouncements() {
-	
+		require_once(FRAMEWORK_PATH . 'models/announcements.php');
+		$announcements = new Announcements($this->registry);
+		$pagination = $announcements->listAnnouncements(0);
+		$output = '';
+		if ($pagination->getNumRowsPage() == 0) {
+			$output .= '<article class="text-center">Žiadne oznamy</article>' . "\n";
+		}
+		else {
+			while ($row = $this->registry->getObject('db')->resultsFromCache($pagination->getCache())) {
+				$article = '';
+				$article .= '<article>' . "\n";
+				$article .= '<header><h3><a href="' . $this->registry->getSetting('siteurl') . '/announcements/view/' . $row['id_announcement'] . '">' . $row['ann_title'] . '</a></h3></header>' . "\n";
+				$article .= $row['ann_text'];
+				$article .= '<hr />' . "\n";
+				$article .= '<footer>' . "\n";
+				$article .= '<small><a href="https://plus.google.com/u/1/' . $row['id_user'] . '/about" target="_blank">' . $row['user_firstName'] . ' ' . $row['user_lastName'] . '</a> - <time pubdate="' . $row['createdRaw'] . '">' . $row['createdFriendly'] . '</time></small>' . "\n";
+				$article .= '</footer>' . "\n";
+				$article .= '</article>' . "\n";
+				$output .= $article;
+			}
+		}
+		$tags = array();
+		$tags['announcements'] = $output;
+		return $tags;
 	}
 	
 	private function createUserboard() {
