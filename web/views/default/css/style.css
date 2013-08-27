@@ -77,6 +77,7 @@ a:hover {
 	background: #eeeeee;
 	padding: 0;
 	margin: 10px 0;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 #panelUser {
