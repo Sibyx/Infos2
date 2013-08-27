@@ -9,6 +9,7 @@
 	<meta name="keywords" content="{meta-keywords}" />
 	<meta name="author" content="Jakub Dubec" />
 	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="refresh" content="30" />
 	
 	<!-- CSS -->
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/foundation.min.css" />
