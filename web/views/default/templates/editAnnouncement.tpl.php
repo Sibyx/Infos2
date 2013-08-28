@@ -1,3 +1,4 @@
+<h1>Infos</h1>
 <section class="row">
 	<div class="large-12 columns">
 		<header><h2>Upraviť oznam</h2></header>
