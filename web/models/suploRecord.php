@@ -63,6 +63,7 @@ class suploRecord {
 		}
 	}
 	
+	
 	public function isValid() {
 		return $this->valid;
 	}
@@ -109,9 +110,15 @@ class suploRecord {
 		$this->subject = $this->registry->getObject('db')->sanitizeData($value);
 	}
 	
+	public function setDate($value) {
+		$time = strtotime($value);
+		$this->date = date('Y-m-d',$time);
+	}
+	
 	public function getClassesShort() {
 		return substr($this->classes, 0, 3);
 	}
+	
 	
 	public function save() {
 		$row = array();
