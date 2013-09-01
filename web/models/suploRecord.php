@@ -204,5 +204,16 @@ class suploRecord {
 			}
 		}
 	}
+
+	public function remove() {
+		if ($this->registry->getObject('db')->deleteRecords('suplo', "id_suplo = " . $this->id)) {
+			$this->googleCalendarService->events->delete($this->owner->calendarSuplo, $this->eventId);
+			return true;
+		}
+		else {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[suploRecord::remove] - SQL chyba pri pokuse o odstránenie suploRecord [' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+			return false;
+		}
+	}
 }
 ?>
