@@ -4,5 +4,6 @@
 		public $name;
 		public $nick;
 		public $email;
+		public $calendarSuplo;
 	}
 ?>
