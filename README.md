@@ -4,17 +4,17 @@ Infos2 is information system for elementary and high schools which are running o
 
 TO-DO
 --------------
-- Google Calendar API -> register GoogleApi, terminovnik globalny + suplovanie kazdeho osobne
+- suploController::newSuplo
 
 SUMMARY
 --------------
 - **AUTH**			[100%]
 
-- **USER**			[0%]
+- **USER**			[50%]
 
 - **INDEX**			[20%]
 
-- **SUPLO**			[0%]
+- **SUPLO**			[40%]
 
 - **EVENTS**		[0%]
 
