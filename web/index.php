@@ -20,6 +20,7 @@
 	$registry->createAndStoreObject('urlprocessor', 'url');
 	$registry->createAndStoreObject('googleApi', 'google');
 	$registry->createAndStoreObject('authenticate', 'auth');
+	$registry->createAndStoreObject('renderer', 'render');
 	$registry->createAndStoreObject('template', 'template');
 	$registry->getObject('url')->getURLData();
 	$controllers = array();
