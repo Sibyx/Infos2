@@ -17,7 +17,7 @@ class suploController {
 					$this->removeSuplo($urlBits[2]);
 					break;
 				case 'new':
-					$this->newSuplo();
+					$this->newSuplo($urlBits[2]);
 				
 				default:
 					$this->viewSuplo(date('Y-m-d'));
@@ -53,13 +53,40 @@ class suploController {
 		$this->registry->getObject('template')->parseOutput();
 	}
 
-	private function newSuplo() {
-		if ($_POST['newSuplo_date']) {
-			$input = $_POST['newSuplo_date'];
+	private function newSuplo($date) {
+		if ($_POST['newSuplo_data']) {
+			$input = $_POST['newSuplo_data'];
 		}
 		else {
-			$this->uiNew();
+			$this->uiNew($date);
 		}
+	}
+
+	private function uiNew($date) {
+		//TODO: JavaScript pre newSuplo.tpl.php, ktory zabezpeci update pri zmene datumu pre form:action
+		$tags = array();
+		$tags['title'] = "Nové suplovanie - Infos2";
+		$this=>registry->getObject('template')->buildFromTemplate('newSuplo');
+		
+		$date = new DatetTime(strtodate($date));
+		$tags['dateFormated'] = $date->format("d.m.Y");
+		$tags['dateRaw'] = $date->format("Y-m-d");
+
+		$output = "";
+		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
+		$suploTable = new suploTable($this->registry);
+		if ($suploTable->getTableByDay($date)) {
+			//TODO: nastylovat cez FoundationCSS
+			$tags['suploExists'] = '<a href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" class="">Suplovanie na ' . $date->format("d.m.Y") . ' už existuje  - prepisujem</a>' . "\n";
+		}
+		else {
+			$tags['suploExists'] = "";
+		}
+
+		$tags['suploData'] = $output;
+
+		$this->registry->replaceTags($tags);
+		$this->registry->parseOutput();
 	}
 }
 ?>

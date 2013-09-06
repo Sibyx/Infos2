@@ -5,8 +5,7 @@
 	 * Uprava obrazkov cez Imagick
 	 * CHANGELOG:
 	 * 	- v1.0 [30.03.2013]: createTime, vytvaranie miniatur
-	 * TODO:
-	 *	- upload -> mozno, zatial to spravuje fileManager
+	 * TODO: upload -> mozno, zatial to spravuje fileManager
 	*/
 
 class imageManager {
