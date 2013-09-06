@@ -129,7 +129,8 @@ class Announcement {
 			$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[Announcement::remove] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť oznam "' . $this->title . '"[' . $this->id . ']');
 			$redirectBits = array();
 			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na odstránenie oznamu!', 'alert');
-		}
+		    return false;
+        }
 	}
 }
 ?>

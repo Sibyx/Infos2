@@ -48,7 +48,7 @@ class suploRecord {
 				$this->subject = $row['suplo_subject'];
 
 				$this->eventId = $row['suplo_eventId'];
-				$this->event = $this->googleCalendarService->events->get($this->owner->calendarSuplo, $this->eventId);
+				$this->event = $this->googleCalendarService->events->get($this->owner->calendarId, $this->eventId);
 				
 				$nick = $this->missing->nick;
 				$this->registry->getObject('db')->executeQuery("SELECT user_email, user_firstName, user_lastName, id_user FROM users WHERE user_nick = $nick");
@@ -151,7 +151,7 @@ class suploRecord {
 		if ($this->id == 0) {
 
 			$event = new Event();
-			$event->setSummary($this->hour . ". hodina - " $this->subject);
+			$event->setSummary($this->hour . ". hodina - " .  $this->subject);
 			$event->setLocation($this->classroom);
 
 			$this->registry->getObject('db')->executeQuery("SELECT * FROM getTimeRecord WHERE hour = " . $this->hour);
@@ -174,7 +174,7 @@ class suploRecord {
 
 				$event->setDescription($this->classes . " namiesto " . $this->missing->nick);
 
-				$this->event = $this->googleCalendarService->events->insert($this->owner->calendarSuplo, $event);
+				$this->event = $this->googleCalendarService->events->insert($this->owner->calendarId, $event);
 				if ($this->event->getId() != '') {
 					$row = array();
 					$row['id_user'] = $this->owner->id;
@@ -196,18 +196,23 @@ class suploRecord {
 				}
 				else {
 					$this->valid = false;
+                    return false;
 				}
 				
 			}
 			else {
 				$this->valid = false;
+                return false;
 			}
 		}
+        else {
+            return false;
+        }
 	}
 
 	public function remove() {
 		if ($this->registry->getObject('db')->deleteRecords('suplo', "id_suplo = " . $this->id)) {
-			$this->googleCalendarService->events->delete($this->owner->calendarSuplo, $this->eventId);
+			$this->googleCalendarService->events->delete($this->owner->calendarId, $this->eventId);
 			return true;
 		}
 		else {

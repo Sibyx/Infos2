@@ -1,7 +1,7 @@
 <?php
 class announcementsController {
 	
-	public function __construct($registry){
+	public function __construct(Registry $registry){
 		$this->registry = $registry;
 		$urlBits = $this->registry->getObject('url')->getURLBits();
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
@@ -34,10 +34,9 @@ class announcementsController {
 	private function listAnnouncements($offset) {
 		echo '<div class="nine columns">' . "\n";
 		echo '<section>' . "\n";
-		require_once(FRAMEWORK_PATH . 'models/articles.php');
-		require_once(FRAMEWORK_PATH . 'models/comments.php');
-		$articles = new Articles($this->registry);
-		$pagination = $articles->listArticles($offset);
+		require_once(FRAMEWORK_PATH . 'models/announcements.php');
+		$announcements = new Announcements($this->registry);
+		$pagination = $announcements->listAnnouncements($offset);
 		if ($pagination->getNumRowsPage() == 0) {
 			echo '<div class="">Žiadne články</div>' . "\n";
 		}

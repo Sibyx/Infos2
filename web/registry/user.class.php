@@ -62,11 +62,7 @@ class User {
 	public function getGoogleProfile() {
 		return $this->googleProfile;
 	}
-	
-	public function getAvatar() {
-		return $this->avatar;
-	}
-	
+
 	public function isValid() {
 		return $this->valid;
 	}

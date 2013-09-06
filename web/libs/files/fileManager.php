@@ -1,6 +1,6 @@
 <?php
 class fileManager {
-	private $uploadExtentions = array('png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'ppt', 'ppts', 'pptx', 'avi', 'flv', 'wmv', 'txt', 'doc', 'docx', 'csv', 'doc', 'cpp', 'pas', 'rar', 'dpr');
+	private $uploadExtensions = array('png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'ppt', 'ppts', 'pptx', 'avi', 'flv', 'wmv', 'txt', 'doc', 'docx', 'csv', 'doc', 'cpp', 'pas', 'rar', 'dpr');
 	private $uploadMimes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'application/pdf', 'image/tiff', 'application/vnd.ms-powerpoint', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'video/x-msvideo', 'video/x-flv', 'video/x-ms-wmv', 'text/plain', 'application/vnd.oasis.opendocument.spreadsheet', 'application/xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/rar', 'application/vnd.ms-excel', 'application/binary');
 	private $filePath = '';
 	private $fileExt = '';
@@ -34,8 +34,8 @@ class fileManager {
 	}
 	
 	public function setFileName($value) {
-		$this->filename = strtolower($value);
-		$this->fileName = str_replace(' ', '', $this->filename);
+		$this->fileName = strtolower($value);
+		$this->fileName = str_replace(' ', '', $this->fileName);
 		$this->fileName = $this->remove_accents($this->fileName);
 	}
 	

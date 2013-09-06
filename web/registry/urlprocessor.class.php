@@ -14,14 +14,14 @@ class urlprocessor {
 	}
 	
 	public function getURLData() {
-		$urldata = (isset($_GET['page'])) ? $_GET['page'] : '';
+        $urlData = (isset($_GET['page'])) ? $_GET['page'] : '';
 		$this->urlPath = $urlData;
-		if ($urldata == '') {
+		if ($urlData == '') {
 			$this->urlBits[] =  '';
 			$this->urlPath = '';
 		}
 		else {
-			$data = explode('/', $urldata);
+			$data = explode('/', $urlData);
 			while (!empty($data) && strlen(reset($data)) === 0) {
 				array_shift($data);
 			}

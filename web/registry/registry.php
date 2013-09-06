@@ -1,37 +1,65 @@
 <?php
+/**
+ * Class Registry
+ */
 class Registry {
-	
-	private $objects;
+
+    private $objects;
 	private $settings;
 	public $firephp;
-	
-	public function __construct(){
+
+    public function __construct(){
 		$this->firephp = FirePHP::getInstance(true);
 	}
-	
-	
-	public function createAndStoreObject($object, $key){
+
+    /**
+     * @param string $object
+     * @param string $key
+     */
+    public function createAndStoreObject($object, $key){
 		require_once($object . '.class.php');
 		$this->objects[$key] = new $object($this);
 	}
-	
-	public function storeSetting($setting, $key){
+
+    /**
+     * @param $setting
+     * @param $key
+     */
+    public function storeSetting($setting, $key){
 		$this->settings[$key] = $setting;
 	}
-	
-	public function getSetting($key){
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getSetting($key){
 		return $this->settings[$key];
 	}
-	
-	public function getObject($key){
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getObject($key){
 		return $this->objects[$key];
 	}
-	
-	public function buildURL($urlBits, $queryString='') {
+
+    /**
+     * @param array $urlBits
+     * @param string $queryString
+     * @return mixed
+     */
+    public function buildURL($urlBits, $queryString='') {
 		return $this->getObject('url')->buildURL($urlBits, $queryString, false);
 	}
-	
-	public function redirectURL($url, $message = '', $class = '') {
+
+    /**
+     * @param string $url
+     * @param string $message
+     * @param string $class
+     */
+    public function redirectURL($url, $message = '', $class = '') {
 		$tags = array();
 		$tags['class'] = $class;
 		$tags['message'] = $message;
@@ -42,8 +70,11 @@ class Registry {
 		$this->getObject('template')->replaceTags($tags);
 		$this->getObject('template')->parseOutput();
 	}
-	
-	public function setDebugging($value) {
+
+    /**
+     * @param bool $value
+     */
+    public function setDebugging($value) {
 		$this->firephp->setEnabled($value);
 	}
 }

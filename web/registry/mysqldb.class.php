@@ -33,14 +33,14 @@ class MySQLdb {
 		return $connection_id;
 	}
 	
-	public function setActiveConnection(int $new) {
+	public function setActiveConnection($new) {
 		$this->activeConnection = $new;
 	}
 	
 	public function executeQuery($query) {
 		$this->registry->firephp->log("[mysqldb::executeQuery]: query: " . $query); //DEBUG
 		if (!$result = $this->connections[$this->activeConnection]->query($query)) {
-			$this->registry->getObject('log')->insertLog('FILE', 'ERR', '[Query error]: ' . $this->connections[$connection_id]->error);
+			$this->registry->getObject('log')->insertLog('FILE', 'ERR', '[Query error]: ' . $this->connections[$this->activeConnection]->error);
 			$this->registry->firephp->log("[mysqldb::executeQuery]: error!"); //DEBUG
 			trigger_error('Chyba pri pokuse o vykonanie dotazu: ' . $query . ' - ' . $this->connections[$this->activeConnection]->error, E_USER_ERROR);
 			return false;
@@ -102,6 +102,7 @@ class MySQLdb {
 	}
 	
 	public function callRutine($rutine, $data) {
+        $values = "";
 		foreach ($data as $v) {
 			if (preg_match('/^[1-9]*[0-9]$/', $v)) {
 				$values .= $v. ",";
@@ -170,7 +171,7 @@ class MySQLdb {
 	}
 	
 	public function __deconstruct() {
-		foreach ($connections as $connection) {
+		foreach ($this->connections as $connection) {
 			$connection->close;
 		}
 	}

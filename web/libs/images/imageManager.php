@@ -39,17 +39,17 @@ class imageManager {
 		$this->imgName = $this->image->getFilename();
 		
 		if($type == IMAGETYPE_JPEG) {
-			$this->imageExt = '.jpg';
+			$this->imgExt = '.jpg';
 			
 		}
 		elseif($type == IMAGETYPE_GIF) {
-			$this->imageExt = '.gif';
+			$this->imgExt = '.gif';
         }
 		elseif($type == IMAGETYPE_PNG ) {
-			$this->imageExt = '.png';
+			$this->imgExt = '.png';
 		}
 		
-		$this->imgName = basename($path, $this->imageExt);
+		$this->imgName = basename($path, $this->imgExt);
 		
 		$info = $this->image->identifyImage();
 		$this->width = $info['geometry']['width'];
@@ -58,7 +58,6 @@ class imageManager {
 	}
 	
 	public function getWidth() {
-		$info = $this->image->identifyImage();
 		return $this->width;
 	}
 	

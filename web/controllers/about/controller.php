@@ -1,7 +1,7 @@
 <?php
 class aboutController {
 	
-	public function __construct($registry){
+	public function __construct(Registry $registry){
 		$this->registry = $registry;
 		$urlBits = $this->registry->getObject('url')->getURLBits();
 		switch(isset($urlBits[1]) ? $urlBits[1] : '') {
@@ -97,7 +97,6 @@ class aboutController {
 		echo '</section>' . "\n";
 		echo '</div>' . "\n";
 		echo '<aside class="three columns">' . "\n";
-			include 'aside.php';
 		echo '</aside>' . "\n";
 	}
 	

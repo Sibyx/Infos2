@@ -10,14 +10,12 @@ class suploController {
 				case 'view':
 					$this->viewSuplo($urlBits[2]);
 					break;
-				case 'edit':
-					$this->editSuplo($urlBits[2]);
-					break;
 				case 'remove':
 					$this->removeSuplo($urlBits[2]);
 					break;
 				case 'new':
 					$this->newSuplo($urlBits[2]);
+                    break;
 				
 				default:
 					$this->viewSuplo(date('Y-m-d'));
@@ -33,9 +31,10 @@ class suploController {
 
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
 		$suploTable = new suploTable($this->registry);
-		$suploRecords = $suploTable->getSuploByDay($date);
+		$suploRecords = $suploTable->getTableByDay($date);
 		$output = "";
-		foreach ($suploRecords as $record) {
+
+        foreach ($suploRecords as $record) {
 			$data = $record->toArray();
 			$row = "<tr>" . "\n";
 			$row .= "<td>" . $data['hour'] . "</td>";
@@ -65,10 +64,11 @@ class suploController {
 	private function uiNew($date) {
 		//TODO: JavaScript pre newSuplo.tpl.php, ktory zabezpeci update pri zmene datumu pre form:action
 		$tags = array();
+
 		$tags['title'] = "Nové suplovanie - Infos2";
-		$this=>registry->getObject('template')->buildFromTemplate('newSuplo');
+		$this->registry->getObject('template')->buildFromTemplate('newSuplo');
 		
-		$date = new DatetTime(strtodate($date));
+		$date = new DateTime(strtotime($date));
 		$tags['dateFormated'] = $date->format("d.m.Y");
 		$tags['dateRaw'] = $date->format("Y-m-d");
 
@@ -85,8 +85,8 @@ class suploController {
 
 		$tags['suploData'] = $output;
 
-		$this->registry->replaceTags($tags);
-		$this->registry->parseOutput();
+		$this->registry->getObject('template')->replaceTags($tags);
+		$this->registry->getObject('template')->parseOutput();
 	}
 }
 ?>

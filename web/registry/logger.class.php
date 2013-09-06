@@ -13,7 +13,7 @@ class Logger {
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
-		$this->file = fopen(FRAMEWORK_PATH . 'framework.log', a);
+		$this->file = fopen(FRAMEWORK_PATH . 'framework.log', 'a');
 	}
 	/*
 	 * Insert log message to DB or File
@@ -41,7 +41,7 @@ class Logger {
 		}
 	}
 	public function __deconstruct() {
-		fclose($file);
+		fclose($this->file);
 	}
 }
 ?>

@@ -23,20 +23,7 @@ class AuthenticateController {
 				case 'logout':
 					$this->logout();
 				break;
-				case 'register':
-					$this->registerDelegator();
-				break;
 			}
-		}
-	}
-	
-	private function registerDelegator() {
-		require(FRAMEWORK_PATH . 'controllers/authenticate/registrationController.php');
-		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-			$rc = new registrationController($this->registry, true);
-		}
-		else {
-			$rc = new registrationController($this->registry, false);
 		}
 	}
 
