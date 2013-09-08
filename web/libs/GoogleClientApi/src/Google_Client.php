@@ -452,19 +452,19 @@ class Google_ServiceException extends Google_Exception {
     $this->errors = $errors;
   }
 
-  /**
-   * An example of the possible errors returned.
-   *
-   * {
-   *   "domain": "global",
-   *   "reason": "authError",
-   *   "message": "Invalid Credentials",
-   *   "locationType": "header",
-   *   "location": "Authorization",
-   * }
-   *
-   * @return [{string, string}] List of errors return in an HTTP response or [].
-   */
+    /**
+     * An example of the possible errors returned.
+     *
+     * {
+     *   "domain": "global",
+     *   "reason": "authError",
+     *   "message": "Invalid Credentials",
+     *   "locationType": "header",
+     *   "location": "Authorization",
+     * }
+     *
+     * @return array [{string, string}] List of errors return in an HTTP response or [].
+     */
   public function getErrors() {
     return $this->errors;
   }

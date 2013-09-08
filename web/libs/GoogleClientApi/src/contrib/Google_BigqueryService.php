@@ -33,6 +33,7 @@
      * @param string $datasetId Dataset ID of dataset being deleted
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param bool deleteContents If True, delete all the tables in the dataset. If False and the dataset contains tables, the request will fail. Default is False
      */
     public function delete($projectId, $datasetId, $optParams = array()) {
@@ -341,6 +342,7 @@
      * @param string $datasetId Dataset ID of the table to delete
      * @param string $tableId Table ID of the table to delete
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($projectId, $datasetId, $tableId, $optParams = array()) {
       $params = array('projectId' => $projectId, 'datasetId' => $datasetId, 'tableId' => $tableId);

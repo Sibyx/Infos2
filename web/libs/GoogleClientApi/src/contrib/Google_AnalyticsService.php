@@ -195,6 +195,7 @@
      * @param string $date Date for which data is to be deleted. Date should be formatted as YYYY-MM-DD.
      * @param string $type Type of data for this delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($accountId, $webPropertyId, $customDataSourceId, $date, $type, $optParams = array()) {
       $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'customDataSourceId' => $customDataSourceId, 'date' => $date, 'type' => $type);
@@ -269,6 +270,7 @@
      * @param string $profileId Profile ID to which the experiment belongs
      * @param string $experimentId ID of the experiment to delete
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($accountId, $webPropertyId, $profileId, $experimentId, $optParams = array()) {
       $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'profileId' => $profileId, 'experimentId' => $experimentId);

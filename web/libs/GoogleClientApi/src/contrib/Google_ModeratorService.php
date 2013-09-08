@@ -256,6 +256,7 @@
      * @param string $submissionId The decimal ID of the Submission within the Series.
      * @param string $tagId
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($seriesId, $submissionId, $tagId, $optParams = array()) {
       $params = array('seriesId' => $seriesId, 'submissionId' => $submissionId, 'tagId' => $tagId);

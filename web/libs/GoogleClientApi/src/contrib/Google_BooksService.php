@@ -136,6 +136,7 @@
      *
      * @param string $volumeId The id of the book to be removed.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function deleteBook($volumeId, $optParams = array()) {
       $params = array('volumeId' => $volumeId);
@@ -457,6 +458,7 @@
      * @param string $annotationId The ID for the annotation to delete.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string source String to identify the originator of this request.
      */
     public function delete($annotationId, $optParams = array()) {
@@ -568,6 +570,7 @@
      * @param string $volumeId ID of volume to add.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string source String to identify the originator of this request.
      */
     public function addVolume($shelf, $volumeId, $optParams = array()) {
@@ -582,6 +585,7 @@
      * @param string $shelf ID of bookshelf from which to remove a volume.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string source String to identify the originator of this request.
      */
     public function clearVolumes($shelf, $optParams = array()) {
@@ -636,6 +640,7 @@
      * @param int $volumePosition Position on shelf to move the item (0 puts the item before the current first item, 1 puts it between the first and the second and so on.)
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string source String to identify the originator of this request.
      */
     public function moveVolume($shelf, $volumeId, $volumePosition, $optParams = array()) {
@@ -651,6 +656,7 @@
      * @param string $volumeId ID of volume to remove.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string source String to identify the originator of this request.
      */
     public function removeVolume($shelf, $volumeId, $optParams = array()) {
@@ -735,6 +741,7 @@
      * @param string $position Position string for the new volume reading position.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string action Action that caused this reading position to be set.
      * @opt_param string contentVersion Volume content version for which this reading position applies.
      * @opt_param string deviceCookie Random persistent device cookie optional on set position.

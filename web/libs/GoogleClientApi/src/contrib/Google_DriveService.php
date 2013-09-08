@@ -180,6 +180,7 @@
      *
      * @param Google_Channel $postBody
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function stop(Google_Channel $postBody, $optParams = array()) {
       $params = array('postBody' => $postBody);
@@ -205,6 +206,7 @@
      * @param string $folderId The ID of the folder.
      * @param string $childId The ID of the child.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($folderId, $childId, $optParams = array()) {
       $params = array('folderId' => $folderId, 'childId' => $childId);
@@ -287,6 +289,7 @@
      * @param string $fileId The ID of the file.
      * @param string $commentId The ID of the comment.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($fileId, $commentId, $optParams = array()) {
       $params = array('fileId' => $fileId, 'commentId' => $commentId);
@@ -435,6 +438,7 @@
      *
      * @param string $fileId The ID of the file to delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($fileId, $optParams = array()) {
       $params = array('fileId' => $fileId);
@@ -657,6 +661,7 @@
      * @param string $fileId The ID of the file.
      * @param string $parentId The ID of the parent.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($fileId, $parentId, $optParams = array()) {
       $params = array('fileId' => $fileId, 'parentId' => $parentId);
@@ -735,6 +740,7 @@
      * @param string $fileId The ID for the file.
      * @param string $permissionId The ID for the permission.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($fileId, $permissionId, $optParams = array()) {
       $params = array('fileId' => $fileId, 'permissionId' => $permissionId);
@@ -859,6 +865,7 @@
      * @param string $propertyKey The key of the property.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string visibility The visibility of the property.
      */
     public function delete($fileId, $propertyKey, $optParams = array()) {
@@ -982,6 +989,7 @@
      *
      * @param string $fileId The ID of the file that the Realtime API data model is associated with.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function get($fileId, $optParams = array()) {
       $params = array('fileId' => $fileId);
@@ -1008,6 +1016,7 @@
      * @param string $commentId The ID of the comment.
      * @param string $replyId The ID of the reply.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($fileId, $commentId, $replyId, $optParams = array()) {
       $params = array('fileId' => $fileId, 'commentId' => $commentId, 'replyId' => $replyId);
@@ -1135,6 +1144,7 @@
      * @param string $fileId The ID of the file.
      * @param string $revisionId The ID of the revision.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($fileId, $revisionId, $optParams = array()) {
       $params = array('fileId' => $fileId, 'revisionId' => $revisionId);

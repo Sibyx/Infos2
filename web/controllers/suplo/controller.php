@@ -14,7 +14,7 @@ class suploController {
 					$this->removeSuplo($urlBits[2]);
 					break;
 				case 'new':
-					$this->newSuplo($urlBits[2]);
+					$this->newSuplo();
                     break;
 				
 				default:
@@ -30,16 +30,16 @@ class suploController {
 		$this->registry->getObject('template')->buildFromTemplate('viewSuplo');
 
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
-		$suploTable = new suploTable($this->registry);
-		$suploRecords = $suploTable->getTableByDay($date);
+		$suploTable = new suploTable($this->registry, $date);
+		$suploRecords = $suploTable->getRecords();
 		$output = "";
 
         foreach ($suploRecords as $record) {
-			$data = $record->toArray();
+            $data = $record->toArray();
 			$row = "<tr>" . "\n";
 			$row .= "<td>" . $data['hour'] . "</td>";
 			$row .= "<td>" . $data['missing']->name . "</td>";
-			$row .= "<td>" . $record->getClaseesShort() . "</td>";
+			$row .= "<td>" . $record->getClassesShort() . "</td>";
 			$row .= "<td>" . $data['subject'] . "</td>";
 			$row .= "<td>" . $data['classroom'] . "</td>";
 			$row .= "<td>" . $data['owner']->name . "</td> /n";
@@ -52,30 +52,46 @@ class suploController {
 		$this->registry->getObject('template')->parseOutput();
 	}
 
-	private function newSuplo($date) {
-		if ($_POST['newSuplo_data']) {
+	private function newSuplo() {
+		if (isset($_POST['newSuplo_data'])) {
+            $date = new DateTime($_POST['newSuplo_date']);
+            require_once(FRAMEWORK_PATH . 'models/suploTable.php');
+            $suploTable = new suploTable($this->registry, $date);
 			$input = $_POST['newSuplo_data'];
+            foreach(preg_split("/((\r?\n)|(\r\n?))/", $input) as $key => $line){
+                if ($key != 0) {
+                    $record = array();
+                    foreach (explode("\t", $line) as $cell) {
+                        $record[] = $cell;
+                    }
+                    $suploTable->addRecord($record);
+                }
+            }
+            $suploTable->deleteRrecords();
+            $redirectBits = array();
+            $redirectBits[] = 'suplo';
+            $redirectBits[] = 'view';
+            $redirectBits[] = $date->format("Y-m-d");
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Suplovanie bolo úspešne vytvorené!', 'success');
 		}
 		else {
-			$this->uiNew($date);
+			$this->uiNew();
 		}
 	}
 
-	private function uiNew($date) {
-		//TODO: JavaScript pre newSuplo.tpl.php, ktory zabezpeci update pri zmene datumu pre form:action
+    private function uiNew() {
+        $date = new DateTime();
 		$tags = array();
 
 		$tags['title'] = "Nové suplovanie - Infos2";
 		$this->registry->getObject('template')->buildFromTemplate('newSuplo');
 		
-		$date = new DateTime(strtotime($date));
 		$tags['dateFormated'] = $date->format("d.m.Y");
 		$tags['dateRaw'] = $date->format("Y-m-d");
 
-		$output = "";
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
-		$suploTable = new suploTable($this->registry);
-		if ($suploTable->getTableByDay($date)) {
+		$suploTable = new suploTable($this->registry, $date);
+		if ($suploTable->numRecords() > 0) {
 			//TODO: nastylovat cez FoundationCSS
 			$tags['suploExists'] = '<a href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" class="">Suplovanie na ' . $date->format("d.m.Y") . ' už existuje  - prepisujem</a>' . "\n";
 		}
@@ -83,10 +99,12 @@ class suploController {
 			$tags['suploExists'] = "";
 		}
 
-		$tags['suploData'] = $output;
-
 		$this->registry->getObject('template')->replaceTags($tags);
 		$this->registry->getObject('template')->parseOutput();
 	}
+
+    private function removeSuplo($date) {
+        return true;
+    }
 }
 ?>

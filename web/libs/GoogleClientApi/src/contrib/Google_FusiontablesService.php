@@ -30,6 +30,7 @@
      * @param string $tableId Table from which the column is being deleted.
      * @param string $columnId Name or identifier for the column being deleted.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($tableId, $columnId, $optParams = array()) {
       $params = array('tableId' => $tableId, 'columnId' => $columnId);
@@ -202,6 +203,7 @@
      * @param string $tableId Table from which the style is being deleted
      * @param int $styleId Identifier (within a table) for the style being deleted
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($tableId, $styleId, $optParams = array()) {
       $params = array('tableId' => $tableId, 'styleId' => $styleId);
@@ -339,6 +341,7 @@
      *
      * @param string $tableId ID of the table that is being deleted.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($tableId, $optParams = array()) {
       $params = array('tableId' => $tableId);
@@ -502,6 +505,7 @@
      * @param string $tableId Table from which the template is being deleted
      * @param int $templateId Identifier for the template which is being deleted
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($tableId, $templateId, $optParams = array()) {
       $params = array('tableId' => $tableId, 'templateId' => $templateId);

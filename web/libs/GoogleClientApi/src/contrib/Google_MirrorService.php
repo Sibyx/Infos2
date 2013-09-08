@@ -29,6 +29,7 @@
      *
      * @param string $id The ID of the contact.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -184,6 +185,7 @@
      *
      * @param string $id The ID of the subscription.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -259,6 +261,7 @@
      *
      * @param string $id The ID of the timeline item.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -378,6 +381,7 @@
      * @param string $itemId The ID of the timeline item the attachment belongs to.
      * @param string $attachmentId The ID of the attachment.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($itemId, $attachmentId, $optParams = array()) {
       $params = array('itemId' => $itemId, 'attachmentId' => $attachmentId);

@@ -53,6 +53,7 @@
      *
      * @param int $stateKey The key for the data to be retrieved.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($stateKey, $optParams = array()) {
       $params = array('stateKey' => $stateKey);

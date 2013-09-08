@@ -264,6 +264,7 @@
      * @param string $id The id parameter specifies the YouTube live broadcast ID for the resource that is being deleted.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string onBehalfOfContentOwner USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner
      */
     public function delete($id, $optParams = array()) {
@@ -379,6 +380,7 @@
      *
      * @param string $id The id parameter specifies the YouTube live stream ID for the resource that is being deleted.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -466,6 +468,7 @@
      *
      * @param string $id The id parameter specifies the YouTube playlist item ID for the playlist item that is being deleted. In a playlistItem resource, the id property specifies the playlist item's ID.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -556,6 +559,7 @@
      *
      * @param string $id The id parameter specifies the YouTube playlist ID for the playlist that is being deleted. In a playlist resource, the id property specifies the playlist's ID.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -705,6 +709,7 @@
      *
      * @param string $id The id parameter specifies the YouTube subscription ID for the resource that is being deleted. In a subscription resource, the id property specifies the YouTube subscription ID.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);
@@ -838,6 +843,7 @@
      * @param string $id The id parameter specifies the YouTube video ID for the resource that is being deleted. In a video resource, the id property specifies the video's ID.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string onBehalfOfContentOwner USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner
      */
     public function delete($id, $optParams = array()) {
@@ -925,6 +931,7 @@
      * @param string $rating Specifies the rating to record.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string onBehalfOfContentOwner USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner
      */
     public function rate($id, $rating, $optParams = array()) {

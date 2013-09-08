@@ -79,6 +79,7 @@
      * @param string $project The project associated with the model.
      * @param string $id The unique name for the predictive model.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($project, $id, $optParams = array()) {
       $params = array('project' => $project, 'id' => $id);

@@ -30,6 +30,7 @@
      * @param string $activityId ID of the activity.
      * @param string $userId ID of the user to be removed from the activity.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($activityId, $userId, $optParams = array()) {
       $params = array('activityId' => $activityId, 'userId' => $userId);
@@ -54,6 +55,7 @@
      *
      * @param string $activityId ID of the activity to remove.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($activityId, $optParams = array()) {
       $params = array('activityId' => $activityId);
@@ -213,6 +215,7 @@
      *
      * @param string $commentId ID of the comment to remove.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($commentId, $optParams = array()) {
       $params = array('commentId' => $commentId);
@@ -349,6 +352,7 @@
      * @param int $communityId ID of the community.
      * @param string $userId ID of the user.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($communityId, $userId, $optParams = array()) {
       $params = array('communityId' => $communityId, 'userId' => $userId);
@@ -392,6 +396,7 @@
      * @param int $communityId ID of the community.
      * @param string $userId ID of the user.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($communityId, $userId, $optParams = array()) {
       $params = array('communityId' => $communityId, 'userId' => $userId);
@@ -480,6 +485,7 @@
      * @param string $topicId The ID of the topic whose message will be moved to the trash folder.
      * @param string $messageId The ID of the message to be moved to the trash folder.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($communityId, $topicId, $messageId, $optParams = array()) {
       $params = array('communityId' => $communityId, 'topicId' => $topicId, 'messageId' => $messageId);
@@ -714,6 +720,7 @@
      * @param int $communityId The ID of the community whose topic will be moved to the trash folder.
      * @param string $topicId The ID of the topic to be moved to the trash folder.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($communityId, $topicId, $optParams = array()) {
       $params = array('communityId' => $communityId, 'topicId' => $topicId);

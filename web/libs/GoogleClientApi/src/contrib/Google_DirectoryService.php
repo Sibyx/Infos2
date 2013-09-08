@@ -129,6 +129,7 @@
      *
      * @param string $groupKey Email or immutable Id of the group
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($groupKey, $optParams = array()) {
       $params = array('groupKey' => $groupKey);
@@ -247,6 +248,7 @@
      * @param string $groupKey Email or immutable Id of the group
      * @param string $alias The alias to be removed
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($groupKey, $alias, $optParams = array()) {
       $params = array('groupKey' => $groupKey, 'alias' => $alias);
@@ -308,6 +310,7 @@
      * @param string $groupKey Email or immutable Id of the group
      * @param string $memberKey Email or immutable Id of the member
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($groupKey, $memberKey, $optParams = array()) {
       $params = array('groupKey' => $groupKey, 'memberKey' => $memberKey);
@@ -431,6 +434,7 @@
      * @param string $resourceId Immutable id of Mobile Device
      * @param Google_MobileDeviceAction $postBody
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function action($customerId, $resourceId, Google_MobileDeviceAction $postBody, $optParams = array()) {
       $params = array('customerId' => $customerId, 'resourceId' => $resourceId, 'postBody' => $postBody);
@@ -444,6 +448,7 @@
      * @param string $customerId Immutable id of the Google Apps account
      * @param string $resourceId Immutable id of Mobile Device
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($customerId, $resourceId, $optParams = array()) {
       $params = array('customerId' => $customerId, 'resourceId' => $resourceId);
@@ -514,6 +519,7 @@
      * @param string $customerId Immutable id of the Google Apps account
      * @param string $orgUnitPath Full path of the organization unit
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($customerId, $orgUnitPath, $optParams = array()) {
       $params = array('customerId' => $customerId, 'orgUnitPath' => $orgUnitPath);
@@ -633,6 +639,7 @@
      *
      * @param string $userKey Email or immutable Id of the user
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($userKey, $optParams = array()) {
       $params = array('userKey' => $userKey);
@@ -705,6 +712,7 @@
      * @param string $userKey Email or immutable Id of the user as admin
      * @param Google_UserMakeAdmin $postBody
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function makeAdmin($userKey, Google_UserMakeAdmin $postBody, $optParams = array()) {
       $params = array('userKey' => $userKey, 'postBody' => $postBody);
@@ -736,6 +744,7 @@
      * @param string $userKey The immutable id of the user
      * @param Google_UserUndelete $postBody
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function undelete($userKey, Google_UserUndelete $postBody, $optParams = array()) {
       $params = array('userKey' => $userKey, 'postBody' => $postBody);
@@ -780,6 +789,7 @@
      * @param string $userKey Email or immutable Id of the user
      * @param string $alias The alias to be removed
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($userKey, $alias, $optParams = array()) {
       $params = array('userKey' => $userKey, 'alias' => $alias);
@@ -839,6 +849,7 @@
      *
      * @param string $userKey Email or immutable Id of the user
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($userKey, $optParams = array()) {
       $params = array('userKey' => $userKey);

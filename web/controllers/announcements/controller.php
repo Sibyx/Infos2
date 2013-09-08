@@ -99,6 +99,7 @@ class announcementsController {
 			$tags['ann_createdFriendly'] = $data['createdFriendly'];
 			$tags['author_id'] = $data['ownerId'];
 			$tags['author_name'] = $data['ownerName'];
+            $tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
 			$this->registry->getObject('template')->buildFromTemplate('announcement');
 			$this->registry->getObject('template')->replaceTags($tags);
 			$this->registry->getObject('template')->parseOutput();

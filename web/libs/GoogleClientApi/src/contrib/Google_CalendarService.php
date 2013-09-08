@@ -30,6 +30,7 @@
      * @param string $calendarId Calendar identifier.
      * @param string $ruleId ACL rule identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($calendarId, $ruleId, $optParams = array()) {
       $params = array('calendarId' => $calendarId, 'ruleId' => $ruleId);
@@ -145,6 +146,7 @@
      *
      * @param string $calendarId Calendar identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($calendarId, $optParams = array()) {
       $params = array('calendarId' => $calendarId);
@@ -268,6 +270,7 @@
      *
      * @param string $calendarId Calendar identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function clear($calendarId, $optParams = array()) {
       $params = array('calendarId' => $calendarId);
@@ -280,6 +283,7 @@
      *
      * @param string $calendarId Calendar identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($calendarId, $optParams = array()) {
       $params = array('calendarId' => $calendarId);
@@ -404,6 +408,7 @@
      * @param string $eventId Event identifier.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param bool sendNotifications Whether to send notifications about the deletion of the event. Optional. The default is False.
      */
     public function delete($calendarId, $eventId, $optParams = array()) {

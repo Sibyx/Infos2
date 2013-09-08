@@ -28,6 +28,7 @@
      * Deletes the authenticated user's current location. (currentLocation.delete)
      *
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($optParams = array()) {
       $params = array();
@@ -87,6 +88,7 @@
      *
      * @param string $locationId Timestamp of the location to delete (ms since epoch).
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($locationId, $optParams = array()) {
       $params = array('locationId' => $locationId);

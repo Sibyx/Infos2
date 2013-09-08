@@ -63,6 +63,7 @@
      * @param string $taskqueue The taskqueue to delete a task from.
      * @param string $task The id of the task to delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($project, $taskqueue, $task, $optParams = array()) {
       $params = array('project' => $project, 'taskqueue' => $taskqueue, 'task' => $task);

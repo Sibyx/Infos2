@@ -29,6 +29,7 @@
      *
      * @param string $id The id of a verified site or domain.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($id, $optParams = array()) {
       $params = array('id' => $id);

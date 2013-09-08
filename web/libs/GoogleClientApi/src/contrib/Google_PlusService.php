@@ -196,6 +196,7 @@
      *
      * @param string $id The ID of the moment to delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function remove($id, $optParams = array()) {
       $params = array('id' => $id);

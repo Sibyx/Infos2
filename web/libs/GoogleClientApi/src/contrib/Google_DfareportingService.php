@@ -116,6 +116,7 @@
      * @param string $profileId The DFA user profile ID.
      * @param string $reportId The ID of the report.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($profileId, $reportId, $optParams = array()) {
       $params = array('profileId' => $profileId, 'reportId' => $reportId);

@@ -111,6 +111,7 @@
      * @param string $applicationId The application being requested.
      * @param string $playerId A player ID. A value of me may be used in place of the authenticated player's ID.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function hide($applicationId, $playerId, $optParams = array()) {
       $params = array('applicationId' => $applicationId, 'playerId' => $playerId);
@@ -125,6 +126,7 @@
      * @param string $applicationId The application being requested.
      * @param string $playerId A player ID. A value of me may be used in place of the authenticated player's ID.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function unhide($applicationId, $playerId, $optParams = array()) {
       $params = array('applicationId' => $applicationId, 'playerId' => $playerId);
@@ -149,6 +151,7 @@
      * accessible to whitelisted tester accounts for your application. (rooms.reset)
      *
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function reset($optParams = array()) {
       $params = array();

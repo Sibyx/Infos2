@@ -58,10 +58,6 @@ class User {
 	public function getEmail() {
 		return $this->email;
 	}
-	
-	public function getGoogleProfile() {
-		return $this->googleProfile;
-	}
 
 	public function isValid() {
 		return $this->valid;

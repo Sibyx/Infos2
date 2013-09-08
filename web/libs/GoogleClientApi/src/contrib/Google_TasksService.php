@@ -29,6 +29,7 @@
      *
      * @param string $tasklist Task list identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($tasklist, $optParams = array()) {
       $params = array('tasklist' => $tasklist);
@@ -145,6 +146,7 @@
      *
      * @param string $tasklist Task list identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function clear($tasklist, $optParams = array()) {
       $params = array('tasklist' => $tasklist);
@@ -158,6 +160,7 @@
      * @param string $tasklist Task list identifier.
      * @param string $task Task identifier.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($tasklist, $task, $optParams = array()) {
       $params = array('tasklist' => $tasklist, 'task' => $task);

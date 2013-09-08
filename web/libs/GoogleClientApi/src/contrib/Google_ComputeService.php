@@ -426,6 +426,7 @@
      * @param string $project Name of the project scoping this request.
      * @param string $operation Name of the operation resource to delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($project, $operation, $optParams = array()) {
       $params = array('project' => $project, 'operation' => $operation);
@@ -1136,6 +1137,7 @@
      * @param string $region Name of the region scoping this request.
      * @param string $operation Name of the operation resource to delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($project, $region, $operation, $optParams = array()) {
       $params = array('project' => $project, 'region' => $region, 'operation' => $operation);
@@ -1413,6 +1415,7 @@
      * @param string $zone Name of the zone scoping this request.
      * @param string $operation Name of the operation resource to delete.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($project, $zone, $operation, $optParams = array()) {
       $params = array('project' => $project, 'zone' => $zone, 'operation' => $operation);

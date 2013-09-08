@@ -63,6 +63,7 @@
      * @param string $subscriptionId The purchased subscription ID (for example, 'monthly001').
      * @param string $token The token provided to the user's device when the subscription was purchased.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function cancel($packageName, $subscriptionId, $token, $optParams = array()) {
       $params = array('packageName' => $packageName, 'subscriptionId' => $subscriptionId, 'token' => $token);

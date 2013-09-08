@@ -31,6 +31,7 @@
      * @param string $skuId Name for sku
      * @param string $userId email id or unique Id of the user
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($productId, $skuId, $userId, $optParams = array()) {
       $params = array('productId' => $productId, 'skuId' => $skuId, 'userId' => $userId);

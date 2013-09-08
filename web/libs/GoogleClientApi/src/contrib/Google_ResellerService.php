@@ -173,6 +173,7 @@
      * @param string $subscriptionId Id of the subscription, which is unique for a customer
      * @param string $deletionType Whether the subscription is to be fully cancelled or downgraded
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($customerId, $subscriptionId, $deletionType, $optParams = array()) {
       $params = array('customerId' => $customerId, 'subscriptionId' => $subscriptionId, 'deletionType' => $deletionType);

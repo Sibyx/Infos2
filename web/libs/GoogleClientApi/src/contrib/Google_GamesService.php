@@ -174,6 +174,7 @@
      * (applications.played)
      *
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function played($optParams = array()) {
       $params = array();
@@ -347,6 +348,7 @@
      *
      * @param string $roomId The ID of the room.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function dismiss($roomId, $optParams = array()) {
       $params = array('roomId' => $roomId);

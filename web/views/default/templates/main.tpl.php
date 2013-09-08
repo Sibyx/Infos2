@@ -9,20 +9,21 @@
 	<meta name="keywords" content="{meta-keywords}" />
 	<meta name="author" content="Jakub Dubec" />
 	<meta name="viewport" content="width=device-width" />
-	<meta http-equiv="refresh" content="30" />
 	
 	<!-- CSS -->
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/foundation.min.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/normalize.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/fonts.css" />
-	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/jquery-ui-1.10.2.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/style.css" />
 		
 	<!-- JS -->
+
 	<script src="{siteurl}/views/{defaultView}/js/jquery-2.0.0.min.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/jquery-ui-1.10.2.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/scripts.js"></script>
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script src="https://apis.google.com/js/plusone.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/vendor/custom.modernizr.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.forms.js"></script>
@@ -56,7 +57,7 @@
 		</div>
 	</footer>
 	<script>
-		$(document).foundation();
+		//$(document).foundation();
 	</script>
 	<!-- This page was generated with my custom PHP framework -->
 </body>

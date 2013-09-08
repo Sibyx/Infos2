@@ -118,6 +118,7 @@ abstract class Google_IO {
    * @param Google_HttpRequest $request The outbound request.
    * return bool If the cached object needs to be revalidated, false if it is
    * still current and can be re-used.
+   * @return bool
    */
   protected function checkMustRevaliadateCachedRequest($cached, $request) {
     if (Google_CacheParser::mustRevalidate($cached)) {

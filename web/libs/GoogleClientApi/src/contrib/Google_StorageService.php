@@ -31,6 +31,7 @@
      * @param string $bucket Name of a bucket.
      * @param string $entity The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($bucket, $entity, $optParams = array()) {
       $params = array('bucket' => $bucket, 'entity' => $entity);
@@ -149,6 +150,7 @@
      * @param string $bucket Name of a bucket.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string ifMetagenerationMatch Makes the return of the bucket metadata conditional on whether the bucket's current metageneration matches the given value.
      * @opt_param string ifMetagenerationNotMatch Makes the return of the bucket metadata conditional on whether the bucket's current metageneration does not match the given value.
      */
@@ -281,6 +283,7 @@
      *
      * @param Google_Channel $postBody
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function stop(Google_Channel $postBody, $optParams = array()) {
       $params = array('postBody' => $postBody);
@@ -307,6 +310,7 @@
      * @param string $bucket Name of a bucket.
      * @param string $entity The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($bucket, $entity, $optParams = array()) {
       $params = array('bucket' => $bucket, 'entity' => $entity);
@@ -429,6 +433,7 @@
      * @param string $entity The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string generation If present, selects a specific revision of this object (as opposed to the latest version, the default).
      */
     public function delete($bucket, $object, $entity, $optParams = array()) {
@@ -620,6 +625,7 @@
      * @param string $object Name of the object.
      * @param array $optParams Optional parameters.
      *
+     * @return array|\Google_HttpRequest
      * @opt_param string generation If present, permanently deletes a specific revision of this object (as opposed to the latest version, the default).
      * @opt_param string ifGenerationMatch Makes the operation conditional on whether the object's current generation matches the given value.
      * @opt_param string ifGenerationNotMatch Makes the operation conditional on whether the object's current generation does not match the given value.

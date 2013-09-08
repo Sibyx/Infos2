@@ -231,6 +231,7 @@
      * @param string $blogId The Id of the Blog.
      * @param string $postId The ID of the Post.
      * @param array $optParams Optional parameters.
+     * @return array|\Google_HttpRequest
      */
     public function delete($blogId, $postId, $optParams = array()) {
       $params = array('blogId' => $blogId, 'postId' => $postId);
