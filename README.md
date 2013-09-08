@@ -4,7 +4,8 @@ Infos2 is information system for elementary and high schools which are running o
 
 TO-DO
 --------------
-- suploController::newSuplo
+- suplo not working correctly: inserting records
+- create support for multiple last names
 
 SUMMARY
 --------------
@@ -14,7 +15,7 @@ SUMMARY
 
 - **INDEX**			[20%]
 
-- **SUPLO**			[40%]
+- **SUPLO**			[60%]
 
 - **EVENTS**		[0%]
 
