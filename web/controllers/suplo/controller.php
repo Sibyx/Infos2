@@ -25,8 +25,11 @@ class suploController {
 	}
 
 	private function viewSuplo($date) {
+        $date = new DateTime($date);
+
 		$tags = array();
-		$tags['title'] = "Suplovanie na " . $date . " - Infos2";
+		$tags['title'] = "Suplovanie na " . $date->format("j. n. Y") . " - Infos2";
+        $tags['dateFormated'] = $date->format("j. n. Y");
 		$this->registry->getObject('template')->buildFromTemplate('viewSuplo');
 
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
@@ -36,14 +39,15 @@ class suploController {
 
         foreach ($suploRecords as $record) {
             $data = $record->toArray();
+            $this->registry->firephp->log($data);
 			$row = "<tr>" . "\n";
 			$row .= "<td>" . $data['hour'] . "</td>";
 			$row .= "<td>" . $data['missing']->name . "</td>";
 			$row .= "<td>" . $record->getClassesShort() . "</td>";
 			$row .= "<td>" . $data['subject'] . "</td>";
 			$row .= "<td>" . $data['classroom'] . "</td>";
-			$row .= "<td>" . $data['owner']->name . "</td> /n";
-			$row .= "</tr>" . "/n";
+			$row .= "<td>" . $data['owner']->name . "</td> \n";
+			$row .= "</tr>" . "\n";
 			$output .= $row;
 		}
 

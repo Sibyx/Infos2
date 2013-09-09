@@ -20,7 +20,6 @@ class suploRecord {
 	private $event;
 	private $googleCalendarService;
 	private $valid;
-    private $changes;
 
 	public function __construct(Registry $registry, $id = 0) {
 		$this->registry = $registry;
@@ -82,27 +81,15 @@ class suploRecord {
 		return $this->valid;
 	}
 
-    /**
-     * @param string $value
-     * @return bool
-     */
-    public function  isChanged($value = '') {
-        if ($value == '') {
-            return count($this->changes);
-        }
-        else {
-            return in_array($value, $this->changes);
-        }
-    }
-	
 	public function getId() {
 		return $this->id;
 	}
 	
 	public function toArray() {
 		$result = array();
+        $forbidden = array('registry', 'event', 'googleCalendarService');
 		foreach($this as $field => $data) {
-			if(!is_object($data) && !is_array($data)) {
+			if(!in_array($field, $forbidden)) {
 				$result[$field] = $data;
 			}
 		}
@@ -244,12 +231,5 @@ class suploRecord {
 			return false;
 		}
 	}
-
-    /**
-     * @param string $value
-     */
-    public function addChange($value) {
-        $this->changes[] = $value;
-    }
 }
 ?>

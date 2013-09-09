@@ -33,12 +33,12 @@ class suploTable {
     public function __construct(Registry $registry, $date) {
 		$this->registry = $registry;
         $this->date = $date;
-        $this->registry->getObject('db')->executeQuery("SELECT id_suplo FROM suplo WHERE suplo_date = " . $this->date->format("Y-m-d"));
-        $this->numRecords = $this->registry->getObject('db')->numRows();
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '" . $this->date->format("Y-m-d") . "'");
+        $this->numRecords = $this->registry->getObject('db')->numRowsFromCache($cache);
         require_once(FRAMEWORK_PATH . "models/suploRecord.php");
         if ($this->numRecords > 0) {
             $this->suploRecords = array();
-            while ($row = $this->registry->getObject('db')->getRows()) {
+            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $this->suploRecords[] = new suploRecord($this->registry, $row['id_suplo']);
             }
         }
