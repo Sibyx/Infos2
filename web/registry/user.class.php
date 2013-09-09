@@ -9,6 +9,7 @@
  *	- v2.0 [05.06.2013]: prerobene pre Google Auth
 */
 class User {
+    //TODO: support for google api objects, remove arrays
 	
 	private $id;
 	private $firstName;

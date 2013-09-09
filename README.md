@@ -4,7 +4,7 @@ Infos2 is information system for elementary and high schools which are running o
 
 TO-DO
 --------------
-- suplo not working correctly: inserting records
+- suplo module testing
 - create support for multiple last names
 
 SUMMARY
