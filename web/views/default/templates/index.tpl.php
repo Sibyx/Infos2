@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="large-7 columns">
 		<section class="boardPanel" id="panelAnnouncements">
-			<header><h2>Oznamy</h2></header>
+			<header><a href="{siteurl}/announcements/"><h2>Oznamy</h2></a></header>
 				{announcements}
 		</section>
 	</div>

@@ -55,7 +55,7 @@
 		</div>
 	</footer>
 	<script>
-		//$(document).foundation();
+		$(document).foundation();
 	</script>
 	<!-- This page was generated with my custom PHP framework -->
 </body>
