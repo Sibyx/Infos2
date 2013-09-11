@@ -49,6 +49,7 @@ class suploRecord {
 				$this->classes = $row['suplo_classes'];
 				$this->classroom = $row['suplo_classroom'];
 				$this->subject = $row['suplo_subject'];
+                $this->note = $row['suplo_note'];
 
 				$this->eventId = $row['suplo_eventId'];
 				$this->event = $this->googleCalendarService->events->get($this->owner->calendarId, $this->eventId);

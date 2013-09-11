@@ -2,7 +2,7 @@
 <section class="row">
 	<div class="large-12 collumns">
 		<header><h2>Suplovanie {dateFormated}</h2></header>
-		<table>
+		<table style="width: 100%;">
 			<thead>
 				<tr>
 					<th>Hodina</th>

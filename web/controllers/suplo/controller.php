@@ -47,6 +47,7 @@ class suploController {
 			$row .= "<td>" . $data['subject'] . "</td>";
 			$row .= "<td>" . $data['classroom'] . "</td>";
 			$row .= "<td>" . $data['owner']->name . "</td> \n";
+            $row .= "<td>" . $data['note'] . "</td> \n";
 			$row .= "</tr>" . "\n";
 			$output .= $row;
 		}

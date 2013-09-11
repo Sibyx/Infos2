@@ -45,11 +45,9 @@
 				<img src="{siteurl}/views/{defaultView}/images/logoSkola.png" alt="GVPT" style="height:80px; margin:5px;"/>
 			</div>
 			<div class="large-6 columns">
-				<div class="row text-centered">
-					<strong>Jakub Dubec</strong>
-					<br />
-					All rights reserved. &copy;
-				</div>
+				<strong>Jakub Dubec</strong>
+				<br />
+				All rights reserved. &copy;
 			</div>
 			<div class="large-3 columns">
 				<a href="http://www.w3.org/html/logo/" rel="external" target="_blank"><img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-performance-semantics.png" width="197" height="64" alt="HTML5 Powered with CSS3 / Styling, Performance &amp; Integration, and Semantics" title="HTML5 Powered with CSS3 / Styling, Performance &amp; Integration, and Semantics" /></a>
