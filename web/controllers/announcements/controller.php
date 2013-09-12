@@ -32,58 +32,55 @@ class announcementsController {
 	}
 	
 	private function listAnnouncements($offset) {
-		echo '<div class="nine columns">' . "\n";
-		echo '<section>' . "\n";
 		require_once(FRAMEWORK_PATH . 'models/announcements.php');
 		$announcements = new Announcements($this->registry);
 		$pagination = $announcements->listAnnouncements($offset);
+        $annOutput = '';
 		if ($pagination->getNumRowsPage() == 0) {
-			echo '<div class="">Žiadne články</div>' . "\n";
+			$annOutput .= '<div class="">Žiadne oznamy</div>' . "\n";
 		}
 		else {
 			while ($row = $this->registry->getObject('db')->resultsFromCache($pagination->getCache())) {
-				$comments = new Comments($this->registry, $row['id_article']);
-				echo '<article>' . "\n";
-				echo '<header><h2><a href="' . $this->registry->getSetting('siteurl') . '/articles/view/' . $row['id_article'] . '">' . $row['article_title'] . '</a></h2></header>' . "\n";
-				echo '<div class="row articleInfo">' . "\n";
-				echo '<div class="nine columns">' . $row['user_nick'] . ', publikované dňa <time datetime="' . $row['article_date'] . '">' . $row['dateFriendly'] . '</time></div>' . "\n";
-				echo '<div class="three columns right-text"><a href="' . $this->registry->getSetting('siteurl') . '/articles/view/' . $row['id_article'] . '#comments">' . $comments->printCommentsNumber() . '</a></div>' . "\n";
-				echo '</div>' . "\n";
-				echo '<div class="row">' . "\n";
-				echo '<div class="twelve columns mt">' . "\n";
-				echo $this->getFirstPara($row['article_text']) . ' <a href="' . $this->registry->getSetting('siteurl') . '/articles/view/' . $row['id_article'] . '">Celý článok</a>' . "\n";
-				echo '</div>' . "\n";
-				echo '</div>' . "\n";
-				echo '</article>' . "\n";
-				echo '<hr />' . "\n";
+                $article = '';
+                $article .= '<article>' . "\n";
+                $article .= '<header><h3><a href="' . $this->registry->getSetting('siteurl') . '/announcements/view/' . $row['id_announcement'] . '">' . $row['ann_title'] . '</a></h3></header>' . "\n";
+                $article .= $row['ann_text'];
+                $article .= '<hr />' . "\n";
+                $article .= '<footer>' . "\n";
+                $article .= '<small><a href="https://plus.google.com/u/1/' . $row['id_user'] . '/about" target="_blank">' . $row['user_firstName'] . ' ' . $row['user_lastName'] . '</a> - <time pubdate="' . $row['createdRaw'] . '">' . $row['createdFriendly'] . '</time></small>' . "\n";
+                $article .= '</footer>' . "\n";
+                $article .= '</article>' . "\n";
+                $annOutput .= $article;
 			}
 		}
-		echo '</section>' . "\n";
-		echo '<div class="pagination-centered">' . "\n";
-		echo '<ul class="pagination">' . "\n";
+        $pagOutput = '';
 		if ($pagination->isFirst()) {
-			echo '<li class="arrow unavailable"><a href="">&laquo;</a></li>' . "\n";
+            $pagOutput .= '<li class="arrow unavailable"><a href="">&laquo;</a></li>' . "\n";
 		}
 		else {
-			echo '<li class="arrow"><a href="' . $this->registry->getSetting('siteurl') . '/articles/' . ($pagination->getCurrentPage()-2) . '">&laquo;</a></li>' . "\n";
+            $pagOutput .= '<li class="arrow"><a href="' . $this->registry->getSetting('siteurl') . '/announcements/' . ($pagination->getCurrentPage()-2) . '">&laquo;</a></li>' . "\n";
 		}
 		for ($i = 1;$i <= $pagination->getNumPages(); $i++) {
 			if ($i == $pagination->getCurrentPage()) {
-				echo '<li class="current"><a href="' . $this->registry->getSetting('siteurl') . '/articles/' . ($i-1) . '">' . $i . '</a></li>' . "\n";
+                $pagOutput .= '<li class="current"><a href="' . $this->registry->getSetting('siteurl') . '/announcements/' . ($i-1) . '">' . $i . '</a></li>' . "\n";
 			}
 			else {
-				echo '<li><a href="' . $this->registry->getSetting('siteurl') . '/articles/' . ($i-1) . '">' . $i . '</a></li>' . "\n";
+                $pagOutput .= '<li><a href="' . $this->registry->getSetting('siteurl') . '/announcements/' . ($i-1) . '">' . $i . '</a></li>' . "\n";
 			}
 		}
 		if ($pagination->isLast()) {
-			echo '<li class="arrow unavailable"><a href="">&raquo;</a></li>' . "\n";
+            $pagOutput .= '<li class="arrow unavailable"><a href="">&raquo;</a></li>' . "\n";
 		}
 		else {
-			echo '<li class="arrow"><a href="' . $this->registry->getSetting('siteurl') . '/articles/' . ($pagination->getCurrentPage()) . '">&raquo;</a></li>' . "\n";
+            $pagOutput .= '<li class="arrow"><a href="' . $this->registry->getSetting('siteurl') . '/announcements/' . ($pagination->getCurrentPage()) . '">&raquo;</a></li>' . "\n";
 		}
-		echo '</ul>' . "\n";
-		echo '</div>' . "\n";
-		echo '</div>' . "\n";
+        $tags = array();
+        $tags['title'] = 'Oznamy - Infos2';
+        $tags['announcements'] = $annOutput;
+        $tags['pagination'] = $pagOutput;
+        $this->registry->getObject('template')->buildFromTemplate('listAnnouncements');
+        $this->registry->getObject('template')->replaceTags($tags);
+        $this->registry->getObject('template')->parseOutput();
 	}
 	
 	private function viewAnnouncement($announcementId) {

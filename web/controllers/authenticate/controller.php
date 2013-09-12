@@ -10,7 +10,6 @@
 class AuthenticateController {
 
 	private $registry;
-	private $model;
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;

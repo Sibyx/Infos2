@@ -8,7 +8,6 @@ class suploRecord {
      */
     private $date;
 	private $dateFriendly;
-	private $dateRaw;
 	private $owner;
 	private $missing;
 	private $hour;
@@ -219,6 +218,12 @@ class suploRecord {
             $update['suplo_classroom'] = $this->classroom;
             $update['suplo_note'] = $this->note;
             $update['suplo_subject'] = $this->subject;
+            if ($this->registry->getObject('db')->updateRecords("suplo", $update, 'id_suplo = ' . $this->id)) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 	}
 

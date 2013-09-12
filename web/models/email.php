@@ -3,9 +3,6 @@ require_once(FRAMEWORK_PATH . 'libs/PHPMailer/class.phpmailer.php');
 class Email {
 
 	private $message;
-	private $headers;
-	private $recipient;
-	private $subject;
 	private $mail;
 	
     public function __construct(Registry $registry)  {

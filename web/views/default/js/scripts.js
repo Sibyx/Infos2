@@ -24,7 +24,7 @@ $(document).ready(function() {
 					$('#contactThanks span').addClass("green");
 				}
 			},
-			error: function (xhr, ajaxOptions, thrownError) {
+			error: function () {
 				$("#contactThanks").append('<span style="margin-top: 20px; display: inline-block; font-size: 25pt; font-family:BigNoodleTitling">I am so sorry but my e-mail robot has depressions and refused your request. Please, try it later..</span>');
 				$('#contactThanks span').addClass("red");
 			}
