@@ -4,8 +4,9 @@ Infos2 is information system for elementary and high schools which are running o
 
 TO-DO
 --------------
-- suplo module testing
 - create support for multiple last names
+- logging for suplo
+- gui for remove, add end edit for suplo and announcements
 
 SUMMARY
 --------------
@@ -15,13 +16,13 @@ SUMMARY
 
 - **INDEX**			[20%]
 
-- **SUPLO**			[60%]
+- **SUPLO**			[90%]
 
 - **EVENTS**		[0%]
 
 - **DOCS**			[0%]
 
-- **ANNOUNCEMENTS**	[80%]
+- **ANNOUNCEMENTS**	[90%]
 
 COLORS
 --------------

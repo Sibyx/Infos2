@@ -26,7 +26,8 @@ class defaultController {
 		$tags = array_merge(
 			$tags,
 			$this->createUserboard(),
-			$this->createAnnouncements()
+			$this->createAnnouncements(),
+            $this->createSuplo()
 		);
 		$this->registry->getObject('template')->buildFromTemplate('index');
 		$this->registry->getObject('template')->replaceTags($tags);
@@ -71,6 +72,61 @@ class defaultController {
 		$tags['next'] = $timetable->getNext();
 		return $tags;
 	}
+
+    /**
+     * @return string
+     */
+    private function createSuplo() {
+        require_once(FRAMEWORK_PATH . 'models/suploRecords.php');
+        require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
+        $suploRecords = new suploRecords($this->registry);
+
+        //Dnes
+        $cache = $suploRecords->getCurrentUser(new DateTime);
+        $output = '';
+        if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Dnes</td></tr>' . "\n";
+            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+                $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
+                $data = $suploRecord->toArray();
+                $output .= '<tr data-suplo-id="' . $data['id'] . '">' . "\n";
+                $output .= '<td style="font-weight: bold;">' . $data['hour'] . '. hodina:</td>' . "\n";
+                $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
+                $output .= '<td>' . $data['subject'] . '</td>' . "\n";
+                $output .= '<td>' . $data['classroom'] . '</td>' . "\n";
+                $output .= '<td>' . $data['missing']->name . '</td>' . "\n";
+                $output .= '</tr>' . "\n";
+            }
+        }
+        else {
+            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Dnes nesupluješ!</td></tr>' . "\n";
+        }
+        $tags = array();
+        $tags['suploToday'] = $output;
+
+        //Zajtra
+        $cache = $suploRecords->getCurrentUser(new DateTime(date('Y-m-d', time()+86400)));
+        $output = '';
+        if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Zajtra</td></tr>' . "\n";
+            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+                $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
+                $data = $suploRecord->toArray();
+                $output .= '<tr data-suplo-id="' . $data['id'] . '">' . "\n";
+                $output .= '<td style="font-weight: bold;">' . $data['hour'] . '. hodina:</td>' . "\n";
+                $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
+                $output .= '<td>' . $data['subject'] . '</td>' . "\n";
+                $output .= '<td>' . $data['classroom'] . '</td>' . "\n";
+                $output .= '<td>' . $data['missing']->name . '</td>' . "\n";
+                $output .= '</tr>' . "\n";
+            }
+        }
+        else {
+            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Zajtra nesupluješ!</td></tr>' . "\n";
+        }
+        $tags['suploTomorow'] = $output;
+        return $tags;
+    }
 	
 	private function getCurrentTime() {
 		$result = array();

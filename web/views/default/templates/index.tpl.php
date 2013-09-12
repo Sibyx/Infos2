@@ -25,7 +25,22 @@
 		</section>
 		
 		<section class="boardPanel" id="panelSuplo">
-			<header><h2>Suplovanie</h2></header>
+            <header><a href="{siteurl}/suplo/"><h2>Suplovanie</h2></a></header>
+            <table style="width: 100%">
+                <thead>
+                    <tr>
+                        <td>Hodina</td>
+                        <td>Trieda</td>
+                        <td>Predmet</td>
+                        <td>Učebňa</td>
+                        <td>Namiesto</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {suploToday}
+                    {suploTomorow}
+                </tbody>
+            </table>
 		</section>
 		
 		<section class="boardPanel" id="panelEvents">
