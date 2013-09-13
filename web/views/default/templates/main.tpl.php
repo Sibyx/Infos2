@@ -54,6 +54,7 @@
 			</div>
 		</div>
 	</footer>
+    <div class="reveal-modal-bg" style="display: none"></div>
 	<script>
 		$(document).foundation();
 	</script>

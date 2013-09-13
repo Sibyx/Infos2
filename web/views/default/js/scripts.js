@@ -1,8 +1,30 @@
 $(document).ready(function() {
 	
-	$("body").delegate("tr[data-redirect-url]", 'click',function(){
-		window.open($(this).attr('data-redirect-url'),'_blank');
+	$("body").delegate("tr[data-record-url]", 'click',function(){
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('data-record-url'),
+            dataType: 'html',
+            success: function(data) {
+                $('#myModal').html(data);
+            },
+            error: function () {
+                $('#myModal').html('<span style="margin-top: 20px; display: inline-block; font-size: 25pt; font-family:BigNoodleTitling">I am so sorry but my e-mail robot has depressions and refused your request. Please, try it later..</span>');
+            }
+        });
+        $('#myModal').foundation('reveal', 'open');
 	});
+
+    $("#newSuplo_date").change(function(){
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('data-suplo-url') + $(this).val(),
+            dataType: 'html',
+            success: function(data) {
+                $('#suploExists').html(data);
+            }
+        });
+    });
 	
 	
 	$("#formContact").submit(function(e){

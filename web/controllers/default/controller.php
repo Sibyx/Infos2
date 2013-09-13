@@ -85,11 +85,11 @@ class defaultController {
         $cache = $suploRecords->getCurrentUser(new DateTime);
         $output = '';
         if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
-            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Dnes</td></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">Dnes</th></tr>' . "\n";
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
-                $output .= '<tr data-suplo-id="' . $data['id'] . '">' . "\n";
+                $output .= '<tr data-record-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
                 $output .= '<td style="font-weight: bold;">' . $data['hour'] . '. hodina:</td>' . "\n";
                 $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
                 $output .= '<td>' . $data['subject'] . '</td>' . "\n";
@@ -99,7 +99,7 @@ class defaultController {
             }
         }
         else {
-            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Dnes nesupluješ!</td></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">Dnes nesupluješ!</th></tr>' . "\n";
         }
         $tags = array();
         $tags['suploToday'] = $output;
@@ -108,7 +108,7 @@ class defaultController {
         $cache = $suploRecords->getCurrentUser(new DateTime(date('Y-m-d', time()+86400)));
         $output = '';
         if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
-            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Zajtra</td></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">Zajtra</th></tr>' . "\n";
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
@@ -122,7 +122,7 @@ class defaultController {
             }
         }
         else {
-            $output .= '<tr><td colspan="5" class="text-center" style="font-weight: bold">Zajtra nesupluješ!</td></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">Zajtra nesupluješ!</th></tr>' . "\n";
         }
         $tags['suploTomorow'] = $output;
         return $tags;

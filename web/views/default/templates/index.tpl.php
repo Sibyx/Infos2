@@ -52,6 +52,8 @@
 		</section>
 	</div>
 </div>
+<div id="myModal" class="reveal-modal">
+</div>
 <script>
 	var t = window.setInterval(updateClock, 1000);
 </script>

@@ -16,6 +16,12 @@ class suploController {
 				case 'new':
 					$this->newSuplo();
                     break;
+                case 'record':
+                    $this->viewRecord(intval($urlBits[2]));
+                    break;
+                case 'suploExists':
+                    $this->suploExists($urlBits[2]);
+                    break;
 				
 				default:
 					$this->viewSuplo(date('Y-m-d'));
@@ -98,7 +104,7 @@ class suploController {
 		$suploTable = new suploTable($this->registry, $date);
 		if ($suploTable->numRecords() > 0) {
 			//TODO: nastylovat cez FoundationCSS
-			$tags['suploExists'] = '<a href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" class="">Suplovanie na ' . $date->format("d.m.Y") . ' už existuje  - prepisujem</a>' . "\n";
+			$tags['suploExists'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d.m.Y") . ' už existuje  - prepisujem</a>' . "\n";
 		}
 		else {
 			$tags['suploExists'] = "";
@@ -111,5 +117,25 @@ class suploController {
     private function removeSuplo($date) {
         return true;
     }
+
+    private function viewRecord($id) {
+        require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
+        $suploRecord = new suploRecord($this->registry, $id);
+        $data = $suploRecord->toArray();
+        echo '<h2>' . $data['hour'] . '. hodina</h2>' . "\n";
+
+        echo '<a class="close-reveal-modal">' . "&#215;" . '</a>' . "\n";
+    }
+
+    private function suploExists($date) {
+        $date = new DateTime($date);
+        $dateFormated = $date->format("Y-m-d");
+        $this->registry->getObject('db')->executeQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '$dateFormated'");
+        if ($this->registry->getObject('db')->numRows() > 0) {
+            echo '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d. m. Y") . ' už existuje  - prepisujem</a>' . "\n";
+        }
+    }
+
+
 }
 ?>
