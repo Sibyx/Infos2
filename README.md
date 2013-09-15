@@ -7,6 +7,7 @@ TO-DO
 - create support for multiple last names
 - logging for suplo
 - gui for remove, add end edit for suplo and announcements
+- output with foundation grid for announcements and panels on dashboard
 
 SUMMARY
 --------------
@@ -14,7 +15,7 @@ SUMMARY
 
 - **USER**			[50%]
 
-- **INDEX**			[20%]
+- **INDEX**			[40%]
 
 - **SUPLO**			[90%]
 
@@ -22,7 +23,7 @@ SUMMARY
 
 - **DOCS**			[0%]
 
-- **ANNOUNCEMENTS**	[90%]
+- **ANNOUNCEMENTS**	[95%]
 
 COLORS
 --------------
