@@ -22,8 +22,13 @@
 				</tr>
 			</table>
 			<hr />
+            <div class="text-right">
+                <a href="{siteurl}/user/settings"><img src="{siteurl}/views/{defaultView}/images/settings.png" alt="Settings" class="icon"/></a>
+                <a href="{siteurl}/authenticate/logout"><img src="{siteurl}/views/{defaultView}/images/logout.png" alt="Logout" class="icon"/></a>
+            </div>
+
 		</section>
-		
+
 		<section class="boardPanel" id="panelSuplo">
             <header><a href="{siteurl}/suplo/"><h2>Suplovanie</h2></a></header>
             <table style="width: 100%">

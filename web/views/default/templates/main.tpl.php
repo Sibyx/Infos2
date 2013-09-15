@@ -26,11 +26,14 @@
     <script src="https://apis.google.com/js/plusone.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/vendor/custom.modernizr.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.js"></script>
+    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.abide.js"></script>
+    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.alerts.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.forms.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.magellan.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.orbit.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.placeholder.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.reveal.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.section.js"></script>
+    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.tooltips.js"></script>
 	
 	<!-- Jebnuty explorer! -->
 	<!--[if lt IE 8]><script type="text/javascript">alert("Your browser is obsolete, please use Firefox or Google Chrome!");</script><![endif]-->

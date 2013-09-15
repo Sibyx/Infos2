@@ -60,7 +60,7 @@ class suploController {
 
 		$tags['suploTable'] = $output;
 		$this->registry->getObject('template')->replaceTags($tags);
-		$this->registry->getObject('template')->parseOutput();
+		echo $this->registry->getObject('template')->parseOutput();
 	}
 
 	private function newSuplo() {
@@ -111,7 +111,7 @@ class suploController {
 		}
 
 		$this->registry->getObject('template')->replaceTags($tags);
-		$this->registry->getObject('template')->parseOutput();
+		echo $this->registry->getObject('template')->parseOutput();
 	}
 
     private function removeSuplo($date) {

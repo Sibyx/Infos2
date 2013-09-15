@@ -68,7 +68,7 @@ class Registry {
 		$tags['meta-description'] = "Redirect";
 		$this->getObject('template')->buildFromTemplate('redirect');
 		$this->getObject('template')->replaceTags($tags);
-		$this->getObject('template')->parseOutput();
+		echo $this->getObject('template')->parseOutput();
 	}
 
     /**

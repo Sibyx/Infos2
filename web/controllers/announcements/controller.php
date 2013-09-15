@@ -8,19 +8,25 @@ class announcementsController {
 			switch(isset($urlBits[1]) ? $urlBits[1] : '') {
 				case 'view':
 					$this->viewAnnouncement(intval($urlBits[2]));
-				break;
+				    break;
 				case 'edit':
 					$this->editAnnouncement(intval($urlBits[2]));
-				break;
+				    break;
 				case 'new':
 					$this->newAnnouncement();
-				break;
+				    break;
 				case 'remove':
 					$this->removeAnnouncement(intval($urlBits[2]));
-				break;
-				default:				
+				    break;
+                case 'like':
+                    $this->like(intval($urlBits[2]));
+                    break;
+                case 'dislike':
+                    $this->dislike(intval($urlBits[2]));
+                    break;
+				default:
 					$this->listAnnouncements(intval($urlBits[1]));
-				break;
+				    break;
 			}
 		}
 		else {
@@ -80,7 +86,7 @@ class announcementsController {
         $tags['pagination'] = $pagOutput;
         $this->registry->getObject('template')->buildFromTemplate('listAnnouncements');
         $this->registry->getObject('template')->replaceTags($tags);
-        $this->registry->getObject('template')->parseOutput();
+        echo $this->registry->getObject('template')->parseOutput();
 	}
 	
 	private function viewAnnouncement($announcementId) {
@@ -97,9 +103,9 @@ class announcementsController {
 			$tags['author_id'] = $data['ownerId'];
 			$tags['author_name'] = $data['ownerName'];
             $tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
-			$this->registry->getObject('template')->buildFromTemplate('announcement');
+			$this->registry->getObject('template')->buildFromTemplate('viewAnnouncement');
 			$this->registry->getObject('template')->replaceTags($tags);
-			$this->registry->getObject('template')->parseOutput();
+			echo $this->registry->getObject('template')->parseOutput();
 		}
 		else {
 			$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::viewAnnouncement] - Pokus o otvorenie neexistujúceho oznamu');
@@ -145,7 +151,7 @@ class announcementsController {
 		$tags['title'] = 'Nový oznam - Infos2';
 		$this->registry->getObject('template')->buildFromTemplate('newAnnouncement');
 		$this->registry->getObject('template')->replaceTags($tags);
-		$this->registry->getObject('template')->parseOutput();
+		echo $this->registry->getObject('template')->parseOutput();
 	}
 	
 	private function editAnnouncement($id) {
@@ -197,7 +203,7 @@ class announcementsController {
 		$tags['id_ann'] = $data['id'];
 		$this->registry->getObject('template')->buildFromTemplate('editAnnouncement');
 		$this->registry->getObject('template')->replaceTags($tags);
-		$this->registry->getObject('template')->parseOutput();
+		echo $this->registry->getObject('template')->parseOutput();
 	}
 	
 	private function removeAnnouncement($id) {
@@ -214,6 +220,34 @@ class announcementsController {
 			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri odstraňovaní. Skúste prosím znova.', 'alert');
 		}
 	}
+
+    private function like($announcementId) {
+        require_once(FRAMEWORK_PATH . 'models/like.php');
+        require_once(FRAMEWORK_PATH . 'models/likes.php');
+        $like = new Like($this->registry, $announcementId);
+        $like->setStatus(true);
+        $like->save();
+        $likes = new Likes($this->registry, $announcementId);
+        $data = $likes->toArray();
+        $result = array();
+        $result['likers'] = $data['likers'];
+        $result['numLikes'] = $data['numLikes'];
+        echo json_encode($result);
+    }
+
+    private function dislike($announcementId) {
+        require_once(FRAMEWORK_PATH . 'models/like.php');
+        require_once(FRAMEWORK_PATH . 'models/likes.php');
+        $like = new Like($this->registry, $announcementId);
+        $like->setStatus(false);
+        $like->save();
+        $likes = new Likes($this->registry, $announcementId);
+        $data = $likes->toArray();
+        $result = array();
+        $result['likers'] = $data['dislikers'];
+        $result['numLikes'] = $data['numDislikes'];
+        echo json_encode($result);
+    }
 
 }
 ?>

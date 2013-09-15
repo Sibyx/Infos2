@@ -25,6 +25,18 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('body').delegate('.vote', 'click', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('href'),
+            dataType: 'json',
+            success: function(data) {
+                $('this').children('small').html(data.numLikes).attr('title', data.likers);
+            }
+        });
+    });
 	
 	
 	$("#formContact").submit(function(e){

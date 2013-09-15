@@ -31,11 +31,12 @@ class defaultController {
 		);
 		$this->registry->getObject('template')->buildFromTemplate('index');
 		$this->registry->getObject('template')->replaceTags($tags);
-		$this->registry->getObject('template')->parseOutput();
+		echo $this->registry->getObject('template')->parseOutput();
 	}
 	
 	private function createAnnouncements() {
 		require_once(FRAMEWORK_PATH . 'models/announcements.php');
+        require_once(FRAMEWORK_PATH . 'models/likes.php');
 		$announcements = new Announcements($this->registry);
 		$pagination = $announcements->listAnnouncements(0);
 		$output = '';
@@ -44,16 +45,23 @@ class defaultController {
 		}
 		else {
 			while ($row = $this->registry->getObject('db')->resultsFromCache($pagination->getCache())) {
-				$article = '';
-				$article .= '<article>' . "\n";
-				$article .= '<header><h3><a href="' . $this->registry->getSetting('siteurl') . '/announcements/view/' . $row['id_announcement'] . '">' . $row['ann_title'] . '</a></h3></header>' . "\n";
-				$article .= $row['ann_text'];
-				$article .= '<hr />' . "\n";
-				$article .= '<footer>' . "\n";
-				$article .= '<small><a href="https://plus.google.com/u/1/' . $row['id_user'] . '/about" target="_blank">' . $row['user_firstName'] . ' ' . $row['user_lastName'] . '</a> - <time pubdate="' . $row['createdRaw'] . '">' . $row['createdFriendly'] . '</time></small>' . "\n";
-				$article .= '</footer>' . "\n";
-				$article .= '</article>' . "\n";
-				$output .= $article;
+                $likes = new Likes($this->registry, $row['id_announcement']);
+                $data = $likes->toArray();
+                $tags = array();
+                $tags['annTitle'] = $row['ann_title'];
+                $tags['announcementId'] = $row['id_announcement'];
+                $tags['annText'] = $row['ann_text'];
+                $tags['userId'] = $row['id_user'];
+                $tags['userName'] = $row['user_firstName'] . ' ' . $row['user_lastName'];
+                $tags['createdFriendly'] = $row['createdFriendly'];
+                $tags['createdRaw'] = $row['createdRaw'];
+                $tags['likes'] = $data['numLikes'];
+                $tags['dislikes'] = $data['numDislikes'];
+                $tags['likers'] = $data['likers'];
+                $tags['dislikers'] = $data['dislikers'];
+                $this->registry->getObject('template')->buildFromTemplate('announcement', false);
+                $this->registry->getObject('template')->replaceTags($tags);
+				$output .= $this->registry->getObject('template')->parseOutput();
 			}
 		}
 		$tags = array();

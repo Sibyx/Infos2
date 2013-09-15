@@ -143,6 +143,11 @@ a:hover {
 	font-family: DigitalDream;
 }
 
+.icon {
+    width: 24px;
+    margin: 0 5px;
+}
+
 /* FOOTER */
 body > footer {
 	margin-top: 50px;

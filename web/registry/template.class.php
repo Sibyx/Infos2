@@ -1,10 +1,11 @@
 <?php
 	/*
-	 * 19.05.2013
-	 * Class Template v1.0
+	 * 14.09.2013
+	 * Class Template v1.1
 	 * Objekt na generovanie obsahu
 	 * CHANGELOG:
 	 * 	- v1.0 [19.05.2013]: createTime
+	 *  - v1.1 [14.09.2013]: $useMainTemplate
 	*/
 class Template {
 
@@ -15,11 +16,16 @@ class Template {
 		$this->registry = $registry;
 	}
 	
-	public function buildFromTemplate($templateName) {
+	public function buildFromTemplate($templateName, $useMainTemplate = true) {
 		$mainTemplate = FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/main.tpl.php';
 		$templatePath = FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/' . $templateName . '.tpl.php';
 		if(file_exists($templatePath) && file_exists($mainTemplate)) {
-			$this->page = str_replace('{content}', file_get_contents($templatePath), file_get_contents($mainTemplate));
+            if ($useMainTemplate) {
+                $this->page = str_replace('{content}', file_get_contents($templatePath), file_get_contents($mainTemplate));
+            }
+			else {
+                $this->page = file_get_contents($templatePath);
+            }
 		}
 	}
 	
@@ -39,7 +45,7 @@ class Template {
 	}
 	
 	public function parseOutput() {
-		echo $this->page;
+		return $this->page;
 	}
 }
 ?>
