@@ -74,7 +74,7 @@ $(document).ready(function() {
 function updateClock() {
 	$.ajax({
 		type: 'POST',
-		url: window.location.origin + '/default/time',
+		url: window.location.origin + '/infos2/default/time',
 		dataType: 'json',
 		success: function(data) {
 			$('#serverTime').html(data.serverTimeFormated);
