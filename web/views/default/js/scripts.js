@@ -9,7 +9,7 @@ $(document).ready(function() {
                 $('#myModal').html(data);
             },
             error: function () {
-                $('#myModal').html('<span style="margin-top: 20px; display: inline-block; font-size: 25pt; font-family:BigNoodleTitling">I am so sorry but my e-mail robot has depressions and refused your request. Please, try it later..</span>');
+                $('#myModal').html('<span style="margin-top: 20px; display: inline-block; font-size: 25pt; font-family:BigNoodleTitling">I am so sorry but my robot has depressions and refused your request. Please, try it later..</span>');
             }
         });
         $('#myModal').foundation('reveal', 'open');
@@ -33,7 +33,8 @@ $(document).ready(function() {
             url: $(this).attr('href'),
             dataType: 'json',
             success: function(data) {
-                $('this').children('small').html(data.numLikes).attr('title', data.likers);
+                $('this').children('small').html(data.numLikes);
+                $('this').attr('title', data.likers);
             }
         });
     });

@@ -1,9 +1,18 @@
 <h1>Gymmt Infos2</h1>
 <div class="row">
 	<div class="large-7 columns">
-		<section class="boardPanel" id="panelAnnouncements">
-			<header><a href="{siteurl}/announcements/"><h2>Oznamy</h2></a></header>
-				{announcements}
+		<section id="panelAnnouncements">
+            <div class="boardPanel large-12 columns">
+                <header class="row">
+                    <div class="small-10 columns">
+                        <a href="{siteurl}/announcements/"><h2>Oznamy</h2></a>
+                    </div>
+                    <div class="small-2 columns text-right">
+                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam"/></a>
+                    </div>
+                </header>
+                {announcements}
+            </div>
 		</section>
 	</div>
 	
@@ -30,7 +39,14 @@
 		</section>
 
 		<section class="boardPanel" id="panelSuplo">
-            <header><a href="{siteurl}/suplo/"><h2>Suplovanie</h2></a></header>
+            <header>
+                <div class="small-10 columns">
+                    <a href="{siteurl}/suplo/"><h2>Suplovanie</h2></a>
+                </div>
+                <div class="small-2 columns text-right">
+                    <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam"/></a>
+                </div>
+            </header>
             <table style="width: 100%">
                 <thead>
                     <tr>
@@ -49,11 +65,23 @@
 		</section>
 		
 		<section class="boardPanel" id="panelEvents">
-			<header><h2>Udalosti</h2></header>
+            <header>
+                <div class="small-10 columns">
+                    <a href="{siteurl}/events/"><h2>Udalosti</h2></a>
+                </div>
+                <div class="small-2 columns text-right">
+                    <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam"/></a>
+                </div>
+            </header>
 		</section>
 		
 		<section class="boardPanel" id="panelDocs">
-			<header><h2>Dokumenty</h2></header>
+            <header>
+                <div class="small-12 columns">
+                    <a href="{siteurl}/events/"><h2>Dokumenty</h2></a>
+                </div>
+            </header>
+
 		</section>
 	</div>
 </div>
