@@ -13,15 +13,15 @@ SUMMARY
 
 - **USER**			[50%]
 
-- **INDEX**			[40%]
+- **INDEX**			[50%]
 
 - **SUPLO**			[90%]
 
-- **EVENTS**		[0%]
+- **EVENTS**		[5%]
 
 - **DOCS**			[0%]
 
-- **ANNOUNCEMENTS**	[95%]
+- **ANNOUNCEMENTS**	[100%]
 
 COLORS
 --------------
