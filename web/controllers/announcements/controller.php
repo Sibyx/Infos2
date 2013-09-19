@@ -1,6 +1,8 @@
 <?php
 class announcementsController {
-	
+
+    private $registry;
+
 	public function __construct(Registry $registry){
 		$this->registry = $registry;
 		$urlBits = $this->registry->getObject('url')->getURLBits();

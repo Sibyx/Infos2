@@ -28,12 +28,13 @@ $(document).ready(function() {
 
     $('body').delegate('.vote', 'click', function(e) {
         e.preventDefault();
+        var element = $(this);
         $.ajax({
             type: 'GET',
             url: $(this).attr('href'),
             dataType: 'json',
             success: function(data) {
-                $('this').children('small').html(data.numLikes).attr('title', data.likers);
+                element.children('small').html(data.numLikes);
             }
         });
     });

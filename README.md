@@ -6,8 +6,6 @@ TO-DO
 --------------
 - create support for multiple last names
 - logging for suplo
-- gui for remove, add end edit for suplo and announcements
-- output with foundation grid for announcements and panels on dashboard
 
 SUMMARY
 --------------

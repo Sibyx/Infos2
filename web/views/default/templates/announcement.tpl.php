@@ -1,7 +1,11 @@
 <article class="row">
     <div class="large-12 columns">
         <header class="row">
-            <div class="large-12 columns"><h3><a href="{siteurl}/announcements/view/{announcementId}">{annTitle}</a></h3></div>
+            <div class="small-8 columns"><h3><a href="{siteurl}/announcements/view/{announcementId}">{annTitle}</a></h3></div>
+            <div class="small-4 columns text-right">
+                <a href="{siteurl}/announcements/remove/{announcementId}"><img src="{siteurl}/views/{defaultView}/images/delete.png" alt="Odstranit oznam" >
+                <a href="{siteurl}/announcements/edit/{announcementId}"><img src="{siteurl}/views/{defaultView}/images/edit.png" alt="Upravit oznam" style="margin-left: 10px"/></a>
+            </div>
         </header>
         <div class="row">
             <div class="large-12 columns">
