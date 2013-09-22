@@ -19,9 +19,8 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: $(this).attr('data-suplo-url') + $(this).val(),
-            dataType: 'html',
             success: function(data) {
-                $('#suploExists').html(data);
+                $('#suploExists').html(data.text);
             }
         });
     });
@@ -84,4 +83,25 @@ function updateClock() {
 			$('#next').html(data.next);
 		}
 	});
+}
+
+function suploExists(day) {
+    var result;
+    $.ajax({
+        type: 'GET',
+        assync: false,
+        url: '/suplo/suploExists/' + dateToYMD(day),
+        dataType: 'json',
+        success: function(data) {
+            result = data.exists;
+        }
+    });
+    return result;
+}
+
+function dateToYMD(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
 }

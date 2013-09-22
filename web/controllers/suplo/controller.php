@@ -129,13 +129,18 @@ class suploController {
 
     private function suploExists($date) {
         $date = new DateTime($date);
+        $result = array();
         $dateFormated = $date->format("Y-m-d");
         $this->registry->getObject('db')->executeQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '$dateFormated'");
         if ($this->registry->getObject('db')->numRows() > 0) {
-            echo '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d. m. Y") . ' už existuje  - prepisujem</a>' . "\n";
+            $result['exists'] = true;
+            $result['text'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d. m. Y") . ' už existuje  - prepisujem</a>' . "\n";
         }
+        else {
+            $result['exists'] = false;
+            $result['text'] = '';
+        }
+        echo json_encode($result);
     }
-
-
 }
 ?>

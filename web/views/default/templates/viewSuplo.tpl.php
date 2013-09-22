@@ -29,24 +29,11 @@
 </section>
 
 <script>
-    var Event = function(text, className) {
-        this.text = text;
-        this.className = className;
-    };
-
-    var events = {};
-    events[new Date("02/14/2011")] = new Event("Valentines Day", "pink");
-    events[new Date("02/18/2011")] = new Event("Payday", "green");
-    //TODO: spravit cez ajax, nie cez php array;
     $("#suploFilter_date").datepicker({
-        beforeShowDay: function(date) {
-            var event = events[date];
-            if (event) {
-                return [true, event.className, event.text];
-            }
-            else {
-                return [true, '', ''];
-            }
-        }
+        dateFormat: "dd.mm.yy",
+        firstDay: 1,
+        dayNamesMin:["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
+        monthNames: ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"],
+        beforeShowDay: $.datepicker.noWeekends
     });
 </script>
