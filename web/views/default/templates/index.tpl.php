@@ -8,7 +8,7 @@
                         <a href="{siteurl}/announcements/"><h2>Oznamy</h2></a>
                     </div>
                     <div class="small-2 columns text-right">
-                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam"/></a>
+                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
                     </div>
                 </header>
                 {announcements}
@@ -44,7 +44,7 @@
                     <a href="{siteurl}/suplo/"><h2>Suplovanie</h2></a>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam"/></a>
+                    <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
                 </div>
             </header>
             <table style="width: 100%">
@@ -70,7 +70,7 @@
                     <a href="{siteurl}/events/"><h2>Udalosti</h2></a>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam"/></a>
+                    <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
                 </div>
             </header>
 		</section>
@@ -88,5 +88,5 @@
 <div id="myModal" class="reveal-modal">
 </div>
 <script>
-	var t = window.setInterval(updateClock, 1000);
+	//var t = window.setInterval(updateClock, 1000);
 </script>

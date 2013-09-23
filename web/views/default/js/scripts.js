@@ -9,7 +9,7 @@ $(document).ready(function() {
                 $('#myModal').html(data);
             },
             error: function () {
-                $('#myModal').html('<span style="margin-top: 20px; display: inline-block; font-size: 25pt; font-family:BigNoodleTitling">I am so sorry but my robot has depressions and refused your request. Please, try it later..</span>');
+                $('#myModal').html('<span style="margin-top: 20px; display: inline-block; font-size: 25pt; font-family:BigNoodleTitling">I am so sorry but my e-mail robot has depressions and refused your request. Please, try it later..</span>');
             }
         });
         $('#myModal').foundation('reveal', 'open');
@@ -19,22 +19,21 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: $(this).attr('data-suplo-url') + $(this).val(),
-            dataType: 'html',
             success: function(data) {
-                $('#suploExists').html(data);
+                $('#suploExists').html(data.text);
             }
         });
     });
 
     $('body').delegate('.vote', 'click', function(e) {
         e.preventDefault();
+        var element = $(this);
         $.ajax({
             type: 'GET',
             url: $(this).attr('href'),
             dataType: 'json',
             success: function(data) {
-                $('this').children('small').html(data.numLikes);
-                $('this').attr('title', data.likers);
+                element.children('small').html(data.numLikes);
             }
         });
     });
@@ -75,7 +74,7 @@ $(document).ready(function() {
 function updateClock() {
 	$.ajax({
 		type: 'POST',
-		url: window.location.origin + '/default/time',
+		url: window.location.origin + '/infos2/default/time',
 		dataType: 'json',
 		success: function(data) {
 			$('#serverTime').html(data.serverTimeFormated);
@@ -84,4 +83,25 @@ function updateClock() {
 			$('#next').html(data.next);
 		}
 	});
+}
+
+function suploExists(day) {
+    var result;
+    $.ajax({
+        type: 'GET',
+        assync: false,
+        url: '/suplo/suploExists/' + dateToYMD(day),
+        dataType: 'json',
+        success: function(data) {
+            result = data.exists;
+        }
+    });
+    return result;
+}
+
+function dateToYMD(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
 }

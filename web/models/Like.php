@@ -53,4 +53,5 @@ class Like {
             $this->id = $this->registry->getObject('db')->lastInsertID();
         }
     }
+
 }

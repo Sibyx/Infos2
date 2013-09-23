@@ -24,4 +24,12 @@ class suploRecords {
         $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '$dateFormated' AND id_user = " . $this->registry->getObject('auth')->getUser()->getId());
         return $cache;
     }
+
+    /**
+     * @return int
+     */
+    public function getAll() {
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo, DATE_FORMAT(suplo_date, '%d. %m. %Y') FROM suplo");
+        return $cache;
+    }
 }
