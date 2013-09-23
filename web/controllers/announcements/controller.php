@@ -92,19 +92,31 @@ class announcementsController {
 	}
 	
 	private function viewAnnouncement($announcementId) {
+        require_once(FRAMEWORK_PATH . 'models/likes.php');
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
 		$announcement = new Announcement($this->registry, $announcementId);
+        $likes = new Likes($this->registry, $announcementId);
 		if ($announcement->isValid()) {
 			$data = $announcement->toArray();
+            $likesData = $likes->toArray();
 			$tags = array();
-			$tags['title'] = $data['title'] . ' - Infos2';
-			$tags['ann_title'] = $data['title'];
-			$tags['ann_text'] = $data['text'];
-			$tags['ann_createdRaw'] = $data['createdRaw'];
-			$tags['ann_createdFriendly'] = $data['createdFriendly'];
-			$tags['author_id'] = $data['ownerId'];
-			$tags['author_name'] = $data['ownerName'];
+			$tags['annTitle'] = $data['title'];
+            $tags['announcementId'] = $announcementId;
+			$tags['annText'] = $data['text'];
+			$tags['createdRaw'] = $data['createdRaw'];
+			$tags['createdFriendly'] = $data['createdFriendly'];
+			$tags['userId'] = $data['ownerId'];
+			$tags['userName'] = $data['ownerName'];
+            $tags['likes'] = $likesData['numLikes'];
+            $tags['dislikes'] = $likesData['numDislikes'];
+            $tags['likers'] = $likesData['likers'];
+            $tags['dislikers'] = $likesData['dislikers'];
             $tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
+            $this->registry->getObject('template')->buildFromTemplate('announcement', false);
+            $this->registry->getObject('template')->replaceTags($tags);
+            $tags = array();
+            $tags['announcement'] = $this->registry->getObject('template')->parseOutput();
+            $tags['title'] = $data['title'] . ' - Infos2';
 			$this->registry->getObject('template')->buildFromTemplate('viewAnnouncement');
 			$this->registry->getObject('template')->replaceTags($tags);
 			echo $this->registry->getObject('template')->parseOutput();

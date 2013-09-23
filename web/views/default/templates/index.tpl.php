@@ -44,7 +44,7 @@
                     <a href="{siteurl}/suplo/"><h2>Suplovanie</h2></a>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
+                    <a href="{siteurl}/suplo/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
                 </div>
             </header>
             <table style="width: 100%">

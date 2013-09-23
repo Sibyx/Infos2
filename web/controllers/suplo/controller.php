@@ -36,6 +36,8 @@ class suploController {
 		$tags = array();
 		$tags['title'] = "Suplovanie na " . $date->format("j. n. Y") . " - Infos2";
         $tags['dateFormated'] = $date->format("j. n. Y");
+        $tags['dateRaw'] = $date->format("Y-m-d");
+        $tags['dateInput'] = $date->format("d.m.Y");
 		$this->registry->getObject('template')->buildFromTemplate('viewSuplo');
 
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
@@ -57,10 +59,17 @@ class suploController {
 			$row .= "</tr>" . "\n";
 			$output .= $row;
 		}
-
-		$tags['suploTable'] = $output;
-		$this->registry->getObject('template')->replaceTags($tags);
-		echo $this->registry->getObject('template')->parseOutput();
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+            $result = array();
+            $result['text'] = $output;
+            $result['header'] = "Suplovanie na " . $date->format("j. n. Y");
+            echo json_encode($result);
+        }
+        else {
+            $tags['suploTable'] = $output;
+            $this->registry->getObject('template')->replaceTags($tags);
+            echo $this->registry->getObject('template')->parseOutput();
+        }
 	}
 
 	private function newSuplo() {
@@ -103,7 +112,6 @@ class suploController {
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
 		$suploTable = new suploTable($this->registry, $date);
 		if ($suploTable->numRecords() > 0) {
-			//TODO: nastylovat cez FoundationCSS
 			$tags['suploExists'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d.m.Y") . ' už existuje  - prepisujem</a>' . "\n";
 		}
 		else {

@@ -19,11 +19,43 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: $(this).attr('data-suplo-url') + $(this).val(),
+            dataType: 'json',
             success: function(data) {
                 $('#suploExists').html(data.text);
             }
         });
     });
+
+    $("#suploFilter_date").change(function(e){
+        e.preventDefault();
+        console.log($(this).val());
+
+        var datum = new Date($(this).val());
+        console.log(dateToYMD(datum));
+        $.ajax({
+            type: 'GET',
+            url: $("#formSuploFilter").attr('action') + dateToYMD(new Date($(this).val())),
+            dataType: 'json',
+            success: function(data) {
+                $("h2").html(data.header);
+                $("#suploContainer").html(data.text);
+            }
+        });
+    });
+
+    $("#formSuploFilter").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('action'),
+            dataType: 'json',
+            success: function(data) {
+                $("h2").html(data.header);
+                $("#suploContainer").html(data.text);
+            }
+        });
+    });
+
 
     $('body').delegate('.vote', 'click', function(e) {
         e.preventDefault();
@@ -83,20 +115,6 @@ function updateClock() {
 			$('#next').html(data.next);
 		}
 	});
-}
-
-function suploExists(day) {
-    var result;
-    $.ajax({
-        type: 'GET',
-        assync: false,
-        url: '/suplo/suploExists/' + dateToYMD(day),
-        dataType: 'json',
-        success: function(data) {
-            result = data.exists;
-        }
-    });
-    return result;
 }
 
 function dateToYMD(date) {
