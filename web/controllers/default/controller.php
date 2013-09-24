@@ -97,8 +97,8 @@ class defaultController {
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
-                $output .= '<tr data-record-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
-                $output .= '<td style="font-weight: bold;">' . $data['hour'] . '. hodina:</td>' . "\n";
+                $output .= '<tr data-suplo-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
+                $output .= '<td>' . $data['hour'] . '.</td>' . "\n";
                 $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
                 $output .= '<td>' . $data['subject'] . '</td>' . "\n";
                 $output .= '<td>' . $data['classroom'] . '</td>' . "\n";
@@ -120,8 +120,8 @@ class defaultController {
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
-                $output .= '<tr data-suplo-id="' . $data['id'] . '">' . "\n";
-                $output .= '<td style="font-weight: bold;">' . $data['hour'] . '. hodina:</td>' . "\n";
+                $output .= '<tr data-suplo-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
+                $output .= '<td>' . $data['hour'] . '.</td>' . "\n";
                 $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
                 $output .= '<td>' . $data['subject'] . '</td>' . "\n";
                 $output .= '<td>' . $data['classroom'] . '</td>' . "\n";

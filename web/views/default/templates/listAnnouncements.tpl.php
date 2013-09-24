@@ -1,4 +1,4 @@
-<h1>Infos}</h1>
+{header}
 <div class="row">
     <div class="large-12 columns">
         <section id="panelAnnouncements">

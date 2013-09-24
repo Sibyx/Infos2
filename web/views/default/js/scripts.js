@@ -1,9 +1,10 @@
 $(document).ready(function() {
 	
-	$("body").delegate("tr[data-record-url]", 'click',function(){
+	$("body").delegate("tr[data-suplo-url]", 'click',function(){
         $.ajax({
             type: 'GET',
-            url: $(this).attr('data-record-url'),
+            url: $(this).attr('data-suplo-url'),
+            global: false,
             dataType: 'html',
             success: function(data) {
                 $('#myModal').html(data);
@@ -28,28 +29,12 @@ $(document).ready(function() {
 
     $("#suploFilter_date").change(function(e){
         e.preventDefault();
-        console.log($(this).val());
-
-        var datum = new Date($(this).val());
-        console.log(dateToYMD(datum));
         $.ajax({
             type: 'GET',
-            url: $("#formSuploFilter").attr('action') + dateToYMD(new Date($(this).val())),
+            url: $("#formSuploFilter").attr('action') + moment($(this).val(), "DD-MM-YYYY").format("YYYY-MM-DD"),
             dataType: 'json',
             success: function(data) {
-                $("h2").html(data.header);
-                $("#suploContainer").html(data.text);
-            }
-        });
-    });
-
-    $("#formSuploFilter").submit(function(e){
-        e.preventDefault();
-        $.ajax({
-            type: 'GET',
-            url: $(this).attr('action'),
-            dataType: 'json',
-            success: function(data) {
+                $("title").html(data.header + " - Infos2");
                 $("h2").html(data.header);
                 $("#suploContainer").html(data.text);
             }
@@ -100,6 +85,14 @@ $(document).ready(function() {
 			$("#contactThanks").fadeIn("slow");	
 		});
 	});
+
+    $(document).ajaxStart(function() {
+        $('#loader').foundation('reveal', 'open');
+    });
+
+    $(document).ajaxStop(function() {
+        $('#loader').foundation('reveal', 'close');
+    });
 	
 });
 
@@ -108,6 +101,7 @@ function updateClock() {
 		type: 'POST',
 		url: window.location.origin + '/infos2/default/time',
 		dataType: 'json',
+        global: false,
 		success: function(data) {
 			$('#serverTime').html(data.serverTimeFormated);
 			$('#serverTime').attr('datetime', data.serverTime);
@@ -115,11 +109,4 @@ function updateClock() {
 			$('#next').html(data.next);
 		}
 	});
-}
-
-function dateToYMD(date) {
-    var d = date.getDate();
-    var m = date.getMonth() + 1;
-    var y = date.getFullYear();
-    return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
 }

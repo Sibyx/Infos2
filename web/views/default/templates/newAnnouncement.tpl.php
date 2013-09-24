@@ -1,3 +1,4 @@
+{header}
 <section class="row">
 	<div class="large-12 columns">
 		<header><h2>Nový oznam</h2></header>

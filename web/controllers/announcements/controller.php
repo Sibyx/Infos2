@@ -84,6 +84,8 @@ class announcementsController {
 		}
         $tags = array();
         $tags['title'] = 'Oznamy - Infos2';
+        $this->registry->getObject('template')->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $tags['announcements'] = $annOutput;
         $tags['pagination'] = $pagOutput;
         $this->registry->getObject('template')->buildFromTemplate('listAnnouncements');
@@ -116,6 +118,8 @@ class announcementsController {
             $this->registry->getObject('template')->replaceTags($tags);
             $tags = array();
             $tags['announcement'] = $this->registry->getObject('template')->parseOutput();
+            $this->registry->getObject('template')->buildFromTemplate('header', false);
+            $tags['header'] = $this->registry->getObject('template')->parseOutput();
             $tags['title'] = $data['title'] . ' - Infos2';
 			$this->registry->getObject('template')->buildFromTemplate('viewAnnouncement');
 			$this->registry->getObject('template')->replaceTags($tags);
@@ -163,6 +167,8 @@ class announcementsController {
 	private function uiNew() {
 		$tags = array();
 		$tags['title'] = 'Nový oznam - Infos2';
+        $this->registry->getObject('template')->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->getObject('template')->parseOutput();
 		$this->registry->getObject('template')->buildFromTemplate('newAnnouncement');
 		$this->registry->getObject('template')->replaceTags($tags);
 		echo $this->registry->getObject('template')->parseOutput();
@@ -209,6 +215,8 @@ class announcementsController {
 	private function uiEdit($id) {
 		$tags = array();
 		$tags['title'] = 'Upraviť oznam - Infos2';
+        $this->registry->getObject('template')->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->getObject('template')->parseOutput();
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
 		$announcement = new Announcement($this->registry, $id);
 		$data = $announcement->toArray();

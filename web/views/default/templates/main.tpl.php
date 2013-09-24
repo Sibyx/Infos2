@@ -21,6 +21,7 @@
 
 	<script src="{siteurl}/views/{defaultView}/js/jquery-2.0.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="{siteurl}/views/{defaultView}/js/moment.min.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/scripts.js"></script>
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
     <script src="https://apis.google.com/js/plusone.js"></script>
@@ -34,7 +35,8 @@
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.reveal.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.section.js"></script>
     <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.tooltips.js"></script>
-	
+    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.topbar.js"></script>
+
 	<!-- Jebnuty explorer! -->
 	<!--[if lt IE 8]><script type="text/javascript">alert("Your browser is obsolete, please use Firefox or Google Chrome!");</script><![endif]-->
 	<!--[if IE]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -57,6 +59,13 @@
 			</div>
 		</div>
 	</footer>
+    <div id="myModal" class="reveal-modal">
+    </div>
+    <div id="loader" class="reveal-modal text-center">
+        <span>Načítavam</span>
+        <br />
+        <img src="{siteurl}/views/{defaultView}/images/ajax-loader.gif" alt="AJAX Loader"/>
+    </div>
     <div class="reveal-modal-bg" style="display: none"></div>
 	<script>
 		$(document).foundation();

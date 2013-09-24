@@ -32,9 +32,10 @@ class suploController {
 
 	private function viewSuplo($date) {
         $date = new DateTime($date);
-
 		$tags = array();
 		$tags['title'] = "Suplovanie na " . $date->format("j. n. Y") . " - Infos2";
+        $this->registry->getObject('template')->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $tags['dateFormated'] = $date->format("j. n. Y");
         $tags['dateRaw'] = $date->format("Y-m-d");
         $tags['dateInput'] = $date->format("d.m.Y");
@@ -104,8 +105,10 @@ class suploController {
 		$tags = array();
 
 		$tags['title'] = "Nové suplovanie - Infos2";
+        $this->registry->getObject('template')->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->getObject('template')->parseOutput();
 		$this->registry->getObject('template')->buildFromTemplate('newSuplo');
-		
+
 		$tags['dateFormated'] = $date->format("d.m.Y");
 		$tags['dateRaw'] = $date->format("Y-m-d");
 

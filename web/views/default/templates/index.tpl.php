@@ -1,4 +1,4 @@
-<h1>Gymmt Infos2</h1>
+<h1 class="hide">Gymmt Infos2</h1>
 <div class="row">
 	<div class="large-7 columns">
 		<section id="panelAnnouncements">
@@ -85,8 +85,7 @@
 		</section>
 	</div>
 </div>
-<div id="myModal" class="reveal-modal">
-</div>
+
 <script>
 	//var t = window.setInterval(updateClock, 1000);
 </script>

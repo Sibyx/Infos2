@@ -1,4 +1,4 @@
-<h1>Infos}</h1>
+{header}
 <section class="row">
 	<div class="large-12 collumns">
 		<header class="row">
