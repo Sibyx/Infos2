@@ -18,6 +18,13 @@ class Event {
 
     public function __construct(Registry $registry, $id = 0) {
         $this->registry = $registry;
+        if ($id > 0 ) {
+            $this->registry->getObject('db')->executeQuery("SELECT * FROM getMeeting WHERE id_meeting = $id");
+            if ($this->registry->getObject('db')->numRows() > 0) {
+                $this->id = $id;
+                $this->date = new Date();
+            }
+        }
 
     }
 

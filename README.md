@@ -13,13 +13,13 @@ SUMMARY
 
 - **USER**			[50%]
 
-- **INDEX**			[50%]
+- **INDEX**			[80%]
 
 - **SUPLO**			[90%]
 
 - **EVENTS**		[5%]
 
-- **DOCS**			[0%]
+- **DOCS**			[100%]
 
 - **ANNOUNCEMENTS**	[100%]
 
