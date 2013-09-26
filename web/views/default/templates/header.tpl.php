@@ -11,7 +11,22 @@
             <li><a href="{siteurl}/announcements">Oznamy</a></li>
             <li><a href="{siteurl}/suplo">Suplovanie</a></li>
             <li><a href="{siteurl}/events">Udalosti</a></li>
-            <li><a href="{siteurl}/docs">Dokumenty</a></li>
+            <li class="has-dropdown">
+                <a href="#">Dokumenty</a>
+                <ul class="dropdown">
+                    <li><a href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing" target="_blank">Pracovné normy</a></li>
+                    <li><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing">Formuláre pre žiakov</a></li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="has-dropdown">
+                <a href="#">Jakub Dubec</a>
+                <ul class="dropdown">
+                    <li><a href="{siteurl}/profile">Profil</a></li>
+                    <li><a href="{siteurl}/profile/settings">Nastavenia</a></li>
+                    <li class="has-form"><a href="{siteurl}/authenticate/logout" class="button alert">Odhlásiť sa</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
 </nav>

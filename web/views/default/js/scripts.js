@@ -41,6 +41,18 @@ $(document).ready(function() {
         });
     });
 
+    $("#newEvent_time").change(function(e){
+        e.preventDefault();
+        if ($(this).val() == "custom") {
+            $("#newEvent_timeFrom").prop('disabled', false);
+            $("#newEvent_timeTo").prop('disabled', false);
+        }
+        else {
+            $("#newEvent_timeFrom").prop('disabled', true);
+            $("#newEvent_timeTo").prop('disabled', true);
+        }
+    });
+
 
     $('body').delegate('.vote', 'click', function(e) {
         e.preventDefault();

@@ -6,11 +6,16 @@
 		</header>
 		<form id="formNewSuplo" name="formNewSuplo" action="{siteurl}/suplo/new/" enctype="application/x-www-form-urlencoded" method="post">
 			<div class="row">
+
+                <div class="small-1 columns">
+                    <label for="right-label" class="left inline">Dátum</label>
+                </div>
+
                 <div class="large-4 columns">
                     <input type="text" id="newSuplo_date" name="newSuplo_date" value="{dateFormated}" required data-suplo-url="{siteurl}/suplo/suploExists/"/>
                 </div>
 
-                <div class="large-8 columns" id="suploExists">
+                <div class="large-7 columns" id="suploExists">
                     {suploExists}
                 </div>
 
