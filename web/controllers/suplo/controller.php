@@ -132,10 +132,16 @@ class suploController {
     private function viewRecord($id) {
         require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
         $suploRecord = new suploRecord($this->registry, $id);
+        $this->registry->getObject('template')->buildFromTemplate('viewRecord', false);
         $data = $suploRecord->toArray();
-        echo '<h2>' . $data['hour'] . '. hodina</h2>' . "\n";
-
-        echo '<a class="close-reveal-modal">' . "&#215;" . '</a>' . "\n";
+        $tags = array();
+        $tags['hour'] = $data['hour'];
+        $tags['missingName'] = $data['missing']->name;
+        $tags['classroom'] = $data['classroom'];
+        $tags['classes'] = $data['classes'];
+        $tags['subject'] = $data['subject'];
+        $this->registry->getObject('template')->replaceTags($tags);
+        echo $this->registry->getObject('template')->parseOutput();
     }
 
     private function suploExists($date) {

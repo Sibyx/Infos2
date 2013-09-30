@@ -44,12 +44,12 @@ $(document).ready(function() {
     $("#newEvent_time").change(function(e){
         e.preventDefault();
         if ($(this).val() == "custom") {
-            $("#newEvent_timeFrom").prop('disabled', false);
-            $("#newEvent_timeTo").prop('disabled', false);
+            $("#newEvent_startTime").prop('disabled', false);
+            $("#newEvent_endTime").prop('disabled', false);
         }
         else {
-            $("#newEvent_timeFrom").prop('disabled', true);
-            $("#newEvent_timeTo").prop('disabled', true);
+            $("#newEvent_startTime").prop('disabled', true);
+            $("#newEvent_endTime").prop('disabled', true);
         }
     });
 

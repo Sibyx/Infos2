@@ -2,25 +2,31 @@
 	<div class="large-12 columns">
 	
 		<header class="row">
-			<div class="small-8 large-centered columns text-center">
+			<div class="large-8 large-centered columns">
 				<div class="row">
-					<h2 class="large-12 columns">Presmerovanie</h2>
+                    <div class="large-12 columns">
+					    <h2 class="text-center">Presmerovanie</h2>
+                    </div>
 				</div>
 			</div>
 		</header>
 		
 		<div class="row">
-			<div class="small-6 large-centered columns text-center">
+			<div class="large-6 large-centered columns">
 				<div class="row">
-					<div id="timer" class="large-12 columns">3</div>
+					<div class="large-12 columns text-center">
+                        <span id="timer">3</span>
+                    </div>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="small-8 large-centered columns text-center">
+			<div class="large-8 large-centered columns">
 				<div class="row">
-					<div class="alert-box {class} large-12 columns" id="message">{message}</div>
+					<div class="large-12 columns">
+                        <div class="alert-box {class} text-center" id="message">{message}</div>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -28,7 +34,6 @@
 	</div>
 </section>
 <script>
-	
 	var count = 3;
 	var counter = setInterval(redirect, 1000);
 	function redirect() {

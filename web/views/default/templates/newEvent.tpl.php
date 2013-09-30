@@ -8,11 +8,11 @@
             <!-- Datum -->
             <div class="row">
 
-                <div class="small-1 columns">
+                <div class="large-1 columns">
                     <label class="left inline">Dátum</label>
                 </div>
 
-                <div class="small-11 columns">
+                <div class="large-11 columns">
                     <input type="text" id="newEvent_date" name="newEvent_date" value="{dateFormated}" required />
                 </div>
 
@@ -21,32 +21,41 @@
             <!-- Cas -->
             <div class="row">
 
-                <div class="small-1 columns">
+                <div class="large-1 columns">
                     <label class="left inline">Čas</label>
                 </div>
 
-                <div class="small-5 columns">
+                <div class="large-5 columns">
                     <select id="newEvent_time">
                         <option value="8">Veľká prestávka</option>
                         <option value="custom">Vlastné</option>
                     </select>
                 </div>
 
-                <div class="small-3 columns">
-                    <input type="text" id="newEvent_timeFrom" name="newEvent_timeFrom" required disabled/>
+                <div class="large-3 columns">
+                    <input type="text" id="newEvent_startTime" name="newEvent_startTime" required disabled/>
                 </div>
 
-                <div class="small-3 columns">
-                    <input type="text" id="newEvent_timeTo" name="newEvent_timeTo" required disabled/>
+                <div class="large-3 columns">
+                    <input type="text" id="newEvent_endTime" name="newEvent_endTime" required disabled/>
                 </div>
             </div>
 
             <div class="row">
-                <div class="small-1 columns">
+                <div class="large-1 columns">
                     <label class="left inline">Titulok</label>
                 </div>
-                <div class="small-11 columns">
+                <div class="large-11 columns">
                     <input type="text" id="newEvent_title" name="newEvent_title" required />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-1 columns">
+                    <label class="left inline">Miesto</label>
+                </div>
+                <div class="large-11 columns">
+                    <input type="text" id="newEvent_location" name="newEvent_location" required />
                 </div>
             </div>
 
@@ -74,7 +83,7 @@
             beforeShowDay: $.datepicker.noWeekends
         });
 
-        $('#newEvent_timeFrom').timepicker();
-        $('#newEvent_timeTo').timepicker();
+        $('#newEvent_startTime').timepicker();
+        $('#newEvent_endTime').timepicker();
     });
 </script>

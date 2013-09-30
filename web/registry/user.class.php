@@ -9,8 +9,6 @@
  *	- v2.0 [05.06.2013]: prerobene pre Google Auth
 */
 class User {
-    //TODO: support for google api objects, remove arrays
-	
 	private $id;
 	private $firstName;
 	private $lastName;
@@ -20,19 +18,20 @@ class User {
 	private $calendarSuplo;
 	private $nick;
 	private $valid = false;
-	
-	public function __construct(Registry $registry, $googleUserInfo) {
+
+	public function __construct(Registry $registry, Google_UserinfoServiceResource $googleUserInfo) {
 		$this->registry = $registry;
+        $googleUserInfo->useObjects(true);
 		$data = $googleUserInfo->get();
-		$email = $data['email'];
+		$email = $data->getEmail();
 		$sql = "SELECT * FROM users WHERE user_email = '$email'";
 		$this->registry->getObject('db')->executeQuery($sql);
 		if ($this->registry->getObject('db')->numRows() == 1) {
 			$row = $this->registry->getObject('db')->getRows();
-			$this->id = $data['id'];
-			$this->firstName = $data['given_name'];
-			$this->lastName = $data['family_name'];
-			$this->email = $data['email'];
+			$this->id = $data->getId();
+			$this->firstName = $data->getGiven_name();
+			$this->lastName = $data->getFamily_name();
+			$this->email = $data->getFamily_name();
 			$this->admin = $row['user_admin'];
 			$this->calendarSuplo = $row['user_calendarSuplo'];
 			$this->nick = $row['user_nick'];

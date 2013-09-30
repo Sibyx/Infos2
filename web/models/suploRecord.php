@@ -3,9 +3,6 @@ class suploRecord {
 	
 	private $registry;
 	private $id;
-    /**
-     * @var datetime $date
-     */
     private $date;
 	private $dateFriendly;
 	private $owner;
@@ -182,7 +179,7 @@ class suploRecord {
 				$event->setDescription($this->classes . " namiesto " . $this->missing->nick);
 
 				$this->event = $this->googleCalendarService->events->insert($this->owner->calendarId, $event);
-				if ($this->event['id'] != '') {
+				if ($this->event->getId() != '') {
 					$row = array();
 					$row['id_user'] = $this->owner->id;
 					$row['suplo_nick'] = $this->missing->nick;
@@ -192,7 +189,7 @@ class suploRecord {
 					$row['suplo_note'] = $this->note;
 					$row['suplo_classroom'] = $this->classroom;
 					$row['suplo_subject'] = $this->subject;
-					$row['suplo_eventId'] = $this->event['id'];
+					$row['suplo_eventId'] = $this->event->getId();
 					if ($this->registry->getObject('db')->insertRecords("suplo", $row)) {
 						$this->id = $this->registry->getObject('db')->lastInsertID();
 						return true;

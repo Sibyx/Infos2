@@ -27,7 +27,8 @@ class defaultController {
 			$tags,
 			$this->createUserboard(),
 			$this->createAnnouncements(),
-            $this->createSuplo()
+            $this->createSuplo(),
+            $this->createEvents()
 		);
 		$this->registry->getObject('template')->buildFromTemplate('index');
 		$this->registry->getObject('template')->replaceTags($tags);
@@ -133,6 +134,27 @@ class defaultController {
             $output .= '<tr><th colspan="5" class="text-center">Zajtra nesupluješ!</th></tr>' . "\n";
         }
         $tags['suploTomorow'] = $output;
+        return $tags;
+    }
+
+    public function createEvents() {
+        require_once(FRAMEWORK_PATH . 'models/events.php');
+        require_once(FRAMEWORK_PATH . 'models/event.php');
+        $events = new Events($this->registry);
+        $date = new DateTime('now');
+        $items = $events->getEvents(5, false, $date->format("c"));
+        $output = '';
+        foreach ($items as $item) {
+            if ($item->isValid()) {
+                $data = $item->toArray();
+                $output .= "<tr>";
+                $output .= '<td>' . $data['title'] . '</td>';
+                $output .= '<td>' . $data['startDate']->format("j. n. Y G:i") . '</td>';
+                $output .= '<td>' . $data['location'] . '</td>';
+                $output .= '</tr>' . "\n";
+            }
+        }
+        $tags['events'] = $output;
         return $tags;
     }
 	

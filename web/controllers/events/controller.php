@@ -37,8 +37,32 @@ class eventsController {
     }
 
     private  function newEvent() {
-        if (isset($_POST['newEvent_date'])) {
-            //stuff
+        if (isset($_POST['newEvent_title'])) {
+            if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+                require_once(FRAMEWORK_PATH . 'models/event.php');
+                $event = new Event($this->registry);
+                $event->setTitle($_POST['newEvent_title']);
+                $event->setText($_POST['newEvent_text']);
+                $event->setLocation($_POST['newEvent_location']);
+                $event->setStartDate($_POST['newEvent_date'], $_POST['newEvent_startTime']);
+                $event->setEndDate($_POST['newEvent_date'], $_POST['newEvent_endTime']);
+
+                if ($event->save()) {
+                    $redirectBits = array();
+                    $redirectBits[] = 'events';
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola vytvorená!', 'success');
+                }
+                else {
+                    $redirectBits = array();
+                    $redirectBits[] = 'events';
+                    $redirectBits[] = 'new';
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri vytváraní udalosti :(', 'alert');
+                }
+            }
+            else {
+                $redirectBits = array();
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na vytvorenie udalosti!', 'alert');
+            }
         }
         else {
             $this->uiNew();
@@ -58,7 +82,14 @@ class eventsController {
 
     private function removeEvent($id) {
         if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
-            //remove stuff
+            require_once(FRAMEWORK_PATH . 'models/event.php');
+            $event = new Event($this->registry, $id);
+            if ($event->isValid()) {
+                $event->remove();
+                $redirectBits = array();
+                $redirectBits[] = 'events';
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola odstránená!', 'success');
+            }
         }
         else {
             $redirectBits = array();

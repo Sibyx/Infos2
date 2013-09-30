@@ -73,6 +73,18 @@
                     <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
                 </div>
             </header>
+            <table style="width: 100%">
+                <thead>
+                <tr>
+                    <td>Názov</td>
+                    <td>Čas</td>
+                    <td>Miesto</td>
+                </tr>
+                </thead>
+                <tbody>
+                    {events}
+                </tbody>
+            </table>
 		</section>
 		
 		<section class="boardPanel" id="panelDocs">

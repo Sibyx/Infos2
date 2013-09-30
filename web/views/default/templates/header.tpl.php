@@ -24,7 +24,8 @@
                 <ul class="dropdown">
                     <li><a href="{siteurl}/profile">Profil</a></li>
                     <li><a href="{siteurl}/profile/settings">Nastavenia</a></li>
-                    <li class="has-form"><a href="{siteurl}/authenticate/logout" class="button alert">Odhlásiť sa</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{siteurl}/authenticate/logout">Odhlásiť sa</a></li>
                 </ul>
             </li>
         </ul>
