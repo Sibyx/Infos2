@@ -32,9 +32,10 @@ class Event {
     public function __construct(Registry $registry, $id = 0) {
         $this->registry = $registry;
         $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
-        if ($id != 0 ) {
+        if (!empty($id)) {
+            $this->registry->firephp->log($id);
             $this->event = $this->googleCalendarService->events->get($this->registry->getSetting('googleEventCalendar'), $id);
-            $this->registry->firephp->log($this->event->getStart());
+            //$this->registry->firephp->log($this->event);
             $this->id = $this->event->getId();
             $this->startDate = new DateTime($this->event->getStart()->dateTime);
             $this->endDate = new DateTime($this->event->getEnd()->dateTime);

@@ -25,9 +25,28 @@ class Events {
         );
         $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
         $result = array();
-        foreach ($events->getItems() as $event) {
-            $result[] = new Event($this->registry, $event->getId());
+        while(true) {
+            /**
+             * @var Google_Event $event
+             */
+            foreach ($events->getItems() as $event) {
+                //$this->registry->firephp->log($event);
+                $result[] = new Event($this->registry, $event->getId());
+            }
+            $pageToken = $events->getNextPageToken();
+            if ($pageToken) {
+                $optParams = array(
+                    'pageToken' => $pageToken,
+                    'orderBy' => 'startTime',
+                    'singleEvents' => true,
+                    'maxResults' => $limit
+                );
+                $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $optParams);
+            } else {
+                break;
+            }
         }
+        //$this->registry->firephp->log($result);
         return $result;
     }
 }
