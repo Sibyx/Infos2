@@ -16,14 +16,14 @@ class Events {
         $this->googleCalendarService = $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
     }
 
-    public function getEvents($limit = 5, $all = false, $min = '') {
+    public function getEvents($limit = 5) {
         require_once(FRAMEWORK_PATH . 'models/event.php');
         $param = array(
-            'singleEvents' => $all,
-            'timeMin' => $min,
+            'orderBy' => 'startTime',
+            'singleEvents' => true,
             'maxResults' => $limit
         );
-        $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'));
+        $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
         $result = array();
         foreach ($events->getItems() as $event) {
             $result[] = new Event($this->registry, $event->getId());

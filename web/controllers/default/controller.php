@@ -98,7 +98,7 @@ class defaultController {
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
-                $output .= '<tr data-suplo-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
+                $output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
                 $output .= '<td>' . $data['hour'] . '.</td>' . "\n";
                 $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
                 $output .= '<td>' . $data['subject'] . '</td>' . "\n";
@@ -121,7 +121,7 @@ class defaultController {
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
-                $output .= '<tr data-suplo-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
+                $output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
                 $output .= '<td>' . $data['hour'] . '.</td>' . "\n";
                 $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
                 $output .= '<td>' . $data['subject'] . '</td>' . "\n";
@@ -142,12 +142,12 @@ class defaultController {
         require_once(FRAMEWORK_PATH . 'models/event.php');
         $events = new Events($this->registry);
         $date = new DateTime('now');
-        $items = $events->getEvents(5, false, $date->format("c"));
+        $items = $events->getEvents();
         $output = '';
         foreach ($items as $item) {
             if ($item->isValid()) {
                 $data = $item->toArray();
-                $output .= "<tr>";
+                $output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/events/view/' . $data['id'] . '">' . "\n";
                 $output .= '<td>' . $data['title'] . '</td>';
                 $output .= '<td>' . $data['startDate']->format("j. n. Y G:i") . '</td>';
                 $output .= '<td>' . $data['location'] . '</td>';

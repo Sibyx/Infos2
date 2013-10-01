@@ -67,7 +67,7 @@
 		<section class="boardPanel" id="panelEvents">
             <header>
                 <div class="small-10 columns">
-                    <a href="{siteurl}/events/"><h2>Udalosti</h2></a>
+                    <h2>Udalosti</h2>
                 </div>
                 <div class="small-2 columns text-right">
                     <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>

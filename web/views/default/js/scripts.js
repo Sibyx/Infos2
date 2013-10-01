@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	
-	$("body").delegate("tr[data-suplo-url]", 'click',function(){
+	$("body").delegate("tr[data-url]", 'click',function(){
         $.ajax({
             type: 'GET',
-            url: $(this).attr('data-suplo-url'),
+            url: $(this).attr('data-url'),
             global: false,
             dataType: 'html',
             success: function(data) {
