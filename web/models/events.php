@@ -16,7 +16,7 @@ class Events {
         $this->googleCalendarService = $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
     }
 
-    public function getEvents($limit = 5) {
+    public function getLastEvents($limit = 5) {
         require_once(FRAMEWORK_PATH . 'models/event.php');
         $param = array(
             'orderBy' => 'startTime',
@@ -30,8 +30,9 @@ class Events {
              * @var Google_Event $event
              */
             foreach ($events->getItems() as $event) {
-                //$this->registry->firephp->log($event);
-                $result[] = new Event($this->registry, $event->getId());
+                if (new DateTime($event->getEnd()->getDateTime()) > new DateTime) {
+                    $result[] = new Event($this->registry, $event->getId());
+                }
             }
             $pageToken = $events->getNextPageToken();
             if ($pageToken) {
@@ -46,7 +47,6 @@ class Events {
                 break;
             }
         }
-        //$this->registry->firephp->log($result);
         return $result;
     }
 }

@@ -142,7 +142,7 @@ class defaultController {
         require_once(FRAMEWORK_PATH . 'models/event.php');
         $events = new Events($this->registry);
         $date = new DateTime('now');
-        $items = $events->getEvents();
+        $items = $events->getLastEvents();
         $output = '';
         foreach ($items as $item) {
             if ($item->isValid()) {

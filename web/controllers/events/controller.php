@@ -23,6 +23,9 @@ class eventsController {
                 case 'remove':
                     $this->removeEvent(intval($urlBits[2]));
                     break;
+                case 'view':
+                    $this->viewEvent($urlBits[2]);
+                break;
                 default:
                     $this->listEvents(intval($urlBits));
                     break;
@@ -90,10 +93,37 @@ class eventsController {
                 $redirectBits[] = 'events';
                 $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola odstránená!', 'success');
             }
+            else {
+                $redirectBits = array();
+                $redirectBits[] = 'events';
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+            }
         }
         else {
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na odstránenie udalosti!', 'alert');
+        }
+    }
+
+    private function viewEvent($id) {
+        require_once(FRAMEWORK_PATH . 'models/event.php');
+        $event = new Event($this->registry, $id);
+        if ($event->isValid()) {
+            $data = $event->toArray();
+            $tags = array();
+            $tags['title'] = $data['title'];
+            $tags['description'] = $data['text'];
+            $tags['startDate'] = $data['startDate']->format("j. n. Y - H:i");
+            $tags['endDate'] = $data['endDate']->format("j. n. Y - H:i");
+            $tags['location'] = $data['location'];
+            $this->registry->getObject('template')->buildFromTemplate('viewEvent', false);
+            $this->registry->getObject('template')->replaceTags($tags);
+            echo $this->registry->getObject('template')->parseOutput();
+        }
+        else {
+            $redirectBits = array();
+            $redirectBits[] = 'events';
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
         }
     }
 

@@ -35,7 +35,6 @@ class Event {
         if (!empty($id)) {
             $this->registry->firephp->log($id);
             $this->event = $this->googleCalendarService->events->get($this->registry->getSetting('googleEventCalendar'), $id);
-            //$this->registry->firephp->log($this->event);
             $this->id = $this->event->getId();
             $this->startDate = new DateTime($this->event->getStart()->dateTime);
             $this->endDate = new DateTime($this->event->getEnd()->dateTime);
