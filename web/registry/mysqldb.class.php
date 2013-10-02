@@ -181,5 +181,9 @@ class MySQLdb {
 		$row = $this->getRows();
 		return $row['lastId'];
 	}
+
+    public function getActiveConnection() {
+        return $this->activeConnection;
+    }
 }
 ?>
