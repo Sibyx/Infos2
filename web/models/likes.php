@@ -8,6 +8,7 @@
 class Likes {
 
     private $registry;
+    private $announcementId;
     private $numLikes = 0;
     private $numDislikes = 0;
     private $likers = "Príspevok zatiaľ nedostal kladné hodnotenie.";
@@ -15,6 +16,7 @@ class Likes {
 
     public function __construct(Registry $registry, $announcementId) {
         $this->registry = $registry;
+        $this->announcementId = $announcementId;
         $this->registry->getObject('db')->executeQuery("SELECT * FROM listLikes WHERE id_announcement = $announcementId");
         if ($this->registry->getObject('db')->numRows() > 0) {
             while ($row = $this->registry->getObject('db')->getRows()) {
@@ -50,5 +52,14 @@ class Likes {
             }
         }
         return $result;
+    }
+
+    public function remove() {
+        if ($this->registry->getObject('db')->executeQuery("DELETE FROM likes WHERE id_announcement = " . $this->announcementId)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

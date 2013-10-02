@@ -18,10 +18,10 @@ class eventsController {
                     $this->newEvent();
                     break;
                 case 'edit':
-                    $this->editEvent(intval($urlBits[2]));
+                    $this->editEvent($urlBits[2]);
                     break;
                 case 'remove':
-                    $this->removeEvent(intval($urlBits[2]));
+                    $this->removeEvent($urlBits[2]);
                     break;
                 case 'view':
                     $this->viewEvent($urlBits[2]);
@@ -112,6 +112,7 @@ class eventsController {
             $data = $event->toArray();
             $tags = array();
             $tags['title'] = $data['title'];
+            $tags['eventId'] = $data['id'];
             $tags['description'] = $data['text'];
             $tags['startDate'] = $data['startDate']->format("j. n. Y - H:i");
             $tags['endDate'] = $data['endDate']->format("j. n. Y - H:i");
@@ -128,11 +129,97 @@ class eventsController {
     }
 
     private function editEvent($id) {
-        //editStuff
+        if (isset($_POST['editEvent_title'])) {
+            if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+                require_once(FRAMEWORK_PATH . 'models/event.php');
+                $event = new Event($this->registry, $id);
+                if ($event->isValid()) {
+                    $event->setTitle($_POST['editEvent_title']);
+                    $event->setText($_POST['editEvent_text']);
+                    $event->setLocation($_POST['editEvent_location']);
+                    $event->setStartDate($_POST['editEvent_date'], $_POST['editEvent_startTime']);
+                    $event->setEndDate($_POST['editEvent_date'], $_POST['editEvent_endTime']);
+
+                    if ($event->save()) {
+                        $redirectBits = array();
+                        $redirectBits[] = 'events';
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola upravená!', 'success');
+                    }
+                    else {
+                        $redirectBits = array();
+                        $redirectBits[] = 'events';
+                        $redirectBits[] = 'new';
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri upravovaní udalosti :(', 'alert');
+                    }
+                }
+                else {
+                    $redirectBits = array();
+                    $redirectBits[] = 'events';
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+                }
+
+            }
+            else {
+                $redirectBits = array();
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na upravenie udalosti!', 'alert');
+            }
+        }
+        else {
+            $this->uiEdit($id);
+        }
     }
 
-    private function listEvents($offset) {
-        //funny list stuff
+    private function uiEdit($id) {
+        require_once(FRAMEWORK_PATH . 'models/event.php');
+        $event = new Event($this->registry, $id);
+        if ($event->isValid()) {
+            $data = $event->toArray();
+            $tags = array();
+            $tags['title'] = "Upraviť udalosť";
+            $tags['dateFormated'] = $data['startDate']->format("j.n.Y");
+            $tags['eventId'] = $data['id'];
+            $tags['startTime'] = $data['startDate']->format("H:i");
+            $tags['endTime'] = $data['endDate']->format("H:i");
+            $tags['text'] = $data['text'];
+            $tags['location'] = $data['location'];
+            $tags['eventTitle'] = $data['title'];
+            $this->registry->getObject('template')->buildFromTemplate('header', false);
+            $tags['header'] = $this->registry->getObject('template')->parseOutput();
+            $this->registry->getObject('template')->buildFromTemplate('editEvent');
+            $this->registry->getObject('template')->replaceTags($tags);
+            echo $this->registry->getObject('template')->parseOutput();
+        }
+        else {
+            $redirectBits = array();
+            $redirectBits[] = 'events';
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+        }
+    }
+
+    private function listEvents() {
+        $tags = array();
+        $tags['title'] = "Udalosti";
+        $this->registry->getObject('template')->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->getObject('template')->parseOutput();
+        $this->registry->getObject('template')->buildFromTemplate('listEvents');
+        require_once(FRAMEWORK_PATH . 'models/events.php');
+        require_once(FRAMEWORK_PATH . 'models/event.php');
+        $events = new Events($this->registry);
+        $items = $events->getEvents();
+        $output = '';
+        foreach ($items as $item) {
+            if ($item->isValid()) {
+                $data = $item->toArray();
+                $output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/events/view/' . $data['id'] . '">' . "\n";
+                $output .= '<td>' . $data['title'] . '</td>';
+                $output .= '<td>' . $data['startDate']->format("j. n. Y G:i") . '</td>';
+                $output .= '<td>' . $data['location'] . '</td>';
+                $output .= '</tr>' . "\n";
+            }
+        }
+        $tags['events'] = $output;
+        $this->registry->getObject('template')->replaceTags($tags);
+        echo $this->registry->getObject('template')->parseOutput();
     }
 
 }

@@ -142,6 +142,13 @@ class Announcement {
 	
 	public function remove() {
 		if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            //compatibilityMode
+            if ($this->registry->getSetting('compatibilityMode')) {
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                $this->registry->getObject('db')->deleteRecords('oznamy', 'id_oznam = ' . $this->id);
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+            }
+
 			if ($this->registry->getObject('db')->deleteRecords('announcements', "id_announcement = " . $this->id)) {
 				$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::remove] - Odstránený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 				return true;

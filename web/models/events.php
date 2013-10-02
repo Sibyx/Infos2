@@ -49,5 +49,35 @@ class Events {
         }
         return $result;
     }
+
+    public function getEvents() {
+        require_once(FRAMEWORK_PATH . 'models/event.php');
+        $param = array(
+            'orderBy' => 'startTime',
+            'singleEvents' => true
+        );
+        $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
+        $result = array();
+        while(true) {
+            /**
+             * @var Google_Event $event
+             */
+            foreach ($events->getItems() as $event) {
+                $result[] = new Event($this->registry, $event->getId());
+            }
+            $pageToken = $events->getNextPageToken();
+            if ($pageToken) {
+                $optParams = array(
+                    'pageToken' => $pageToken,
+                    'orderBy' => 'startTime',
+                    'singleEvents' => true
+                );
+                $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $optParams);
+            } else {
+                break;
+            }
+        }
+        return $result;
+    }
 }
 ?>

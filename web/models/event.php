@@ -111,6 +111,19 @@ class Event {
 
     public function save() {
         if ($this->id == 0) {
+
+            //compatibilityMode
+            if ($this->registry->getSetting('compatibilityMode')) {
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                $insert = array();
+                $insert['termin_date'] = $this->startDate->format("Y-m-d");
+                $insert['termin_text'] = $this->text;
+                $insert['termin_title'] = $this->title;
+                $insert['id_termin'] = $this->id;
+                $this->registry->getObject('db')->insertRecords('terminovnik', $insert);
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+            }
+
             $event = new Google_Event();
             $event->setSummary($this->title);
             $event->setLocation($this->location);
@@ -138,6 +151,19 @@ class Event {
             }
         }
         else {
+
+            //compatibilityMode
+            if ($this->registry->getSetting('compatibilityMode')) {
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                $changes = array();
+                $changes['termin_text'] = $this->text;
+                $changes['termin_title'] = $this->title;
+                $this->registry->getObject('db')->updateRecords('terminovnik', $changes, 'id_termin = ' . $this->id);
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+            }
+
+            $this->event = new Google_Event();
+
             $this->event->setDescription($this->text);
 
             $this->event->setSummary($this->title);
@@ -151,7 +177,7 @@ class Event {
             $end->setDateTime($this->endDate->format('c'));
             $this->event->setEnd($end);
 
-            $updatedEvent = $this->event = $this->googleCalendarService->events->update($this->registry->getSetting('googleEventCalendar'), $this->event, $this->id);
+            $updatedEvent = $this->googleCalendarService->events->update($this->registry->getSetting('googleEventCalendar'), $this->id, $this->event);
 
             if ($updatedEvent->getUpdated() != $this->event->getUpdated()) {
                 return true;
@@ -163,6 +189,12 @@ class Event {
     }
 
     public function remove() {
+        //compatibilityMode
+        if ($this->registry->getSetting('compatibilityMode')) {
+            $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+            $this->registry->getObject('db')->deleteRecords('terminovnik', 'id_termin = ' . $this->id);
+            $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+        }
         $this->googleCalendarService->events->delete($this->registry->getSetting('googleEventCalendar'), $this->id);
         $this->valid = false;
     }

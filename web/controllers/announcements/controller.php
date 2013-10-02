@@ -230,17 +230,26 @@ class announcementsController {
 	
 	private function removeAnnouncement($id) {
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
+        require_once(FRAMEWORK_PATH . 'models/likes.php');
 		$announcement = new Announcement($this->registry, $id);
-		if ($announcement->remove()) {
-			$redirectBits = array();
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol odstránený', 'success');
-		}
-		else {
-			$redirectBits[] = 'announcements';
-			$redirectBits[] = 'view';
-			$redirectBits[] = $id;
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri odstraňovaní. Skúste prosím znova.', 'alert');
-		}
+        $likes = new Likes($this->registry, $id);
+        if ($announcement->isValid()) {
+            if ($likes->remove() && $announcement->remove()) {
+                $redirectBits = array();
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol odstránený', 'success');
+            }
+            else {
+                $redirectBits[] = 'announcements';
+                $redirectBits[] = 'view';
+                $redirectBits[] = $id;
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri odstraňovaní. Skúste prosím znova.', 'alert');
+            }
+        }
+        else {
+            $redirectBits[] = 'announcements';
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
+        }
+
 	}
 
     private function like($announcementId) {

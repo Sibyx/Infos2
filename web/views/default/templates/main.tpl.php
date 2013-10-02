@@ -60,9 +60,9 @@
 			</div>
 		</div>
 	</footer>
-    <div id="myModal" class="reveal-modal">
+    <div id="myModal" class="reveal-modal medium">
     </div>
-    <div id="loader" class="reveal-modal text-center">
+    <div id="loader" class="reveal-modal text-center small">
         <span>Načítavam</span>
         <br />
         <img src="{siteurl}/views/{defaultView}/images/ajax-loader.gif" alt="AJAX Loader"/>
