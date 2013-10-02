@@ -31,7 +31,7 @@ class User {
 			$this->id = $data->getId();
 			$this->firstName = $data->getGiven_name();
 			$this->lastName = $data->getFamily_name();
-			$this->email = $data->getFamily_name();
+			$this->email = $data->getEmail();
 			$this->admin = $row['user_admin'];
 			$this->calendarSuplo = $row['user_calendarSuplo'];
 			$this->nick = $row['user_nick'];

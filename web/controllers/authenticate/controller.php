@@ -34,7 +34,7 @@ class AuthenticateController {
 			return;
 		}
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
-			$this->registry->getObject('log')->insertLog('SQL', 'INF', '[AuthenticateController::login] - User ' . $this->registry->getObject('auth')->getUser()->getEmail() . ' was logged in');
+			$this->registry->getObject('log')->insertLog('SQL', 'INF', '[AuthenticateController::login] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' bol prihlásený');
 			$this->registry->redirectURL($this->registry->buildURL(array()), 'Bol si úspešne prihlásený!', 'success');
 		}
 		else {
