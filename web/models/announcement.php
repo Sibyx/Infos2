@@ -80,6 +80,18 @@ class Announcement {
 		if($this->registry->getObject('auth')->isLoggedIn()) {
 			$data = array();
 			if ($this->id > 0) {
+
+                //compatibilityMode
+                if ($this->registry->getSetting('compatibilityMode')) {
+                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                    $changes = array();
+                    $changes['oznam_title'] = $this->title;
+                    $changes['oznam_text'] = $this->text;
+                    $changes['oznam_public'] = true;
+                    $this->registry->getObject('db')->updateRecords('oznamy', $changes, 'id_oznam=' . $this->id);
+                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+                }
+
 				$data['ann_updated'] = date('Y-m-d H:i:s');
 				$data['ann_text'] = $this->text;
 				$data['ann_title'] = $this->title;
@@ -93,6 +105,20 @@ class Announcement {
 				}
 			}
 			else {
+
+                //compatibilityMode
+                if ($this->registry->getSetting('compatibilityMode')) {
+                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                    $insert = array();
+                    $insert['oznam_date'] = date('Y-m-d H:i:s');
+                    $insert['oznam_title'] = $this->title;
+                    $insert['oznam_text'] = $this->text;
+                    $insert['oznam_public'] = false;
+                    $this->registry->getObject('db')->insertRecords('oznamy', $insert);
+                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+                }
+
+
 				$data['id_user'] = $this->registry->getObject('auth')->getUser()->getId();
 				$data['ann_title'] = $this->title;
 				$data['ann_text'] = $this->text;

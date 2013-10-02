@@ -79,6 +79,17 @@ class suploController {
             require_once(FRAMEWORK_PATH . 'models/suploTable.php');
             $suploTable = new suploTable($this->registry, $date);
 			$input = $_POST['newSuplo_data'];
+
+            //compatibilityMode
+            if ($this->registry->getSetting('compatibilityMode')) {
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                require_once(FRAMEWORK_PATH . 'models/suploCompatibility.php');
+                $suploCompatibility = new suploCompatibility($this->registry, $date);
+                $suploCompatibility->setText($input);
+                $suploCompatibility->save();
+                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+            }
+
             foreach(preg_split("/((\r?\n)|(\r\n?))/", $input) as $key => $line){
                 if ($key != 0) {
                     $record = array();

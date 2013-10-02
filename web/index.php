@@ -13,18 +13,17 @@
 	$registry->createAndStoreObject('logger', 'log');
 	$registry->createAndStoreObject('mysqldb', 'db');
 	$registry->getObject('db')->setActiveConnection($registry->getObject('db')->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']));
-	$registry->storeSetting('mainDB',$registry->getObject('db')->getActiveConnection());
+	$registry->storeSetting($registry->getObject('db')->getActiveConnection(), "mainDB");
     $registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
-	$settings = "SELECT * FROM settings";
-	$registry->getObject('db')->executeQuery($settings);
+	$registry->getObject('db')->executeQuery("SELECT * FROM settings");
 	while ($setting = $registry->getObject('db')->getRows()) {
 		$registry->storeSetting($setting['value'], $setting['key']);
 	}
     if ($registry->getSetting('compatibilityMode')) {
         $registry->getObject('db')->setActiveConnection($registry->getObject('db')->newConnection($config['compatibilityDB']['host'], $config['compatibilityDB']['user'], $config['compatibilityDB']['password'], $config['compatibilityDB']['database']));
-        $registry->storeSetting('compatibilityDB',$registry->getObject('db')->getActiveConnection());
+        $registry->storeSetting($registry->getObject('db')->getActiveConnection(), "compatibilityDB");
         $registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
-        $registry->getObject('db')->setActiveConnection($registry->getSetting('compatibilityDB'));
+        $registry->getObject('db')->setActiveConnection($registry->getSetting('mainDB'));
     }
 	$registry->createAndStoreObject('urlprocessor', 'url');
 	$registry->createAndStoreObject('googleApi', 'google');
