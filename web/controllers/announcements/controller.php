@@ -133,35 +133,35 @@ class announcementsController {
 	}
 	
 	private function newAnnouncement() {
-		if (isset($_POST['newAnn_title'])) {
-			require_once(FRAMEWORK_PATH . 'models/announcement.php');
-			$announcement = new Announcement($this->registry);
-			$announcement->setTitle($_POST['newAnn_title']);
-			$announcement->setText($_POST['newAnn_text']);
-			if ($announcement->save()) {
-				$id = $announcement->getId();
-				$redirectBits = array();
-				$redirectBits[] = 'announcements';
-				$redirectBits[] = 'view';
-				$redirectBits[] = $id;
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol vytvorený!', 'success');
-			}
-			else {
-				$redirectBits[] = 'announcements';
-				$redirectBits[] = 'new';
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri ukladaní zmien. Skúste prosím znova.', 'alert');
-			}
-		}
-		else {
-			if($this->registry->getObject('auth')->getUser()->isAdmin()) {
-				$this->uiNew();
-			}
-			else {
-				$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::newAnnouncement] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť oznam.');
-				$redirectBits = array();
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
-			}
-		}
+        if($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            if (isset($_POST['newAnn_title'])) {
+                require_once(FRAMEWORK_PATH . 'models/announcement.php');
+                $announcement = new Announcement($this->registry);
+                $announcement->setTitle($_POST['newAnn_title']);
+                $announcement->setText($_POST['newAnn_text']);
+                if ($announcement->save()) {
+                    $id = $announcement->getId();
+                    $redirectBits = array();
+                    $redirectBits[] = 'announcements';
+                    $redirectBits[] = 'view';
+                    $redirectBits[] = $id;
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol vytvorený!', 'success');
+                }
+                else {
+                    $redirectBits[] = 'announcements';
+                    $redirectBits[] = 'new';
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri ukladaní zmien. Skúste prosím znova.', 'alert');
+                }
+            }
+            else {
+                $this->uiNew();
+            }
+        }
+        else {
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::newAnnouncement] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť oznam.');
+            $redirectBits = array();
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
+        }
 	}
 	
 	private function uiNew() {
@@ -175,41 +175,41 @@ class announcementsController {
 	}
 	
 	private function editAnnouncement($id) {
-		if (isset($_POST['editAnn_title'])) {
-			require_once(FRAMEWORK_PATH . 'models/announcement.php');
-			$announcement = new Announcement($this->registry, $id);
-			if ($announcement->isValid()) {
-				$announcement->setTitle($_POST['editAnn_title']);
-				$announcement->setText($_POST['editAnn_text']);
-				if ($announcement->save()) {
-					$redirectBits[] = 'announcements';
-					$redirectBits[] = 'view';
-					$redirectBits[] = $announcement->getId();
-					$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol upravený!', 'success');
-				}
-				else {
-					$redirectBits[] = 'announcements';
-					$redirectBits[] = 'edit';
-					$redirectBits[] = $id;
-					$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri ukladaní zmien. Skúste prosím znova.', 'alert');
-				}
-			}
-			else {
-				$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::editAnnouncement] - Pokus o upravenie neexistujúceho oznamu');
-				$redirectBits = array();
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
-			}
-		}
-		else {
-			if($this->registry->getObject('auth')->getUser()->isAdmin()) {
-				$this->uiEdit($id);
-			}
-			else {
-				$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::editAnnouncement] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť oznam.');
-				$redirectBits = array();
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
-			}
-		}
+        if($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            if (isset($_POST['editAnn_title'])) {
+                require_once(FRAMEWORK_PATH . 'models/announcement.php');
+                $announcement = new Announcement($this->registry, $id);
+                if ($announcement->isValid()) {
+                    $announcement->setTitle($_POST['editAnn_title']);
+                    $announcement->setText($_POST['editAnn_text']);
+                    if ($announcement->save()) {
+                        $redirectBits[] = 'announcements';
+                        $redirectBits[] = 'view';
+                        $redirectBits[] = $announcement->getId();
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol upravený!', 'success');
+                    }
+                    else {
+                        $redirectBits[] = 'announcements';
+                        $redirectBits[] = 'edit';
+                        $redirectBits[] = $id;
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri ukladaní zmien. Skúste prosím znova.', 'alert');
+                    }
+                }
+                else {
+                    $this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::editAnnouncement] - Pokus o upravenie neexistujúceho oznamu');
+                    $redirectBits = array();
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
+                }
+            }
+            else {
+                $this->uiEdit($id);
+            }
+        }
+        else {
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::editAnnouncement] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť oznam.');
+            $redirectBits = array();
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
+        }
 	}
 	
 	private function uiEdit($id) {

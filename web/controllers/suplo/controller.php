@@ -74,7 +74,7 @@ class suploController {
 	}
 
 	private function newSuplo() {
-		if (isset($_POST['newSuplo_data'])) {
+		if (isset($_POST['newSuplo_data']) && $this->registry->getObject('auth')->getUser()->isAdmin()) {
             $date = new DateTime($_POST['newSuplo_date']);
             require_once(FRAMEWORK_PATH . 'models/suploTable.php');
             $suploTable = new suploTable($this->registry, $date);
