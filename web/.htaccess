@@ -1,4 +1,5 @@
 ErrorDocument 404 /index.php
+
 DirectoryIndex index.php
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -21,3 +22,8 @@ AddType image/svg+xml .svg .svgz
         Header set Access-Control-Allow-Origin "*"
     </IfModule>
 </FilesMatch>
+
+<Files "config.*">
+    Order Allow,Deny
+    Deny from all
+</Files>

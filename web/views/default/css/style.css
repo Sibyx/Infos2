@@ -53,6 +53,11 @@ a:hover {
 	text-decoration: underline;
 }
 
+tr[data-url]:hover {
+    cursor: pointer;
+    background: #3299bb;
+}
+
 #timer {
 	font-size: 128pt;
 	font-family: Arial;

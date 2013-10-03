@@ -20,7 +20,7 @@
             </li>
             <li class="divider"></li>
             <li class="has-dropdown">
-                <a href="#">Jakub Dubec</a>
+                <a href="#">Užívateľ</a>
                 <ul class="dropdown">
                     <li><a href="{siteurl}/profile">Profil</a></li>
                     <li><a href="{siteurl}/profile/settings">Nastavenia</a></li>
