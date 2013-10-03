@@ -84,6 +84,7 @@ class Announcement {
                 //compatibilityMode
                 if ($this->registry->getSetting('compatibilityMode')) {
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                    $this->registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
                     $changes = array();
                     $changes['oznam_title'] = $this->title;
                     $changes['oznam_text'] = $this->text;
@@ -109,6 +110,7 @@ class Announcement {
                 //compatibilityMode
                 if ($this->registry->getSetting('compatibilityMode')) {
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                    $this->registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
                     $insert = array();
                     $insert['oznam_date'] = date('Y-m-d H:i:s');
                     $insert['oznam_title'] = $this->title;
@@ -144,6 +146,7 @@ class Announcement {
 		if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
             //compatibilityMode
             if ($this->registry->getSetting('compatibilityMode')) {
+                $this->registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
                 $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
                 $this->registry->getObject('db')->deleteRecords('oznamy', 'id_oznam = ' . $this->id);
                 $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
