@@ -68,7 +68,17 @@
         <img src="{siteurl}/views/{defaultView}/images/ajax-loader.gif" alt="AJAX Loader"/>
     </div>
     <div class="reveal-modal-bg" style="display: none"></div>
-	<script>
+    <script type="text/javascript">
+        var _urq = _urq || [];
+        _urq.push(['initSite', '800b7610-f562-42fc-8af8-a2d1a0667132']);
+
+        (function() {
+            var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
+            ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
+        })();
+    </script>
+    <script>
 		$(document).foundation();
 	</script>
 	<!-- This page was generated with my custom PHP framework -->
