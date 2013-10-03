@@ -134,7 +134,6 @@ class Event {
                 //compatibilityMode
                 if ($this->registry->getSetting('compatibilityMode')) {
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-                    $this->registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
                     $insert = array();
                     $insert['termin_date'] = $this->startDate->format("Y-m-d");
                     $insert['termin_text'] = $this->text;
@@ -155,7 +154,6 @@ class Event {
             //compatibilityMode
             if ($this->registry->getSetting('compatibilityMode')) {
                 $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-                $this->registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
                 $changes = array();
                 $changes['termin_text'] = $this->text;
                 $changes['termin_title'] = $this->title;
@@ -193,7 +191,6 @@ class Event {
         //compatibilityMode
         if ($this->registry->getSetting('compatibilityMode')) {
             $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-            $this->registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
             $this->registry->getObject('db')->deleteRecords('terminovnik', 'id_termin = "' . $this->id . '"');
             $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
         }
