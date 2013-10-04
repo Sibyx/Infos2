@@ -32,7 +32,7 @@
 			</table>
 			<hr />
             <div class="text-right">
-                <a href="{siteurl}/user/settings"><img src="{siteurl}/views/{defaultView}/images/settings.png" alt="Settings" class="icon"/></a>
+                <a href="https://gymmt.edupage.org/login/index.php" target="_blank"><img src="{siteurl}/views/{defaultView}/images/izk.png" alt="Žiacka knižka" class="icon"/></a>
                 <a href="{siteurl}/authenticate/logout"><img src="{siteurl}/views/{defaultView}/images/logout.png" alt="Logout" class="icon"/></a>
             </div>
 
