@@ -80,7 +80,6 @@ class Announcement {
 		if($this->registry->getObject('auth')->isLoggedIn()) {
 			$data = array();
 			if ($this->id > 0) {
-
                 //compatibilityMode
                 if ($this->registry->getSetting('compatibilityMode')) {
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
@@ -96,16 +95,15 @@ class Announcement {
 				$data['ann_text'] = $this->text;
 				$data['ann_title'] = $this->title;
 				if ($this->registry->getObject('db')->updateRecords('announcements', $data, 'id_announcement = ' . $this->id)) {
-					$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::save] - Upravený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Upravený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 					return true;
 				}
 				else {
-					$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[Announcement:save] - SQL chyba pri pokuse o úpravu oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o úpravu oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 					return false;
 				}
 			}
 			else {
-
                 //compatibilityMode
                 if ($this->registry->getSetting('compatibilityMode')) {
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
@@ -126,11 +124,11 @@ class Announcement {
 				$data['ann_updated'] = date('Y-m-d H:i:s');
 				if ($this->registry->getObject('db')->insertRecords('announcements', $data)) {
 					$this->id = $this->registry->getObject('db')->lastInsertID();
-					$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::save] - Vytvorený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Vytvorený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 					return true;
 				}
 				else {
-					$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[Announcement:save] - SQL chyba pri pokuse o vytvorenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o vytvorenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 					return false;
 				}
 			}
@@ -141,28 +139,20 @@ class Announcement {
 	}
 	
 	public function remove() {
-		if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
-            //compatibilityMode
-            if ($this->registry->getSetting('compatibilityMode')) {
-                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-                $this->registry->getObject('db')->deleteRecords('oznamy', 'id_oznam = ' . $this->id);
-                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
-            }
+        //compatibilityMode
+        if ($this->registry->getSetting('compatibilityMode')) {
+            $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+            $this->registry->getObject('db')->deleteRecords('oznamy', 'id_oznam = ' . $this->id);
+            $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
+        }
 
-			if ($this->registry->getObject('db')->deleteRecords('announcements', "id_announcement = " . $this->id)) {
-				$this->registry->getObject('log')->insertLog('SQL', 'INF', '[Announcement::remove] - Odstránený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
-				return true;
-			}
-			else {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', '[Announcement::remove] - SQL chyba pri pokuse o odstránenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
-				return false;
-			}
-		}
-		else {
-			$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[Announcement::remove] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť oznam "' . $this->title . '"[' . $this->id . ']');
-			$redirectBits = array();
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na odstránenie oznamu!', 'alert');
-		    return false;
+        if ($this->registry->getObject('db')->deleteRecords('announcements', "id_announcement = " . $this->id)) {
+            $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Odstránený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+            return true;
+        }
+        else {
+            $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o odstránenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+            return false;
         }
 	}
 }

@@ -25,7 +25,7 @@ class eventsController {
                     break;
                 case 'view':
                     $this->viewEvent($urlBits[2]);
-                break;
+                    break;
                 default:
                     $this->listEvents(intval($urlBits));
                     break;
@@ -40,8 +40,8 @@ class eventsController {
     }
 
     private  function newEvent() {
-        if (isset($_POST['newEvent_title'])) {
-            if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            if (isset($_POST['newEvent_title'])) {
                 require_once(FRAMEWORK_PATH . 'models/event.php');
                 $event = new Event($this->registry);
                 $event->setTitle($_POST['newEvent_title']);
@@ -49,7 +49,6 @@ class eventsController {
                 $event->setLocation($_POST['newEvent_location']);
                 $event->setStartDate($_POST['newEvent_date'], $_POST['newEvent_startTime']);
                 $event->setEndDate($_POST['newEvent_date'], $_POST['newEvent_endTime']);
-
                 if ($event->save()) {
                     $redirectBits = array();
                     $redirectBits[] = 'events';
@@ -63,12 +62,13 @@ class eventsController {
                 }
             }
             else {
-                $redirectBits = array();
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na vytvorenie udalosti!', 'alert');
+                $this->uiNew();
             }
         }
         else {
-            $this->uiNew();
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť udalosť.');
+            $redirectBits = array();
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na vytvorenie udalosti!', 'alert');
         }
     }
 
@@ -100,6 +100,7 @@ class eventsController {
             }
         }
         else {
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť udalosť.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na odstránenie udalosti!', 'alert');
         }
@@ -129,8 +130,8 @@ class eventsController {
     }
 
     private function editEvent($id) {
-        if (isset($_POST['editEvent_title'])) {
-            if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            if (isset($_POST['editEvent_title'])) {
                 require_once(FRAMEWORK_PATH . 'models/event.php');
                 $event = new Event($this->registry, $id);
                 if ($event->isValid()) {
@@ -157,15 +158,15 @@ class eventsController {
                     $redirectBits[] = 'events';
                     $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
                 }
-
             }
             else {
-                $redirectBits = array();
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na upravenie udalosti!', 'alert');
+                $this->uiEdit($id);
             }
         }
         else {
-            $this->uiEdit($id);
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť udalosť.');
+            $redirectBits = array();
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na upravenie udalosti!', 'alert');
         }
     }
 

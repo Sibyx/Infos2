@@ -158,7 +158,7 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::newAnnouncement] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť oznam.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť oznam.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
         }
@@ -196,7 +196,7 @@ class announcementsController {
                     }
                 }
                 else {
-                    $this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::editAnnouncement] - Pokus o upravenie neexistujúceho oznamu');
+                    $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements',  'Pokus o upravenie neexistujúceho oznamu');
                     $redirectBits = array();
                     $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
                 }
@@ -206,7 +206,7 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::editAnnouncement] - Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť oznam.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť oznam.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
         }
@@ -231,25 +231,31 @@ class announcementsController {
 	private function removeAnnouncement($id) {
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
         require_once(FRAMEWORK_PATH . 'models/likes.php');
-		$announcement = new Announcement($this->registry, $id);
-        $likes = new Likes($this->registry, $id);
-        if ($announcement->isValid()) {
-            if ($likes->remove() && $announcement->remove()) {
-                $redirectBits = array();
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol odstránený', 'success');
+        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            $announcement = new Announcement($this->registry, $id);
+            $likes = new Likes($this->registry, $id);
+            if ($announcement->isValid()) {
+                if ($likes->remove() && $announcement->remove()) {
+                    $redirectBits = array();
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol odstránený', 'success');
+                }
+                else {
+                    $redirectBits[] = 'announcements';
+                    $redirectBits[] = 'view';
+                    $redirectBits[] = $id;
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri odstraňovaní. Skúste prosím znova.', 'alert');
+                }
             }
             else {
                 $redirectBits[] = 'announcements';
-                $redirectBits[] = 'view';
-                $redirectBits[] = $id;
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri odstraňovaní. Skúste prosím znova.', 'alert');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
             }
         }
         else {
-            $redirectBits[] = 'announcements';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť oznam id = [' . $id . ']');
+            $redirectBits = array();
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na odstránenie oznamu!', 'alert');
         }
-
 	}
 
     private function like($announcementId) {

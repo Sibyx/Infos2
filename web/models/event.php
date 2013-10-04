@@ -111,7 +111,6 @@ class Event {
 
     public function save() {
         if ($this->id == 0) {
-
             $event = new Google_Event();
             $event->setSummary($this->title);
             $event->setLocation($this->location);
@@ -142,15 +141,16 @@ class Event {
                     $this->registry->getObject('db')->insertRecords('terminovnik', $insert);
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
                 }
+                $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril udalosť ID = ' . $this->id . ' - ' . $this->title);
                 return true;
             }
             else {
+                $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', 'GoogleAPI chyba pri pokuse o vytvorenie udalosti "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
                 $this->valid = false;
                 return false;
             }
         }
         else {
-
             //compatibilityMode
             if ($this->registry->getSetting('compatibilityMode')) {
                 $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
@@ -179,9 +179,11 @@ class Event {
             $updatedEvent = $this->googleCalendarService->events->update($this->registry->getSetting('googleEventCalendar'), $this->id, $this->event);
 
             if ($updatedEvent->getUpdated() != $this->event->getUpdated()) {
+                $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' upravil udalosť ID = ' . $this->id . ' - ' . $this->title);
                 return true;
             }
             else {
+                $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', 'GoogleAPI chyba pri pokuse o upravenie udalosti "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
                 return false;
             }
         }
@@ -195,6 +197,7 @@ class Event {
             $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
         }
         $this->googleCalendarService->events->delete($this->registry->getSetting('googleEventCalendar'), $this->id);
+        $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' odstránil udalosť ID = ' . $this->id . ' - ' . $this->title);
         $this->valid = false;
     }
 }

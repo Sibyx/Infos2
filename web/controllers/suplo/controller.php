@@ -10,9 +10,6 @@ class suploController {
 				case 'view':
 					$this->viewSuplo($urlBits[2]);
 					break;
-				case 'remove':
-					$this->removeSuplo($urlBits[2]);
-					break;
 				case 'new':
 					$this->newSuplo();
                     break;
@@ -28,6 +25,11 @@ class suploController {
 					break;
 			}
 		}
+        else {
+            $redirectBits[] = 'authenticate';
+            $redirectBits[] = 'login';
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Musíš byť prihlásený', 'alert');
+        }
 	}
 
 	private function viewSuplo($date) {
@@ -74,41 +76,49 @@ class suploController {
 	}
 
 	private function newSuplo() {
-		if (isset($_POST['newSuplo_data']) && $this->registry->getObject('auth')->getUser()->isAdmin()) {
-            $date = new DateTime($_POST['newSuplo_date']);
-            require_once(FRAMEWORK_PATH . 'models/suploTable.php');
-            $suploTable = new suploTable($this->registry, $date);
-			$input = $_POST['newSuplo_data'];
+        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+            if (isset($_POST['newSuplo_data'])) {
+                $date = new DateTime($_POST['newSuplo_date']);
+                require_once(FRAMEWORK_PATH . 'models/suploTable.php');
+                $suploTable = new suploTable($this->registry, $date);
+                $input = $_POST['newSuplo_data'];
 
-            //compatibilityMode
-            if ($this->registry->getSetting('compatibilityMode')) {
-                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-                require_once(FRAMEWORK_PATH . 'models/suploCompatibility.php');
-                $suploCompatibility = new suploCompatibility($this->registry, $date);
-                $suploCompatibility->setText($input);
-                $suploCompatibility->save();
-                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
-            }
-
-            foreach(preg_split("/((\r?\n)|(\r\n?))/", $input) as $key => $line){
-                if ($key != 0) {
-                    $record = array();
-                    foreach (explode("\t", $line) as $cell) {
-                        $record[] = $cell;
-                    }
-                    $suploTable->addRecord($record);
+                //compatibilityMode
+                if ($this->registry->getSetting('compatibilityMode')) {
+                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
+                    require_once(FRAMEWORK_PATH . 'models/suploCompatibility.php');
+                    $suploCompatibility = new suploCompatibility($this->registry, $date);
+                    $suploCompatibility->setText($input);
+                    $suploCompatibility->save();
+                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
                 }
+
+                foreach(preg_split("/((\r?\n)|(\r\n?))/", $input) as $key => $line){
+                    if ($key != 0) {
+                        $record = array();
+                        foreach (explode("\t", $line) as $cell) {
+                            $record[] = $cell;
+                        }
+                        $suploTable->addRecord($record);
+                    }
+                }
+                $suploTable->deleteRrecords();
+                $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie.');
+                $redirectBits = array();
+                $redirectBits[] = 'suplo';
+                $redirectBits[] = 'view';
+                $redirectBits[] = $date->format("Y-m-d");
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Suplovanie bolo úspešne vytvorené!', 'success');
             }
-            $suploTable->deleteRrecords();
+            else {
+                $this->uiNew();
+            }
+        }
+        else {
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť/upraviť suplovanie.');
             $redirectBits = array();
-            $redirectBits[] = 'suplo';
-            $redirectBits[] = 'view';
-            $redirectBits[] = $date->format("Y-m-d");
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Suplovanie bolo úspešne vytvorené!', 'success');
-		}
-		else {
-			$this->uiNew();
-		}
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie suplovania!', 'alert');
+        }
 	}
 
     private function uiNew() {
@@ -135,10 +145,6 @@ class suploController {
 		$this->registry->getObject('template')->replaceTags($tags);
 		echo $this->registry->getObject('template')->parseOutput();
 	}
-
-    private function removeSuplo($date) {
-        return true;
-    }
 
     private function viewRecord($id) {
         require_once(FRAMEWORK_PATH . 'models/suploRecord.php');

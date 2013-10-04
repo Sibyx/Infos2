@@ -1,11 +1,12 @@
 <?php
 /*
- * 18.05.2013
- * Class Logger v1.0
+ * 04.10.2013
+ * Class Logger v1.1
  * Objekt na zaznamenavanie aktivit
  * CHANGELOG:
  * 	- v1.0 [14.04.2013]: createTime
  *	- v1.0 [18.05.2013]: dokumentacia, navratova hodnota
+ *  - v1.1 [04.10.2013]: log location
 */
 class Logger {
 
@@ -19,20 +20,22 @@ class Logger {
 	 * Insert log message to DB or File
 	 * @param $dest - FILE|SQL
 	 * @param $type - ERR|INF|WAR
-	 * @param $message - [location] - message
+	 * @param $location - call location
+	 * @param $message - message
 	 * @result bool - uspech?
-	 * insertLog('SQL', 'ERR', '[Logger::insertLog] - Funny message!');
+	 * insertLog('SQL', 'ERR', 'Logger', 'Funny message!');
 	*/
-	public function insertLog($dest, $type, $message) {
+	public function insertLog($dest, $type, $location, $message) {
 		if ($dest == 'FILE') {
 			$logMessage = '';
 			$logMessage .= date("d.m.Y H:i:s");
-			$logMessage .= " - [$type] $message \n";
+			$logMessage .= " - [$type] - [$location] - $message \n";
 			return fwrite($this->file, $logMessage);
 		}
 		elseif ($dest == 'SQL') {
 			$values = array();
 			$values[] = $type;
+            $values[] = $location;
 			$values[] = $this->registry->getObject('db')->sanitizeData($message);
 			return $this->registry->getObject('db')->callRutine('insertLog', $values);
 		}
