@@ -35,6 +35,12 @@ class Template {
 		$tags['sitename'] = $this->registry->getSetting('sitename');
 		$tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
 		$tags['userPanel'] = $this->registry->getObject('render')->createUserPanel();
+        if (file_exists(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/userreport.tpl.php')) {
+            $tags['userreport'] = file_get_contents(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/userreport.tpl.php');
+        }
+        else {
+            $tags['userreport'] = '';
+        }
 		if(sizeof($tags) > 0) {
 			foreach($tags as $tag => $data) {
 				if(!is_array($data)) {

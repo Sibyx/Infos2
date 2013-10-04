@@ -98,8 +98,9 @@ class suploRecord {
     }
 	
 	public function setOwner($value) {
+        $value = rtrim($value, '.');
         $value = $this->registry->getObject('db')->sanitizeData($value);
-		$this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_lastName = '$value'");
+		$this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_lastName LIKE '$value'");
 		if ($this->registry->getObject("db")->numRows() == 1) {
 			$row = $this->registry->getObject("db")->getRows();
             $this->owner->id = $row['id_user'];
@@ -107,7 +108,6 @@ class suploRecord {
 			$this->owner->email = $row['user_email'];
 			$this->owner->calendarId = $row['user_calendarSuplo'];
 		}
-		
 	}
 	
 	public function setMissing($value) {

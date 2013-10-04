@@ -110,3 +110,4 @@
 <script>
 	//var t = window.setInterval(updateClock, 1000);
 </script>
+{userreport}

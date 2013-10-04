@@ -6,3 +6,4 @@
     <li><b>Učebna: </b> <i>{classroom}</i></li>
 </ul>
 <a class="close-reveal-modal">&#215;</a>
+{userreport}
