@@ -21,7 +21,7 @@ class suploRecords {
      */
     public function getCurrentUser($date) {
         $dateFormated = $date->format("Y-m-d");
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '$dateFormated' AND id_user = " . $this->registry->getObject('auth')->getUser()->getId());
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '$dateFormated' AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
         return $cache;
     }
 
