@@ -1,6 +1,7 @@
 body {
 	background: #fff;
 	color: #5A5A5A;
+    font-family: OpenSansRegular;
 }
 
 .boardPanel h2 {
@@ -86,21 +87,21 @@ tr[data-url]:hover {
 
 /* ANNOUNCEMENTS */
 
-#panelAnnouncements article {
+article {
 	padding: 15px 10px;
-	font-family: Georgia;
 }
 
-#panelAnnouncements article hr {
+article hr {
 	margin-bottom: 5px;
 }
 
-#panelAnnouncements article p {
-	line-height: 1.4em;
-	font-size: 14pt;
+article p {
+	line-height: 1.6em;
+	font-size: 12pt;
 	text-align: justify;
-	padding: 5px 10px;
+	padding: 2px 10px;
 	font-weight: normal;
+    margin-bottom: 5px;
 }
 
 /* USER */
