@@ -17,7 +17,7 @@ SUMMARY
 
 - **SUPLO**			[100%]
 
-- **EVENTS**		[80%]
+- **EVENTS**		[100%]
 
 - **DOCS**			[100%]
 
