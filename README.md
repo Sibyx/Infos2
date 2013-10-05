@@ -4,8 +4,10 @@ Infos2 is information system for elementary and high schools which are running o
 
 TO-DO
 --------------
-- create support for multiple last names
-- logging for suplo
+- newsletter
+- profiles
+- footer
+- about controller
 
 SUMMARY
 --------------
@@ -22,6 +24,8 @@ SUMMARY
 - **DOCS**			[100%]
 
 - **ANNOUNCEMENTS**	[100%]
+
+- **ABOUT**	        [0%]
 
 COLORS
 --------------
