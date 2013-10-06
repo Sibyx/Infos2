@@ -44,7 +44,7 @@ FONTS
 
 - **Name:** 		BigNoodleTitling
 
-- **Text:**			Georgia
+- **Text:**			OpenSans
 
 API LINKS
 --------------
