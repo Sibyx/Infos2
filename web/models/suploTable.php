@@ -42,8 +42,6 @@ class suploTable {
                 $this->suploRecords[] = new suploRecord($this->registry, $row['id_suplo']);
             }
         }
-
-
 	}
 
 
@@ -61,25 +59,8 @@ class suploTable {
         return $this->numRecords;
     }
 
-    /**
-     * @param suploRecord $obj1
-     * @param suploRecord $obj2
-     * @return int
-     */
-    public function checkDiff($obj1, $obj2) {
-        return $obj1->getId() - $obj2->getId();
-    }
-
-    /**
-     * @return array|suploRecord[]
-     */
-    private function getDiff() {
-        return array_udiff($this->suploRecords, $this->newSuploRecords, array($this, 'checkDiff'));
-    }
-
     public function deleteRrecords() {
-        $records = $this->getDiff();
-        foreach ($records as $record) {
+        foreach ($this->suploRecords as $record) {
             $record->remove();
         }
     }
@@ -100,7 +81,7 @@ class suploTable {
             }
             $suploRecord->setNote($data[6]);
             $suploRecord->save();
-            $this->newSuploRecords[] = $suploRecord;
+            $this->suploRecords[] = $suploRecord;
         }
         else {
             $suploRecord = new suploRecord($this->registry);
@@ -113,7 +94,7 @@ class suploTable {
             $suploRecord->setNote($data[6]);
             $suploRecord->setDate($this->date);
             $suploRecord->save();
-            $this->newSuploRecords[] = $suploRecord;
+            $this->suploRecords[] = $suploRecord;
         }
     }
 }

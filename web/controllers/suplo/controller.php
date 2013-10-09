@@ -93,17 +93,19 @@ class suploController {
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
                 }
 
+                $suploTable->deleteRrecords();
                 foreach(preg_split("/((\r?\n)|(\r\n?))/", $input) as $key => $line){
                     if ($key != 0) {
                         $record = array();
                         foreach (explode("\t", $line) as $cell) {
                             $record[] = $cell;
                         }
-                        $suploTable->addRecord($record);
+                        if (!empty($record[0])) {
+                            $suploTable->addRecord($record);
+                        }
                     }
                 }
-                $suploTable->deleteRrecords();
-                $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie.');
+                $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie.');
                 $redirectBits = array();
                 $redirectBits[] = 'suplo';
                 $redirectBits[] = 'view';

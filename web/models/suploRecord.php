@@ -97,23 +97,21 @@ class suploRecord {
     public function setId($value) {
         $this->id = $value;
     }
-	
-	public function setOwner($value) {
-        $value = rtrim($value, '.');
+
+    public function setOwner($value) {
         $value = $this->registry->getObject('db')->sanitizeData($value);
-		$this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE CONCAT(user_lastName, ' ', user_firstName) LIKE '$value%'");
-		if ($this->registry->getObject("db")->numRows() == 1) {
-			$row = $this->registry->getObject("db")->getRows();
+        $this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_viewName LIKE '$value'");
+        if ($this->registry->getObject("db")->numRows() == 1) {
+            $row = $this->registry->getObject("db")->getRows();
             $this->owner->id = $row['id_user'];
-			$this->owner->name = $row['user_firstName'] . ' ' . $row['user_lastName'];
-			$this->owner->email = $row['user_email'];
-			$this->owner->calendarId = $row['user_calendarSuplo'];
-		}
+            $this->owner->name = $row['user_firstName'] . ' ' . $row['user_lastName'];
+            $this->owner->email = $row['user_email'];
+            $this->owner->calendarId = $row['user_calendarSuplo'];
+        }
         else {
             $this->error = true;
-            $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplovanie', "Nenašiel som užívateľa $value");
         }
-	}
+    }
 	
 	public function setMissing($value) {
 		$this->missing->nick = $this->registry->getObject('db')->sanitizeData($value);
@@ -248,7 +246,7 @@ class suploRecord {
 			return true;
 		}
 		else {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplovanie', 'SQL chyba pri pokuse o odstránenie suploRecord [' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', 'SQL chyba pri pokuse o odstránenie suploRecord [' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 			return false;
 		}
 	}
