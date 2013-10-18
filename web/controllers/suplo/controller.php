@@ -51,7 +51,7 @@ class suploController {
         foreach ($suploRecords as $record) {
             $data = $record->toArray();
             $this->registry->firephp->log($data);
-			$row = "<tr>" . "\n";
+            $row = '<tr data-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
 			$row .= "<td>" . $data['hour'] . "</td>";
 			$row .= "<td>" . $data['missing']->name . "</td>";
 			$row .= "<td>" . $record->getClassesShort() . "</td>";

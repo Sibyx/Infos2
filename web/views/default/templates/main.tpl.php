@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>{title}</title>
-	<meta name="robots" content="index, follow" />
+	<meta name="robots" content="noindex, nofollow" />
 	<meta name="description" content="{meta-description}" />
 	<meta name="keywords" content="{meta-keywords}" />
 	<meta name="author" content="Jakub Dubec" />

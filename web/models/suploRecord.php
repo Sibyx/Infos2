@@ -100,7 +100,7 @@ class suploRecord {
 
     public function setOwner($value) {
         $value = $this->registry->getObject('db')->sanitizeData($value);
-        $this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_viewName LIKE '$value'");
+        $this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_viewName = '$value'");
         if ($this->registry->getObject("db")->numRows() == 1) {
             $row = $this->registry->getObject("db")->getRows();
             $this->owner->id = $row['id_user'];

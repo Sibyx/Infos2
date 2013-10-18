@@ -45,5 +45,4 @@
         beforeShowDay: $.datepicker.noWeekends
     });
 </script>
-
 {userreport}

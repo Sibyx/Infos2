@@ -1,6 +1,12 @@
 INFOS
 ==============
-Infos2 is information system for elementary and high schools which are running on Google Apps for education. More info later.
+An effective and fast information sharing is a hit of the modern age. The access to information from almost everywhere, anytime and without any dependence on the device is today a common thing.
+
+My objective was to create an  information system for teachers and school management, which will collect actual announcements about interesting events, substitution tables and important documents for teachers.
+
+I created a custom application core, which closely communicates with Google Cloud. The system is running on the school server and has been written in PHP. Events and substitution records are synchronized with Google Calendar.  Due to this fact the system is able to send text messages to the cell phones of the users.
+
+I, successfully, created a modern information system which effectively shares information between teachers and school management very fast. At the same time, we have improved information awareness of the school employees.
 
 TO-DO
 --------------

@@ -85,3 +85,4 @@
         $('#editEvent_endTime').timepicker();
     });
 </script>
+{userreport}

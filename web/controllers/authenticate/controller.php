@@ -39,7 +39,13 @@ class AuthenticateController {
 		}
 		else {
 			header('Location: ' . filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
-		}
+            /*$this->registry->getObject('template')->buildFromTemplate('login');
+            $tags = array();
+            $tags['title'] = 'Infos2 - Prihlásenie';
+            $tags['loginUrl'] = filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl());
+            $this->registry->getObject('template')->replaceTags($tags);
+            echo $this->registry->getObject('template')->parseOutput();*/
+        }
 	}
 
 	private function logout() {
