@@ -1,4 +1,4 @@
-INFOS
+Infos2 - The Intelligent Communication Platform
 ==============
 An effective and fast information sharing is a hit of the modern age. The access to information from almost everywhere, anytime and without any dependence on the device is today a common thing.
 
