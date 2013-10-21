@@ -148,7 +148,13 @@ class suploRecord {
 	}
 	
 	public function getClassesShort() {
-		return substr($this->classes, 0, 3);
+        $result = substr($this->classes, 0, 3);
+		if (strlen($this->classes) > 3) {
+            return $result . ' ...';
+        }
+        else {
+            return $result;
+        }
 	}
 	
 	
