@@ -15,7 +15,6 @@ class suploRecord {
 	private $eventId;
 	private $event;
 	private $googleCalendarService;
-    private $error = false;
 	private $valid;
 
 	public function __construct(Registry $registry, $id = 0) {
@@ -24,7 +23,6 @@ class suploRecord {
 		require_once(FRAMEWORK_PATH . 'libs/person/person.php');
 		$this->owner = new Person;
 		$this->missing = new Person;
-		$this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
 
 		if ($id > 0) {
 			$this->registry->getObject('db')->executeQuery("SELECT * FROM getSuploRecord WHERE id_suplo = $id");
@@ -49,7 +47,6 @@ class suploRecord {
                 $this->note = $row['suplo_note'];
 
 				$this->eventId = $row['suplo_eventId'];
-				$this->event = $this->googleCalendarService->events->get($this->owner->calendarId, $this->eventId);
 				
 				$nick = $this->missing->nick;
 				$this->registry->getObject('db')->executeQuery("SELECT user_email, user_firstName, user_lastName, id_user FROM users WHERE user_nick = '$nick'");
@@ -156,87 +153,84 @@ class suploRecord {
 	
 	
 	public function save() {
-        if ($this->error == false) {
-            if ($this->id == 0) {
-                $event = new Google_Event();
-                $event->setSummary($this->hour . ". hodina - " .  $this->subject);
-                $event->setLocation($this->classroom);
+        $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
+        if ($this->id == 0) {
+            $this->event = $this->googleCalendarService->events->get($this->owner->calendarId, $this->eventId);
+            $event = new Google_Event();
+            $event->setSummary($this->hour . ". hodina - " .  $this->subject);
+            $event->setLocation($this->classroom);
 
-                $this->registry->getObject('db')->executeQuery("SELECT * FROM getTimeRecord WHERE lesson = " . $this->hour);
-                if ($this->registry->getObject('db')->numRows() == 1) {
-                    $row = $this->registry->getObject('db')->getRows();
+            $this->registry->getObject('db')->executeQuery("SELECT * FROM getTimeRecord WHERE lesson = " . $this->hour);
+            if ($this->registry->getObject('db')->numRows() == 1) {
+                $row = $this->registry->getObject('db')->getRows();
 
-                    $startTime = new DateTime($this->date->format("Y-m-d"));
-                    $startTime->setTime($row['startHour'], $row['startMinute'], $row['startSecond']);
+                $startTime = new DateTime($this->date->format("Y-m-d"));
+                $startTime->setTime($row['startHour'], $row['startMinute'], $row['startSecond']);
 
-                    $endTime = new DateTime($this->date->format("Y-m-d"));
-                    $endTime->setTime($row['endHour'], $row['endMinute'], $row['endSecond']);
+                $endTime = new DateTime($this->date->format("Y-m-d"));
+                $endTime->setTime($row['endHour'], $row['endMinute'], $row['endSecond']);
 
-                    $start = new Google_EventDateTime();
-                    $start->setDateTime($startTime->format("c"));
-                    $event->setStart($start);
+                $start = new Google_EventDateTime();
+                $start->setDateTime($startTime->format("c"));
+                $event->setStart($start);
 
-                    $end = new Google_EventDateTime();
-                    $end->setDateTime($endTime->format("c"));
-                    $event->setEnd($end);
+                $end = new Google_EventDateTime();
+                $end->setDateTime($endTime->format("c"));
+                $event->setEnd($end);
 
-                    $event->setDescription($this->classes . " namiesto " . $this->missing->nick);
+                $event->setDescription($this->classes . " namiesto " . $this->missing->nick);
 
-                    try {
-                        $this->event = $this->googleCalendarService->events->insert($this->owner->calendarId, $event);
-                        if ($this->event->getId() != '') {
-                            $row = array();
-                            $row['id_user'] = $this->owner->id;
-                            $row['suplo_nick'] = $this->missing->nick;
-                            $row['suplo_date'] = $this->date->format("Y-m-d");
-                            $row['suplo_hour'] = $this->hour;
-                            $row['suplo_classes'] = $this->classes;
-                            $row['suplo_note'] = $this->note;
-                            $row['suplo_classroom'] = $this->classroom;
-                            $row['suplo_subject'] = $this->subject;
-                            $row['suplo_eventId'] = $this->event->getId();
-                            if ($this->registry->getObject('db')->insertRecords("suplo", $row)) {
-                                $this->id = $this->registry->getObject('db')->lastInsertID();
-                                return true;
-                            }
-                            else {
-                                return false;
-                            }
+                try {
+                    $this->event = $this->googleCalendarService->events->insert($this->owner->calendarId, $event);
+                    if ($this->event->getId() != '') {
+                        $row = array();
+                        $row['id_user'] = $this->owner->id;
+                        $row['suplo_nick'] = $this->missing->nick;
+                        $row['suplo_date'] = $this->date->format("Y-m-d");
+                        $row['suplo_hour'] = $this->hour;
+                        $row['suplo_classes'] = $this->classes;
+                        $row['suplo_note'] = $this->note;
+                        $row['suplo_classroom'] = $this->classroom;
+                        $row['suplo_subject'] = $this->subject;
+                        $row['suplo_eventId'] = $this->event->getId();
+                        if ($this->registry->getObject('db')->insertRecords("suplo", $row)) {
+                            $this->id = $this->registry->getObject('db')->lastInsertID();
+                            return true;
                         }
                         else {
-                            $this->valid = false;
                             return false;
                         }
                     }
-                    catch (Google_ServiceException $e) {
-                        $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', "Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri suplovaní: " . $this->owner->name . " za " . $this->missing->name);
+                    else {
+                        $this->valid = false;
+                        return false;
                     }
-                    catch(Google_Exception $e) {
-                        $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', "Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri suplovaní: " . $this->owner->name . " za " . $this->missing->name);
-                    }
+                }
+                catch (Google_ServiceException $e) {
+                    $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', "Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri suplovaní: " . $this->owner->name . " za " . $this->missing->name);
+                }
+                catch(Google_Exception $e) {
+                    $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', "Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri suplovaní: " . $this->owner->name . " za " . $this->missing->name);
+                }
 
-                }
-                else {
-                    $this->valid = false;
-                    return false;
-                }
             }
             else {
-                $update = array();
-                $update['suplo_classes'] = $this->classes;
-                $update['suplo_classroom'] = $this->classroom;
-                $update['suplo_note'] = $this->note;
-                $update['suplo_subject'] = $this->subject;
-                if ($this->registry->getObject('db')->updateRecords("suplo", $update, 'id_suplo = ' . $this->id)) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                $this->valid = false;
+                return false;
             }
         }
         else {
-            return false;
+            $update = array();
+            $update['suplo_classes'] = $this->classes;
+            $update['suplo_classroom'] = $this->classroom;
+            $update['suplo_note'] = $this->note;
+            $update['suplo_subject'] = $this->subject;
+            if ($this->registry->getObject('db')->updateRecords("suplo", $update, 'id_suplo = ' . $this->id)) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 	}
 
