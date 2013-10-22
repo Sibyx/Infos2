@@ -19,8 +19,9 @@ class suploRecord {
 
 	public function __construct(Registry $registry, $id = 0) {
 		$this->registry = $registry;
+        $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
 
-		require_once(FRAMEWORK_PATH . 'libs/person/person.php');
+        require_once(FRAMEWORK_PATH . 'libs/person/person.php');
 		$this->owner = new Person;
 		$this->missing = new Person;
 
@@ -159,9 +160,8 @@ class suploRecord {
 	
 	
 	public function save() {
-        $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
         if ($this->id == 0) {
-            $this->event = $this->googleCalendarService->events->get($this->owner->calendarId, $this->eventId);
+
             $event = new Google_Event();
             $event->setSummary($this->hour . ". hodina - " .  $this->subject);
             $event->setLocation($this->classroom);

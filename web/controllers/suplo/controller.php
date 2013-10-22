@@ -105,7 +105,7 @@ class suploController {
                         }
                     }
                 }
-                $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie.');
+                $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie na ' . $date->format("Y-m-d"));
                 $redirectBits = array();
                 $redirectBits[] = 'suplo';
                 $redirectBits[] = 'view';
