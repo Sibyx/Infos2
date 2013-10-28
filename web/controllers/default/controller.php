@@ -28,7 +28,8 @@ class defaultController {
 			$this->createUserboard(),
 			$this->createAnnouncements(),
             $this->createSuplo(),
-            $this->createEvents()
+            $this->createEvents(),
+            $this->createSuploHistory()
 		);
 		$this->registry->getObject('template')->buildFromTemplate('index');
 		$this->registry->getObject('template')->replaceTags($tags);
@@ -154,6 +155,34 @@ class defaultController {
             }
         }
         $tags['events'] = $output;
+        return $tags;
+    }
+
+    private function createSuploHistory() {
+        require_once(FRAMEWORK_PATH . 'models/suploRecords.php');
+        require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
+        $suploRecords = new suploRecords($this->registry);
+
+        $output = '';
+        $cache = $suploRecords->getCurrentUserHistory();
+        if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+                $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
+                $data = $suploRecord->toArray();
+                $output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
+                $output .= '<td>' . $data['dateFriendly'] . '.</td>' . "\n";
+                $output .= '<td>' . $data['hour'] . '.</td>' . "\n";
+                $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
+                $output .= '<td>' . $data['subject'] . '</td>' . "\n";
+                $output .= '<td>' . $data['missing']->name . '</td>' . "\n";
+                $output .= '</tr>' . "\n";
+            }
+        }
+        else {
+            $output .= '<tr><th colspan="5" class="text-center">Tento mesiac si ešte nesuploval!</th></tr>' . "\n";
+        }
+        $tags = array();
+        $tags['suploHistory'] = $output;
         return $tags;
     }
 	

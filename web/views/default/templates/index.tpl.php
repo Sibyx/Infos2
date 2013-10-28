@@ -86,8 +86,8 @@
                 </tbody>
             </table>
 		</section>
-		
-		<section class="boardPanel" id="panelDocs">
+
+        <section class="boardPanel" id="panelDocs">
             <header>
                 <div class="small-12 columns">
                     <h2>Dokumenty</h2>
@@ -95,12 +95,34 @@
             </header>
             <table style="width: 100%">
                 <tbody>
-                    <tr>
-                        <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> Pracovné normy</a></td>
-                    </tr>
-                    <tr>
-                        <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> Formuláre pre žiakov</a></td>
-                    </tr>
+                <tr>
+                    <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> Pracovné normy</a></td>
+                </tr>
+                <tr>
+                    <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> Formuláre pre žiakov</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+		
+        <section class="boardPanel" id="panelSuploHistory">
+                <header>
+                    <div class="small-12 columns">
+                        <h2>História suplovania</h2>
+                    </div>
+                </header>
+            <table style="width: 100%">
+                <thead>
+                <tr>
+                    <td>Dátum</td>
+                    <td>Hodina</td>
+                    <td>Trieda</td>
+                    <td>Predmet</td>
+                    <td>Namiesto</td>
+                </tr>
+                </thead>
+                <tbody>
+                {suploHistory}
                 </tbody>
             </table>
 		</section>

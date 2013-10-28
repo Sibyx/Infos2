@@ -25,6 +25,14 @@ class suploRecords {
         return $cache;
     }
 
+    public function getCurrentUserHistory() {
+        $date = new DateTime('now');
+        $month = $date->format('m');
+        $year = $date->format('Y');
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE MONTH(suplo_date) = $month AND YEAR(suplo_date) = $year AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
+        return $cache;
+    }
+
     /**
      * @return int
      */
