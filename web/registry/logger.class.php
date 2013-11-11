@@ -11,6 +11,7 @@
 class Logger {
 
 	private $file;
+    private $registry;
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;

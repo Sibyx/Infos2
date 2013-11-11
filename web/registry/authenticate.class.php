@@ -50,7 +50,7 @@ class Authenticate {
 		return $this->user;
 	}
 	
-	function logout() {
+	public function logout() {
 		unset($_SESSION['sn_auth_session_uid']);
 		unset($_SESSION['token']);
 		$this->loggedIn = false;
