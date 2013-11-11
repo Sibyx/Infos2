@@ -19,6 +19,9 @@ class suploController {
                 case 'suploExists':
                     $this->suploExists($urlBits[2]);
                     break;
+                case 'monthSummary':
+                    $this->uiSummary();
+                    break;
 				
 				default:
 					$this->viewSuplo(date('Y-m-d'));
@@ -177,6 +180,38 @@ class suploController {
             $result['text'] = '';
         }
         echo json_encode($result);
+    }
+
+    private function uiSummary() {
+        require_once(FRAMEWORK_PATH . 'models/suploRecords.php');
+        require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
+        $suploRecords = new suploRecords($this->registry);
+        $output = '';
+        $cache = $suploRecords->getCurrentUserHistory();
+        if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+                $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
+                $data = $suploRecord->toArray();
+                $output .= '<tr>' . "\n";
+                $output .= '<td>' . $data['dateFriendly'] . '.</td>' . "\n";
+                $output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
+                $output .= '<td>' . $data['subject'] . '</td>' . "\n";
+                $output .= '<td>' . $data['missing']->name . '</td>' . "\n";
+                $output .= '<td></td>' . "\n";
+                $output .= '</tr>' . "\n";
+            }
+        }
+        else {
+            $output .= '<tr><th colspan="5" class="text-center">Tento mesiac si ešte nesuploval!</th></tr>' . "\n";
+        }
+        $tags = array();
+        $tags['suploHistory'] = $output;
+        $tags['month'] = date("F Y");
+        $tags['teacherName'] = $this->registry->getObject('auth')->getUser()->getFullName();
+        $tags['title'] = "Výkaz nadčasov a suplovania";
+        $this->registry->getObject('template')->buildFromTemplate('suploSummary', false);
+        $this->registry->getObject('template')->replaceTags($tags);
+        echo $this->registry->getObject('template')->parseOutput();
     }
 }
 ?>

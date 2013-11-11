@@ -1,0 +1,35 @@
+table {
+    width: 98%;
+    margin: 0 auto;
+}
+
+caption {
+    font-weight: bold;
+    padding: 5px 4px;
+    text-decoration: underline;
+}
+
+thead th, thead td {
+    padding: 8px 3px;
+}
+
+tbody th, tbody td {
+    border: 1px solid #000000;
+    padding: 4px 3px;
+}
+
+tfoot th, tfoot td {
+    padding: 20px 10px 0;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+     text-align: center;
+ }
+
+.text-left {
+    text-align: left;
+}

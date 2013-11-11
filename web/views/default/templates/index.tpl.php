@@ -106,11 +106,14 @@
         </section>
 		
         <section class="boardPanel" id="panelSuploHistory">
-                <header>
-                    <div class="small-12 columns">
-                        <h2>História suplovania</h2>
-                    </div>
-                </header>
+            <header>
+                <div class="small-10 columns">
+                    <h2>História suplovania</h2>
+                </div>
+                <div class="small-2 columns text-right">
+                    <a href="{siteurl}/suplo/monthSummary" target="_blank"><img src="{siteurl}/views/{defaultView}/images/print.png" alt="Vytlac udalost" style="margin-top: 12px"/></a>
+                </div>
+            </header>
             <table style="width: 100%">
                 <thead>
                 <tr>

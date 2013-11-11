@@ -59,6 +59,10 @@ tr[data-url]:hover {
     background: #3299bb;
 }
 
+table {
+    width: 100%;
+}
+
 #timer {
 	font-size: 128pt;
 	font-family: Arial;
