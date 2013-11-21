@@ -21,7 +21,7 @@ class suploRecords {
      */
     public function getCurrentUser($date) {
         $dateFormated = $date->format("Y-m-d");
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE suplo_date = '$dateFormated' AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE sup_date = '$dateFormated' AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
         return $cache;
     }
 
@@ -29,7 +29,7 @@ class suploRecords {
         $date = new DateTime('now');
         $month = $date->format('m');
         $year = $date->format('Y');
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE MONTH(suplo_date) = $month AND YEAR(suplo_date) = $year AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE MONTH(sup_date) = $month AND YEAR(sup_date) = $year AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
         return $cache;
     }
 
@@ -37,7 +37,7 @@ class suploRecords {
      * @return int
      */
     public function getAll() {
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo, DATE_FORMAT(suplo_date, '%d. %m. %Y') FROM suplo");
+        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo, DATE_FORMAT(sup_date, '%d. %m. %Y') FROM suplo");
         return $cache;
     }
 }

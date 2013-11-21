@@ -55,7 +55,7 @@ class announcementsController {
                 $article .= $row['ann_text'];
                 $article .= '<hr />' . "\n";
                 $article .= '<footer>' . "\n";
-                $article .= '<small><a href="https://plus.google.com/u/1/' . $row['id_user'] . '/about" target="_blank">' . $row['user_firstName'] . ' ' . $row['user_lastName'] . '</a> - <time pubdate="' . $row['createdRaw'] . '">' . $row['createdFriendly'] . '</time></small>' . "\n";
+                $article .= '<small><a href="https://plus.google.com/u/1/' . $row['id_user'] . '/about" target="_blank">' . $row['usr_firstName'] . ' ' . $row['usr_lastName'] . '</a> - <time pubdate="' . $row['createdRaw'] . '">' . $row['createdFriendly'] . '</time></small>' . "\n";
                 $article .= '</footer>' . "\n";
                 $article .= '</article>' . "\n";
                 $annOutput .= $article;

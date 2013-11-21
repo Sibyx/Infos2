@@ -7,9 +7,9 @@ class Timetable {
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
-		$this->registry->getObject('db')->executeQuery("SELECT * FROM getCurrentTimetable");
+		$this->registry->getObject('db')->executeQuery("SELECT * FROM vwCurrentTimetable");
 		$row = $this->registry->getObject('db')->getRows();
-		$this->current = $row['label'];
+		$this->current = $row['tmt_label'];
 		$currentId = $row['id_timetable'];
 		$this->registry->getObject('db')->executeQuery("SELECT id_timetable FROM timetable ORDER BY id_timetable DESC");
 		$row = $this->registry->getObject('db')->getRows();
@@ -21,7 +21,7 @@ class Timetable {
 		}
 		$this->registry->getObject('db')->executeQuery("SELECT * FROM timetable WHERE id_timetable = $nextId");
 		$row = $this->registry->getObject('db')->getRows();
-		$this->next = $row['label'];
+		$this->next = $row['tmt_label'];
 	}
 	
 	public function toArray() {

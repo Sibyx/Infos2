@@ -9,6 +9,7 @@
 	<meta name="keywords" content="{meta-keywords}" />
 	<meta name="author" content="Jakub Dubec" />
 	<meta name="viewport" content="width=device-width" />
+    <link href="https://plus.google.com/113484997719165826845" rel="publisher" />
 	
 	<!-- CSS -->
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/foundation.min.css" />
@@ -17,7 +18,7 @@
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/style.css" />
 		
-	<!-- JS -->
+	<!-- JS tt-->
 
 	<script src="{siteurl}/views/{defaultView}/js/jquery-2.0.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>

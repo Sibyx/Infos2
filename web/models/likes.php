@@ -17,10 +17,10 @@ class Likes {
     public function __construct(Registry $registry, $announcementId) {
         $this->registry = $registry;
         $this->announcementId = $announcementId;
-        $this->registry->getObject('db')->executeQuery("SELECT * FROM listLikes WHERE id_announcement = $announcementId");
+        $this->registry->getObject('db')->executeQuery("SELECT * FROM vwLikes WHERE id_announcement = $announcementId");
         if ($this->registry->getObject('db')->numRows() > 0) {
             while ($row = $this->registry->getObject('db')->getRows()) {
-                if ($row['like_status']) {
+                if ($row['lik_status']) {
                     if ($this->numLikes > 0) {
                         $this->likers .= $row['userFullName'] . ", ";
                     }

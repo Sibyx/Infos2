@@ -26,36 +26,36 @@ class suploRecord {
 		$this->missing = new Person;
 
 		if ($id > 0) {
-			$this->registry->getObject('db')->executeQuery("SELECT * FROM getSuploRecord WHERE id_suplo = $id");
+			$this->registry->getObject('db')->executeQuery("SELECT * FROM vwSuploRecord WHERE id_suplo = $id");
 			if ($this->registry->getObject('db')->numRows() == 1) {
 				$row = $this->registry->getObject('db')->getRows();
 				
 				$this->id = $id;
-				$this->date = $row['suplo_date'];
+				$this->date = $row['sup_date'];
 				$this->dateFriendly = $row['dateFriendly'];
 				
 				$this->owner->id = $row['id_user'];
-				$this->owner->name = $row['user_firstName'] . ' ' . $row['user_lastName'];
-				$this->owner->email = $row['user_email'];
-				$this->owner->calendarId = $row['user_calendarSuplo'];
+				$this->owner->name = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
+				$this->owner->email = $row['usr_email'];
+				$this->owner->calendarId = $row['usr_calendarSuplo'];
 				
-				$this->missing->nick = $row['suplo_nick'];
+				$this->missing->nick = $row['sup_nick'];
 				
-				$this->hour = $row['suplo_hour'];
-				$this->classes = $row['suplo_classes'];
-				$this->classroom = $row['suplo_classroom'];
-				$this->subject = $row['suplo_subject'];
-                $this->note = $row['suplo_note'];
+				$this->hour = $row['sup_hour'];
+				$this->classes = $row['sup_classes'];
+				$this->classroom = $row['sup_classroom'];
+				$this->subject = $row['sup_subject'];
+                $this->note = $row['sup_note'];
 
-				$this->eventId = $row['suplo_eventId'];
+				$this->eventId = $row['sup_eventId'];
 				
 				$nick = $this->missing->nick;
-				$this->registry->getObject('db')->executeQuery("SELECT user_email, user_firstName, user_lastName, id_user FROM users WHERE user_nick = '$nick'");
+				$this->registry->getObject('db')->executeQuery("SELECT usr_email, usr_firstName, usr_lastName, id_user FROM user WHERE usr_nick = '$nick'");
 				if ($this->registry->getObject('db')->numRows() == 1) {
 					$row = $this->registry->getObject('db')->getRows();
 					$this->missing->id = $row['id_user'];
-					$this->missing->name = $row['user_firstName'] . ' ' . $row['user_lastName'];
-					$this->missing->email = $row['user_email'];
+					$this->missing->name = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
+					$this->missing->email = $row['usr_email'];
 					$this->valid = true;
 				}
 				else {
@@ -98,13 +98,13 @@ class suploRecord {
 
     public function setOwner($value) {
         $value = $this->registry->getObject('db')->sanitizeData($value);
-        $this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_viewName = '$value'");
+        $this->registry->getObject("db")->executeQuery("SELECT * FROM user WHERE usr_viewName = '$value'");
         if ($this->registry->getObject("db")->numRows() == 1) {
             $row = $this->registry->getObject("db")->getRows();
             $this->owner->id = $row['id_user'];
-            $this->owner->name = $row['user_firstName'] . ' ' . $row['user_lastName'];
-            $this->owner->email = $row['user_email'];
-            $this->owner->calendarId = $row['user_calendarSuplo'];
+            $this->owner->name = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
+            $this->owner->email = $row['usr_email'];
+            $this->owner->calendarId = $row['usr_calendarSuplo'];
         }
         else {
             $this->error = true;
@@ -114,13 +114,13 @@ class suploRecord {
 	public function setMissing($value) {
 		$this->missing->nick = $this->registry->getObject('db')->sanitizeData($value);
         $value = $this->registry->getObject('db')->sanitizeData($value);
-		$this->registry->getObject("db")->executeQuery("SELECT * FROM users WHERE user_nick = '$value'");
+		$this->registry->getObject("db")->executeQuery("SELECT * FROM user WHERE usr_nick = '$value'");
 		if ($this->registry->getObject("db")->numRows() == 1) {
 			$row = $this->registry->getObject("db")->getRows();
 			$this->missing->id = $row['id_user'];
-			$this->missing->name = $row['user_firstName'] . ' ' . $row['user_lastName'];
-			$this->missing->email = $row['user_email'];
-			$this->missing->calendarId = $row['user_calendarSuplo'];
+			$this->missing->name = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
+			$this->missing->email = $row['usr_email'];
+			$this->missing->calendarId = $row['usr_calendarSuplo'];
 		}
 	}
 
@@ -166,7 +166,7 @@ class suploRecord {
             $event->setSummary($this->hour . ". hodina - " .  $this->subject);
             $event->setLocation($this->classroom);
 
-            $this->registry->getObject('db')->executeQuery("SELECT * FROM getTimeRecord WHERE lesson = " . $this->hour);
+            $this->registry->getObject('db')->executeQuery("SELECT * FROM vwTimeRecord WHERE tmt_lesson = " . $this->hour);
             if ($this->registry->getObject('db')->numRows() == 1) {
                 $row = $this->registry->getObject('db')->getRows();
 
@@ -191,14 +191,14 @@ class suploRecord {
                     if ($this->event->getId() != '') {
                         $row = array();
                         $row['id_user'] = $this->owner->id;
-                        $row['suplo_nick'] = $this->missing->nick;
-                        $row['suplo_date'] = $this->date->format("Y-m-d");
-                        $row['suplo_hour'] = $this->hour;
-                        $row['suplo_classes'] = $this->classes;
-                        $row['suplo_note'] = $this->note;
-                        $row['suplo_classroom'] = $this->classroom;
-                        $row['suplo_subject'] = $this->subject;
-                        $row['suplo_eventId'] = $this->event->getId();
+                        $row['sup_nick'] = $this->missing->nick;
+                        $row['sup_date'] = $this->date->format("Y-m-d");
+                        $row['sup_hour'] = $this->hour;
+                        $row['sup_classes'] = $this->classes;
+                        $row['sup_note'] = $this->note;
+                        $row['sup_classroom'] = $this->classroom;
+                        $row['sup_subject'] = $this->subject;
+                        $row['sup_eventId'] = $this->event->getId();
                         if ($this->registry->getObject('db')->insertRecords("suplo", $row)) {
                             $this->id = $this->registry->getObject('db')->lastInsertID();
                             return true;
@@ -227,10 +227,10 @@ class suploRecord {
         }
         else {
             $update = array();
-            $update['suplo_classes'] = $this->classes;
-            $update['suplo_classroom'] = $this->classroom;
-            $update['suplo_note'] = $this->note;
-            $update['suplo_subject'] = $this->subject;
+            $update['sup_classes'] = $this->classes;
+            $update['sup_classroom'] = $this->classroom;
+            $update['sup_note'] = $this->note;
+            $update['sup_subject'] = $this->subject;
             if ($this->registry->getObject('db')->updateRecords("suplo", $update, 'id_suplo = ' . $this->id)) {
                 return true;
             }

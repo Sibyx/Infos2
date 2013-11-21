@@ -54,7 +54,7 @@ class defaultController {
                 $tags['announcementId'] = $row['id_announcement'];
                 $tags['annText'] = $row['ann_text'];
                 $tags['userId'] = $row['id_user'];
-                $tags['userName'] = $row['user_firstName'] . ' ' . $row['user_lastName'];
+                $tags['userName'] = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
                 $tags['createdFriendly'] = $row['createdFriendly'];
                 $tags['createdRaw'] = $row['createdRaw'];
                 $tags['likes'] = $data['numLikes'];

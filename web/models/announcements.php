@@ -11,7 +11,7 @@ class Announcements {
 		$paginatedMembers = new Pagination($this->registry);
 		$paginatedMembers->setLimit(5);
 		$paginatedMembers->setOffset($offset);
-		$query = "SELECT * FROM listAnnouncements";
+		$query = "SELECT * FROM vwAnnouncements";
 		$paginatedMembers->setQuery($query);
 		$paginatedMembers->setMethod('cache');
 		$paginatedMembers->generatePagination();

@@ -15,9 +15,9 @@
 	$registry->getObject('db')->setActiveConnection($registry->getObject('db')->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']));
 	$registry->storeSetting($registry->getObject('db')->getActiveConnection(), "mainDB");
     $registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
-	$registry->getObject('db')->executeQuery("SELECT * FROM settings");
+	$registry->getObject('db')->executeQuery("SELECT * FROM setting");
 	while ($setting = $registry->getObject('db')->getRows()) {
-		$registry->storeSetting($setting['value'], $setting['key']);
+		$registry->storeSetting($setting['set_value'], $setting['id_setting']);
 	}
     if ($registry->getSetting('compatibilityMode')) {
         $registry->getObject('db')->setActiveConnection($registry->getObject('db')->newConnection($config['compatibilityDB']['host'], $config['compatibilityDB']['user'], $config['compatibilityDB']['password'], $config['compatibilityDB']['database']));
@@ -32,9 +32,9 @@
 	$registry->createAndStoreObject('template', 'template');
 	$registry->getObject('url')->getURLData();
 	$controllers = array();
-	$registry->getObject('db')->executeQuery("SELECT * FROM controllers WHERE active = 1");
+	$registry->getObject('db')->executeQuery("SELECT * FROM controller WHERE ctr_active = 1");
 	while ($controller = $registry->getObject('db')->getRows()) {
-		$controllers[] = $controller['controller']; 
+		$controllers[] = $controller['id_controller'];
 	}
 	$registry->getObject('auth')->checkForAuthentication();
 	$controller = $registry->getObject('url')->getURLBit(0);

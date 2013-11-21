@@ -18,7 +18,7 @@ class Announcement {
 	public function __construct(Registry $registry, $id = 0) {
 		$this->registry = $registry;
 		if ($id > 0) {
-			$this->registry->getObject('db')->executeQuery("SELECT * FROM selectAnnouncement WHERE id_announcement = $id");
+			$this->registry->getObject('db')->executeQuery("SELECT * FROM vwAnnouncement WHERE id_announcement = $id");
 			if ($this->registry->getObject('db')->numRows() == 1) {
 				$row = $this->registry->getObject('db')->getRows();
 				$this->id = $id;
@@ -29,7 +29,7 @@ class Announcement {
 				$this->updated = $row['ann_updated'];
 				$this->updatedFriendly = $row['updatedFriendly'];
 				$this->updatedRaw = $row['updatedRaw'];
-				$this->ownerName = $row['user_firstName'] . ' ' . $row['user_lastName'];
+				$this->ownerName = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
 				$this->ownerId = $row['id_user'];
 				$this->text = $row['ann_text'];
 				$this->valid = true;
@@ -94,7 +94,7 @@ class Announcement {
 				$data['ann_updated'] = date('Y-m-d H:i:s');
 				$data['ann_text'] = $this->text;
 				$data['ann_title'] = $this->title;
-				if ($this->registry->getObject('db')->updateRecords('announcements', $data, 'id_announcement = ' . $this->id)) {
+				if ($this->registry->getObject('db')->updateRecords('announcement', $data, 'id_announcement = ' . $this->id)) {
 					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Upravený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 					return true;
 				}
@@ -122,7 +122,7 @@ class Announcement {
 				$data['ann_text'] = $this->text;
 				$data['ann_created'] = date('Y-m-d H:i:s');
 				$data['ann_updated'] = date('Y-m-d H:i:s');
-				if ($this->registry->getObject('db')->insertRecords('announcements', $data)) {
+				if ($this->registry->getObject('db')->insertRecords('announcement', $data)) {
 					$this->id = $this->registry->getObject('db')->lastInsertID();
 					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Vytvorený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
 					return true;
@@ -146,7 +146,7 @@ class Announcement {
             $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
         }
 
-        if ($this->registry->getObject('db')->deleteRecords('announcements', "id_announcement = " . $this->id)) {
+        if ($this->registry->getObject('db')->deleteRecords('announcement', "id_announcement = " . $this->id)) {
             $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Odstránený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
             return true;
         }

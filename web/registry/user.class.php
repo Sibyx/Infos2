@@ -24,7 +24,7 @@ class User {
         $googleUserInfo->useObjects(true);
 		$data = $googleUserInfo->get();
 		$email = $data->getEmail();
-		$sql = "SELECT * FROM users WHERE user_email = '$email'";
+		$sql = "SELECT * FROM user WHERE usr_email = '$email'";
 		$this->registry->getObject('db')->executeQuery($sql);
 		if ($this->registry->getObject('db')->numRows() == 1) {
 			$row = $this->registry->getObject('db')->getRows();
@@ -32,9 +32,9 @@ class User {
 			$this->firstName = $data->getGiven_name();
 			$this->lastName = $data->getFamily_name();
 			$this->email = $data->getEmail();
-			$this->admin = $row['user_admin'];
-			$this->calendarSuplo = $row['user_calendarSuplo'];
-			$this->nick = $row['user_nick'];
+			$this->admin = $row['usr_admin'];
+			$this->calendarSuplo = $row['usr_calendarSuplo'];
+			$this->nick = $row['usr_nick'];
 			$this->valid = true;
 			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 		}
