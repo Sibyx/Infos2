@@ -21,7 +21,7 @@ class Like {
         if ($this->registry->getObject('db')->numRows() > 0) {
             $row = $this->registry->getObject('db')->getRows();
             $this->id = $row['id_like'];
-            $this->status = $row['like_status'];
+            $this->status = $row['lik_status'];
             $this->valid = true;
         }
         else {
@@ -41,14 +41,14 @@ class Like {
     public function save() {
         if ($this->id > 0) {
             $update = array();
-            $update['like_status'] = $this->status;
+            $update['lik_status'] = $this->status;
             $this->registry->getObject('db')->updateRecords('likes', $update, 'id_like = ' . $this->id);
         }
         else {
             $insert = array();
             $insert['id_announcement'] = $this->announcementId;
             $insert['id_user'] = $this->registry->getObject('auth')->getUser()->getId();
-            $insert['like_status'] = $this->status;
+            $insert['lik_status'] = $this->status;
             $this->registry->getObject('db')->insertRecords('likes', $insert);
             $this->id = $this->registry->getObject('db')->lastInsertID();
         }

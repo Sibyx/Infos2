@@ -3,15 +3,21 @@
 	<div class="large-12 columns">
 		<header><h2>Nový oznam</h2></header>
 		<form id="formNewAnn" name="formNewAnn" action="{siteurl}/announcements/new" enctype="application/x-www-form-urlencoded" method="post">
-			<div class="field">
-				<input type="text" id="newAnn_title" name="newAnn_title" placeholder="Titulok" required/>
+			<div class="row">
+                <div class="large-11 columns">
+                    <input type="text" id="newAnn_title" name="newAnn_title" placeholder="Titulok" required/>
+                </div>
 			</div>
-			<div>
-				<textarea id="newAnn_text" name="newAnn_text"></textarea>
+			<div class="row">
+                <div class="large-12 columns">
+				    <textarea id="newAnn_text" name="newAnn_text"></textarea>
+                </div>
 			</div>
-			<div class="field">
-				<button type="submit">Odoslať oznam</button>
-			</div>
+            <div class="row">
+                <div class="small-3 small-centered columns">
+                    <button type="submit" style="margin-top: 20px;">Odoslať oznam</button>
+                </div>
+            </div>
 		</form>
 	</div>
 </section>
