@@ -9,18 +9,22 @@ class Email {
 		$this->registry = $registry;
 		$this->mail = new PHPMailer(true);
 		$this->mail->IsSMTP();
-		$this->mail->Host = "smtp.websupport.sk";
+		$this->mail->Host = $this->registry->getSetting('emailHost');
 		$this->mail->SMTPDebug = 0;
 		$this->mail->SMTPAuth = true;
 		$this->mail->SMTPSecure = "ssl";
-		$this->mail->Port = 465;
-		$this->mail->Username = "robot@cncgravirovacky.sk";
-		$this->mail->Password = "andromeda255";
+		$this->mail->Port = $this->registry->getSetting('emailPort');
+		$this->mail->Username = $this->registry->getSetting('emailUsername');
+		$this->mail->Password = $this->registry->getSetting('emailPassword');
 	}
 	
 	public function setRecipient($email) {
 		$this->mail->AddAddress($email);
 	}
+
+    public function addBCC($email) {
+        $this->mail->addBCC($email);
+    }
 	
 	public function buildFromText($message){
 		$this->message .= $message;
@@ -28,7 +32,7 @@ class Email {
 	
 	public function setSender($email = '', $name = '') {
 		if($email == '' && $name == '') {
-			$this->mail->SetFrom($this->registry->getSetting('adminEmailAddress'), $this->registry->getSetting('sitename'));
+			$this->mail->SetFrom($this->registry->getSetting('emailUsername'), 'GVPT Newsletter');
 			return true;
 		}
 		else {

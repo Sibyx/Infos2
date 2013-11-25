@@ -50,6 +50,8 @@ class eventsController {
                 $event->setStartDate($_POST['newEvent_date'], $_POST['newEvent_startTime']);
                 $event->setEndDate($_POST['newEvent_date'], $_POST['newEvent_endTime']);
                 if ($event->save()) {
+                    require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                    $newsletter = new newsletterManager($this->registry, 'newEvent', $event->toArray());
                     $redirectBits = array();
                     $redirectBits[] = 'events';
                     $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola vytvorená!', 'success');
