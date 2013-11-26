@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Nové suplovanie na GVPT</title>
+<title>Nový oznam na GVPT</title>
 
 <style type="text/css">
 /* -------------------------------------
@@ -212,22 +212,6 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
     float:left;
 }
 
-.suploTable {
-    width: 100%;
-    margin: 0 auto;
-    font-size: .9em;
-    line-height: 1.4em;
-}
-
-.suploTable th {
-    text-align: left;
-    border-bottom: 1px solid #000000;
-}
-
-.suploTable th, .suploTable td{
-    padding: .6em;
-}
-
 /* Be sure to place a .clear element after each set of columns, just to be safe */
 .clear { display: block; clear: both; }
 
@@ -251,68 +235,53 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
 </style>
 
 </head>
-
+ 
 <body bgcolor="#FFFFFF">
 
 <!-- HEADER -->
 <table class="head-wrap" bgcolor="#FFFFFF">
-    <tr>
-        <td></td>
-        <td class="header container" >
-            <div class="content">
-                <table bgcolor="#FFFFFF">
-                    <tr>
-                        <td><img src="{siteurl}/views/{defaultView}/images/logoEmail.png" alt="Infos logo"/></td>
-                        <td align="right"><h6 class="collapse">Gymnázium Viliama Paulinyho - Tótha</h6></td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-        <td></td>
-    </tr>
+	<tr>
+		<td></td>
+		<td class="header container" >
+			<div class="content">
+				<table bgcolor="#FFFFFF">
+					<tr>
+						<td><img src="{siteurl}/views/{defaultView}/images/logoEmail.png" alt="Infos logo"/></td>
+						<td align="right"><h6 class="collapse">Gymnázium Viliama Paulinyho - Tótha</h6></td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		<td></td>
+	</tr>
 </table><!-- /HEADER -->
 
 <!-- BODY -->
 <table class="body-wrap">
-    <tr>
-        <td></td>
-        <td class="container" bgcolor="#FFFFFF">
-            <div class="content">
-                <table>
-                    <tr>
-                        <td>
-                            <h3>{suploTitle}</h3>
-                            <table class="suploTable">
-                                <thead>
-                                <tr>
-                                    <th>Hodina</th>
-                                    <th>Vyučujúci</th>
-                                    <th>Trieda</th>
-                                    <th>Predmet</th>
-                                    <th>Učebňa</th>
-                                    <th>Zastupujúci</th>
-                                    <th>Poznámka</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {suploTable}
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div><!-- /content -->
-        </td>
-        <td></td>
-    </tr>
+	<tr>
+		<td></td>
+		<td class="container" bgcolor="#FFFFFF">
+			<div class="content">
+			<table>
+				<tr>
+					<td>
+						<h3>{annTitle}</h3>
+						<p class="lead">{annText}</p>
+					</td>
+				</tr>
+			</table>
+			</div><!-- /content -->
+		</td>
+		<td></td>
+	</tr>
 </table><!-- /BODY -->
 
 <!-- FOOTER -->
 <table class="footer-wrap">
-    <tr>
-        <td></td>
-        <td class="container">
-            <!-- content -->
+	<tr>
+		<td></td>
+		<td class="container">
+			<!-- content -->
             <div class="content">
                 <table>
                     <tr>
@@ -324,9 +293,9 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
                     </tr>
                 </table>
             </div><!-- /content -->
-        </td>
-        <td></td>
-    </tr>
+		</td>
+		<td></td>
+	</tr>
 </table><!-- /FOOTER -->
 
 </body>

@@ -144,6 +144,8 @@ class eventsController {
                     $event->setEndDate($_POST['editEvent_date'], $_POST['editEvent_endTime']);
 
                     if ($event->save()) {
+                        require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                        $newsletter = new newsletterManager($this->registry, 'newEvent', $event->toArray());
                         $redirectBits = array();
                         $redirectBits[] = 'events';
                         $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola upravená!', 'success');

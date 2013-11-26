@@ -108,6 +108,8 @@ class suploController {
                         }
                     }
                 }
+                require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                $newsletter = new newsletterManager($this->registry, 'newSuplo', $date);
                 $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie na ' . $date->format("Y-m-d"));
                 $redirectBits = array();
                 $redirectBits[] = 'suplo';

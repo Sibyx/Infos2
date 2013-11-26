@@ -185,6 +185,8 @@ class announcementsController {
                     $announcement->setTitle($_POST['editAnn_title']);
                     $announcement->setText($_POST['editAnn_text']);
                     if ($announcement->save()) {
+                        require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                        $newsletter = new newsletterManager($this->registry, 'newAnnouncement', $announcement->toArray());
                         $redirectBits[] = 'announcements';
                         $redirectBits[] = 'view';
                         $redirectBits[] = $announcement->getId();
