@@ -17,9 +17,12 @@
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/fonts.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/style.css" />
-		
-	<!-- JS tt-->
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{siteurl}/views/{defaultView}/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{siteurl}/views/{defaultView}/images/favicon.ico" type="image/x-icon">
+		
+	<!-- JS -->
 	<script src="{siteurl}/views/{defaultView}/js/jquery-2.0.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="{siteurl}/views/{defaultView}/js/jquery-ui-timepicker-addon.js"></script>

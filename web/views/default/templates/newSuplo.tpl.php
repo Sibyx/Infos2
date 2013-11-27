@@ -24,6 +24,7 @@
                 <div class="large-12 columns">
 				    <textarea id="newSuplo_data" name="newSuplo_data" style="height: 350px; margin-bottom: 20px;"></textarea>
 			    </div>
+            </div>
 			<div class="row">
                 <div class="small-3 small-centered columns">
                     <button type="submit">Odoslať suplovanie</button>
