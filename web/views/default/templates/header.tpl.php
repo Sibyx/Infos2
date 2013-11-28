@@ -1,4 +1,4 @@
-<nav class="top-bar">
+<nav class="top-bar" data-topbar>
     <ul class="title-area">
         <li class="name">
             <h1><a href="{siteurl}"><img src="{siteurl}/views/{defaultView}/images/logo.png" style="height: 30px;"/></a></h1>
@@ -22,7 +22,7 @@
             <li class="has-dropdown">
                 <a href="#">Užívateľ</a>
                 <ul class="dropdown">
-                    <li><a href="{siteurl}/profile">Profil</a></li>
+                    <li><a href="{siteurl}/profile" target="_blank">Profil</a></li>
                     <li><a href="{siteurl}/profile/settings">Nastavenia</a></li>
                     <li class="divider"></li>
                     <li><a href="{siteurl}/authenticate/logout">Odhlásiť sa</a></li>

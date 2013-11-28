@@ -23,24 +23,14 @@
     <link rel="icon" href="{siteurl}/views/{defaultView}/images/favicon.ico" type="image/x-icon">
 		
 	<!-- JS -->
-	<script src="{siteurl}/views/{defaultView}/js/jquery-2.0.0.min.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/vendor/jquery.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="{siteurl}/views/{defaultView}/js/jquery-ui-timepicker-addon.js"></script>
     <script src="{siteurl}/views/{defaultView}/js/moment.min.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/scripts.js"></script>
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
     <script src="https://apis.google.com/js/plusone.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/vendor/custom.modernizr.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.abide.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.alerts.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.forms.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.orbit.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.placeholder.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.reveal.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/foundation/foundation.section.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.tooltips.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/foundation/foundation.topbar.js"></script>
+    <script src="{siteurl}/views/{defaultView}/js/scripts.js"></script>
 
 	<!-- Jebnuty explorer! -->
 	<!--[if lt IE 8]><script type="text/javascript">alert("Your browser is obsolete, please use Mozilla Firefox!");</script><![endif]-->
@@ -64,14 +54,15 @@
 			</div>
 		</div>
 	</footer>
-    <div id="myModal" class="reveal-modal medium">
+    <div id="myModal" class="reveal-modal medium" data-reveal>
     </div>
-    <div id="loader" class="reveal-modal text-center small">
+    <div id="loader" class="reveal-modal text-center small" data-reveal>
         <span>Načítavam</span>
         <br />
         <img src="{siteurl}/views/{defaultView}/images/ajax-loader.gif" alt="AJAX Loader"/>
     </div>
     <div class="reveal-modal-bg" style="display: none"></div>
+    <script src="{siteurl}/views/{defaultView}/js/foundation.min.js"></script>
     <script>
 		$(document).foundation();
 	</script>
