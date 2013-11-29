@@ -8,6 +8,11 @@
                     <input type="text" id="newAnn_title" name="newAnn_title" placeholder="Titulok" required/>
                 </div>
 			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <input type="text" id="newAnn_deadline" name="newAnn_deadline" placeholder="Zobrazovať do" required />
+                </div>
+            </div>
 			<div class="row">
                 <div class="large-12 columns">
 				    <textarea id="newAnn_text" name="newAnn_text"></textarea>
@@ -22,6 +27,14 @@
 	</div>
 </section>
 <script type="text/javascript">
+    $(function(){
+        $("#newAnn_deadline").datepicker({
+            dateFormat: "dd.mm.yy",
+            firstDay: 1,
+            dayNamesMin:["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
+            monthNames: ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"]
+        });
+    });
 	tinymce.init({
 		selector: "#newAnn_text",
 		plugins: ["autolink link charmap anchor","searchreplace visualblocks code ","insertdatetime table paste"],

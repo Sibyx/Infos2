@@ -13,6 +13,7 @@ class Announcement {
 	private $ownerId;
 	private $title;
 	private $text;
+    private $deadline;
 	private $valid;
 	
 	public function __construct(Registry $registry, $id = 0) {
@@ -25,13 +26,14 @@ class Announcement {
 				$this->title = $row['ann_title'];
 				$this->created = $row['ann_created'];
 				$this->createdFriendly = $row['createdFriendly'];
-				$this->createdRaw = $row['createdRaw'];
+				$this->createdRaw = $row['ann_created'];
 				$this->updated = $row['ann_updated'];
 				$this->updatedFriendly = $row['updatedFriendly'];
-				$this->updatedRaw = $row['updatedRaw'];
+				$this->updatedRaw = $row['ann_updated'];
 				$this->ownerName = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
 				$this->ownerId = $row['id_user'];
 				$this->text = $row['ann_text'];
+                $this->deadline = new DateTime($row['ann_deadline']);
 				$this->valid = true;
 			}
 			else {
@@ -57,16 +59,17 @@ class Announcement {
 	public function getId() {
 		return $this->id;
 	}
-	
-	public function toArray() {
-		$result = array();
-		foreach($this as $field => $data) {
-			if(!is_object($data) && !is_array($data)) {
-				$result[$field] = $data;
-			}
-		}
-		return $result;
-	}
+
+    public function toArray() {
+        $result = array();
+        $forbidden = array('registry');
+        foreach($this as $field => $data) {
+            if(!in_array($field, $forbidden)) {
+                $result[$field] = $data;
+            }
+        }
+        return $result;
+    }
 	
 	public function setTitle($value) {
 		$this->title = $this->registry->getObject('db')->sanitizeData($value);
@@ -75,6 +78,10 @@ class Announcement {
 	public function setText($value) {
 		$this->text = $this->registry->getObject('db')->sanitizeData($value);
 	}
+
+    public function setDeadline($value) {
+        $this->deadline = new DateTime($value);
+    }
 	
 	public function save() {
 		if($this->registry->getObject('auth')->isLoggedIn()) {
@@ -90,7 +97,7 @@ class Announcement {
                     $this->registry->getObject('db')->updateRecords('oznamy', $changes, 'id_oznam=' . $this->id);
                     $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
                 }
-
+                $data['ann_deadline'] = $this->deadline->format("Y-m-d");
 				$data['ann_updated'] = date('Y-m-d H:i:s');
 				$data['ann_text'] = $this->text;
 				$data['ann_title'] = $this->title;
@@ -122,6 +129,7 @@ class Announcement {
 				$data['ann_text'] = $this->text;
 				$data['ann_created'] = date('Y-m-d H:i:s');
 				$data['ann_updated'] = date('Y-m-d H:i:s');
+                $data['ann_deadline'] = $this->deadline->format("Y-m-d");
 				if ($this->registry->getObject('db')->insertRecords('announcement', $data)) {
 					$this->id = $this->registry->getObject('db')->lastInsertID();
 					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Vytvorený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());

@@ -17,5 +17,17 @@ class Announcements {
 		$paginatedMembers->generatePagination();
 		return $paginatedMembers;
 	}
+
+    public function listActualAnnouncements() {
+        require_once(FRAMEWORK_PATH . 'libs/pagination/pagination.class.php');
+        $paginatedMembers = new Pagination($this->registry);
+        $paginatedMembers->setLimit(5);
+        $paginatedMembers->setOffset(0);
+        $query = "SELECT * FROM vwAnnouncements WHERE ann_deadline > '" . date("Y-m-d") . "'";
+        $paginatedMembers->setQuery($query);
+        $paginatedMembers->setMethod('cache');
+        $paginatedMembers->generatePagination();
+        return $paginatedMembers;
+    }
 }
 ?>

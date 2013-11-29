@@ -139,6 +139,7 @@ class announcementsController {
                 $announcement = new Announcement($this->registry);
                 $announcement->setTitle($_POST['newAnn_title']);
                 $announcement->setText($_POST['newAnn_text']);
+                $announcement->setDeadline($_POST['newAnn_deadline']);
                 if ($announcement->save()) {
                     $id = $announcement->getId();
                     require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
@@ -184,6 +185,7 @@ class announcementsController {
                 if ($announcement->isValid()) {
                     $announcement->setTitle($_POST['editAnn_title']);
                     $announcement->setText($_POST['editAnn_text']);
+                    $announcement->setDeadline($_POST['editAnn_deadline']);
                     if ($announcement->save()) {
                         require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
                         $newsletter = new newsletterManager($this->registry, 'newAnnouncement', $announcement->toArray());
@@ -227,6 +229,7 @@ class announcementsController {
 		$tags['ann_title'] = $data['title'];
 		$tags['ann_text'] = $data['text'];
 		$tags['id_ann'] = $data['id'];
+        $tags['ann_deadline'] = $data['deadline']->format("j.n.Y");
 		$this->registry->getObject('template')->buildFromTemplate('editAnnouncement');
 		$this->registry->getObject('template')->replaceTags($tags);
 		echo $this->registry->getObject('template')->parseOutput();

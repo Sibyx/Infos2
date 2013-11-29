@@ -40,7 +40,7 @@ class defaultController {
 		require_once(FRAMEWORK_PATH . 'models/announcements.php');
         require_once(FRAMEWORK_PATH . 'models/likes.php');
 		$announcements = new Announcements($this->registry);
-		$pagination = $announcements->listAnnouncements(0);
+		$pagination = $announcements->listActualAnnouncements();
 		$output = '';
 		if ($pagination->getNumRowsPage() == 0) {
 			$output .= '<article class="text-center">Žiadne oznamy</article>' . "\n";
@@ -56,7 +56,7 @@ class defaultController {
                 $tags['userId'] = $row['id_user'];
                 $tags['userName'] = $row['usr_firstName'] . ' ' . $row['usr_lastName'];
                 $tags['createdFriendly'] = $row['createdFriendly'];
-                $tags['createdRaw'] = $row['createdRaw'];
+                $tags['createdRaw'] = $row['ann_created'];
                 $tags['likes'] = $data['numLikes'];
                 $tags['dislikes'] = $data['numDislikes'];
                 $tags['likers'] = $data['likers'];
