@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/normalize.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/fonts.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/webicons.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/style.css" />
 
     <!-- Favicon -->
@@ -42,15 +43,18 @@
 	<footer>
 		<div class="row">
 			<div class="large-3 columns">
-				<img src="{siteurl}/views/{defaultView}/images/logoSkola.png" alt="GVPT" style="height:80px; margin:5px;"/>
+				<img src="{siteurl}/views/{defaultView}/images/logo.png" alt="Infos" style="height:30px; width: auto; margin:5px;"/>
+			    <p class="text-right white"><small style="font-size: x-small">by <a href="http://jakubdubec.me" target="_blank" rel="author">Jakub Dubec</a> &copy; 2013</small></p>
+            </div>
+			<div class="large-5 columns">
+                <ul class="inline-list text-left">
+                    <li><a href="{siteurl}/about">O projekte</a></li>
+                    <li><a href="{siteurl}/about/blog">Blog &amp; novinky</a></li>
+                    <li><a href="{siteurl}/about/bug">Nahlásiť chybu</a></li>
+                </ul>
 			</div>
-			<div class="large-6 columns">
-				<strong>Jakub Dubec</strong>
-				<br />
-				All rights reserved. &copy;
-			</div>
-			<div class="large-3 columns">
-				<a href="http://www.w3.org/html/logo/" rel="external" target="_blank"><img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-performance-semantics.png" width="197" height="64" alt="HTML5 Powered with CSS3 / Styling, Performance &amp; Integration, and Semantics" title="HTML5 Powered with CSS3 / Styling, Performance &amp; Integration, and Semantics" /></a>
+			<div class="large-4 columns text-right">
+                <a href="https://plus.google.com/113484997719165826845" rel="publisher" class="webicon googleplus large svg" target="_blank">Follow us on Google+</a>
 			</div>
 		</div>
 	</footer>

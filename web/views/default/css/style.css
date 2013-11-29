@@ -156,7 +156,18 @@ article p {
 body > footer {
 	margin-top: 50px;
 	min-height: 100px;
-	background: #EEE;
+	background: #333333;
 	padding: 20px 0 0;
 	text-align: center;
+}
+
+body > footer .inline-list li a {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #ffffff !important;
+    font-size: small;
+}
+
+body > footer .inline-list li a:hover {
+    text-decoration: none;
 }
