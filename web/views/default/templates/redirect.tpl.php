@@ -5,7 +5,7 @@
 			<div class="large-8 large-centered columns">
 				<div class="row">
                     <div class="large-12 columns">
-					    <h2 class="text-center">Presmerovanie</h2>
+					    <h2 class="text-center">{lang_redirect}</h2>
                     </div>
 				</div>
 			</div>

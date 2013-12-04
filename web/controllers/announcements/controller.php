@@ -35,7 +35,7 @@ class announcementsController {
 			$redirectBits = array();
 			$redirectBits[] = 'authenticate';
 			$redirectBits[] = 'login';
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Musíš byť prihlásený', 'alert');
+			$this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
 		}
 	}
 	
@@ -45,7 +45,7 @@ class announcementsController {
 		$pagination = $announcements->listAnnouncements($offset);
         $annOutput = '';
 		if ($pagination->getNumRowsPage() == 0) {
-			$annOutput .= '<div class="">Žiadne oznamy</div>' . "\n";
+			$annOutput .= '<div class="">{lang_noAnnouncements}</div>' . "\n";
 		}
 		else {
 			while ($row = $this->registry->getObject('db')->resultsFromCache($pagination->getCache())) {
@@ -83,7 +83,7 @@ class announcementsController {
             $pagOutput .= '<li class="arrow"><a href="' . $this->registry->getSetting('siteurl') . '/announcements/' . ($pagination->getCurrentPage()) . '">&raquo;</a></li>' . "\n";
 		}
         $tags = array();
-        $tags['title'] = 'Oznamy - Infos2';
+        $tags['title'] = '{lang_announcements} - ' . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $tags['announcements'] = $annOutput;
@@ -120,7 +120,7 @@ class announcementsController {
             $tags['announcement'] = $this->registry->getObject('template')->parseOutput();
             $this->registry->getObject('template')->buildFromTemplate('header', false);
             $tags['header'] = $this->registry->getObject('template')->parseOutput();
-            $tags['title'] = $data['title'] . ' - Infos2';
+            $tags['title'] = $data['title'] . ' - ' . $this->registry->getSetting('sitename');
 			$this->registry->getObject('template')->buildFromTemplate('viewAnnouncement');
 			$this->registry->getObject('template')->replaceTags($tags);
 			echo $this->registry->getObject('template')->parseOutput();
@@ -128,7 +128,7 @@ class announcementsController {
 		else {
 			$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::viewAnnouncement] - Pokus o otvorenie neexistujúceho oznamu');
 			$redirectBits = array();
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
+			$this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
 		}
 	}
 	
@@ -148,12 +148,12 @@ class announcementsController {
                     $redirectBits[] = 'announcements';
                     $redirectBits[] = 'view';
                     $redirectBits[] = $id;
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol vytvorený!', 'success');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_announcementCreated}', 'success');
                 }
                 else {
                     $redirectBits[] = 'announcements';
                     $redirectBits[] = 'new';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri ukladaní zmien. Skúste prosím znova.', 'alert');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorCreatingAnnouncement}', 'alert');
                 }
             }
             else {
@@ -163,13 +163,13 @@ class announcementsController {
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť oznam.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 	
 	private function uiNew() {
 		$tags = array();
-		$tags['title'] = 'Nový oznam - Infos2';
+		$tags['title'] = '{lang_newAnnouncement} - ' . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
 		$this->registry->getObject('template')->buildFromTemplate('newAnnouncement');
@@ -192,19 +192,19 @@ class announcementsController {
                         $redirectBits[] = 'announcements';
                         $redirectBits[] = 'view';
                         $redirectBits[] = $announcement->getId();
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol upravený!', 'success');
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_announcementEdited}', 'success');
                     }
                     else {
                         $redirectBits[] = 'announcements';
                         $redirectBits[] = 'edit';
                         $redirectBits[] = $id;
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri ukladaní zmien. Skúste prosím znova.', 'alert');
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorEditingAnnouncement}', 'alert');
                     }
                 }
                 else {
                     $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements',  'Pokus o upravenie neexistujúceho oznamu');
                     $redirectBits = array();
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
                 }
             }
             else {
@@ -214,13 +214,13 @@ class announcementsController {
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť oznam.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie oznamu!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 	
 	private function uiEdit($id) {
 		$tags = array();
-		$tags['title'] = 'Upraviť oznam - Infos2';
+		$tags['title'] = '{lang_editAnnouncement} - ' . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
@@ -244,24 +244,24 @@ class announcementsController {
             if ($announcement->isValid()) {
                 if ($likes->remove() && $announcement->remove()) {
                     $redirectBits = array();
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam bol odstránený', 'success');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_announcementDeleted}', 'success');
                 }
                 else {
                     $redirectBits[] = 'announcements';
                     $redirectBits[] = 'view';
                     $redirectBits[] = $id;
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri odstraňovaní. Skúste prosím znova.', 'alert');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorDeletingAnnouncement}', 'alert');
                 }
             }
             else {
                 $redirectBits[] = 'announcements';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Oznam neexistuje!', 'alert');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
             }
         }
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť oznam id = [' . $id . ']');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na odstránenie oznamu!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 

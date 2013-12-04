@@ -34,7 +34,6 @@ class Template {
 		$tags['defaultView'] = $this->registry->getSetting('view');
 		$tags['sitename'] = $this->registry->getSetting('sitename');
 		$tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
-		$tags['userPanel'] = $this->registry->getObject('render')->createUserPanel();
         if (file_exists(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/userreport.tpl.php')) {
             $tags['userreport'] = file_get_contents(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/userreport.tpl.php');
         }
@@ -48,7 +47,18 @@ class Template {
 				}
 			}
 		}
+        $this->replaceLangTags();
 	}
+
+    private function replaceLangTags() {
+        $langTags = parse_ini_file(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/lang/' . $this->registry->getSetting('lang') . '.lang.ini', false);
+        $this->registry->firephp->log($langTags);
+        foreach($langTags as $tag => $data) {
+            if(!is_array($data)) {
+                $this->page = str_replace('{' . $tag . '}', $data, $this->page);
+            }
+        }
+    }
 	
 	public function parseOutput() {
 		return $this->page;

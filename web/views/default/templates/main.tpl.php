@@ -5,8 +5,6 @@
 	<meta charset="utf-8" />
 	<title>{title}</title>
 	<meta name="robots" content="noindex, nofollow" />
-	<meta name="description" content="{meta-description}" />
-	<meta name="keywords" content="{meta-keywords}" />
 	<meta name="author" content="Jakub Dubec" />
 	<meta name="viewport" content="width=device-width" />
     <link href="https://plus.google.com/113484997719165826845" rel="publisher" />
@@ -48,9 +46,9 @@
             </div>
 			<div class="large-5 columns">
                 <ul class="inline-list text-left">
-                    <li><a href="{siteurl}/about">O projekte</a></li>
-                    <li><a href="{siteurl}/about/blog">Blog &amp; novinky</a></li>
-                    <li><a href="{siteurl}/about/bug">Nahlásiť chybu</a></li>
+                    <li><a href="{siteurl}/about">{lang_aboutProject}</a></li>
+                    <li><a href="{siteurl}/about/blog">{lang_aboutBlog}</a></li>
+                    <li><a href="{siteurl}/about/bug">{lang_reportBug}</a></li>
                 </ul>
 			</div>
 			<div class="large-4 columns text-right">
@@ -61,7 +59,7 @@
     <div id="myModal" class="reveal-modal medium" data-reveal>
     </div>
     <div id="loader" class="reveal-modal text-center small" data-reveal>
-        <span>Načítavam</span>
+        <span>{lang_loading}</span>
         <br />
         <img src="{siteurl}/views/{defaultView}/images/ajax-loader.gif" alt="AJAX Loader"/>
     </div>

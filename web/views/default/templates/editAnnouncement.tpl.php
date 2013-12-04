@@ -1,7 +1,7 @@
 {header}
 <section class="row">
 	<div class="large-12 columns">
-		<header><h2>Upraviť oznam</h2></header>
+		<header><h2>{lang_editAnnouncement}</h2></header>
 		<form id="formEditAnn" name="formEditAnn" action="{siteurl}/announcements/edit/{id_ann}" enctype="application/x-www-form-urlencoded" method="post">
 			<div class="row">
                 <div class="large-12 columns">

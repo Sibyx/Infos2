@@ -11,8 +11,8 @@ class Likes {
     private $announcementId;
     private $numLikes = 0;
     private $numDislikes = 0;
-    private $likers = "Príspevok zatiaľ nedostal kladné hodnotenie.";
-    private $dislikers = "Príspevok zatiaľ nedostal záporne hodnotenie.";
+    private $likers = "{lang_noLikes}";
+    private $dislikers = "{lang_noDislikes}";
 
     public function __construct(Registry $registry, $announcementId) {
         $this->registry = $registry;

@@ -35,7 +35,7 @@ class AuthenticateController {
 		}
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
 			$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Authenticate', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' bol prihlásený');
-			$this->registry->redirectURL($this->registry->buildURL(array()), 'Bol si úspešne prihlásený!', 'success');
+			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogin}', 'success');
 		}
 		else {
 			header('Location: ' . filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
@@ -51,10 +51,10 @@ class AuthenticateController {
 	private function logout() {
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
 			$this->registry->getObject('auth')->logout();
-			$this->registry->redirectURL($this->registry->buildURL(array()), 'Odhlásenie bolo úspešné!', 'success');
+			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogout}', 'success');
 		}
 		else {
-			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'Veď nie si prihlásený o.O', 'alert');
+			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), '{lang_noLoggedIn}', 'alert');
 		}
 	}
 }
