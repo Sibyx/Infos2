@@ -31,14 +31,14 @@ class suploController {
         else {
             $redirectBits[] = 'authenticate';
             $redirectBits[] = 'login';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Musíš byť prihlásený', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
         }
 	}
 
 	private function viewSuplo($date) {
         $date = new DateTime($date);
 		$tags = array();
-		$tags['title'] = "Suplovanie na " . $date->format("j. n. Y") . " - Infos2";
+		$tags['title'] = "{lang_suplo} " . $date->format("j. n. Y") . " - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $tags['dateFormated'] = $date->format("j. n. Y");
@@ -68,7 +68,7 @@ class suploController {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
             $result = array();
             $result['text'] = $output;
-            $result['header'] = "Suplovanie na " . $date->format("j. n. Y");
+            $result['header'] = "{lang_suplo} " . $date->format("j. n. Y");
             echo json_encode($result);
         }
         else {
@@ -115,7 +115,7 @@ class suploController {
                 $redirectBits[] = 'suplo';
                 $redirectBits[] = 'view';
                 $redirectBits[] = $date->format("Y-m-d");
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Suplovanie bolo úspešne vytvorené!', 'success');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_suploCreated}', 'success');
             }
             else {
                 $this->uiNew();
@@ -124,7 +124,7 @@ class suploController {
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť/upraviť suplovanie.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávnenia na vytvorenie suplovania!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 
@@ -132,7 +132,7 @@ class suploController {
         $date = new DateTime();
 		$tags = array();
 
-		$tags['title'] = "Nové suplovanie - Infos2";
+		$tags['title'] = "{lang_newSuplo} - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
 		$this->registry->getObject('template')->buildFromTemplate('newSuplo');
@@ -143,7 +143,7 @@ class suploController {
 		require_once(FRAMEWORK_PATH . 'models/suploTable.php');
 		$suploTable = new suploTable($this->registry, $date);
 		if ($suploTable->numRecords() > 0) {
-			$tags['suploExists'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d.m.Y") . ' už existuje  - prepisujem</a>' . "\n";
+			$tags['suploExists'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">{lang_suploExists}</a>' . "\n";
 		}
 		else {
 			$tags['suploExists'] = "";
@@ -175,7 +175,7 @@ class suploController {
         $this->registry->getObject('db')->executeQuery("SELECT id_suplo FROM suplo WHERE sup_date = '$dateFormated'");
         if ($this->registry->getObject('db')->numRows() > 0) {
             $result['exists'] = true;
-            $result['text'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">Suplovanie na ' . $date->format("d. m. Y") . ' už existuje  - prepisujem</a>' . "\n";
+            $result['text'] = '<a class="alert label" href="' . $this->registry->getSetting('siteurl') . '/suplo/view/' . $date->format("Y-m-d") . '" style="margin: 5px 0;">{lang_suploExists}</a>' . "\n";
         }
         else {
             $result['exists'] = false;
@@ -204,13 +204,13 @@ class suploController {
             }
         }
         else {
-            $output .= '<tr><th colspan="5" class="text-center">Tento mesiac si ešte nesuploval!</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{noSuploForThisMonth}</th></tr>' . "\n";
         }
         $tags = array();
         $tags['suploHistory'] = $output;
         $tags['month'] = date("F Y");
         $tags['teacherName'] = $this->registry->getObject('auth')->getUser()->getFullName();
-        $tags['title'] = "Výkaz nadčasov a suplovania";
+        $tags['title'] = "{lang_suploHistoryHeader} - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('suploSummary', false);
         $this->registry->getObject('template')->replaceTags($tags);
         echo $this->registry->getObject('template')->parseOutput();

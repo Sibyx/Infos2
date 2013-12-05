@@ -2,13 +2,13 @@
 <section class="row">
 	<div class="large-12 columns">
 		<header>
-			<h2>Nové suplovanie</h2>
+			<h2>{lang_newSuplo}</h2>
 		</header>
 		<form id="formNewSuplo" name="formNewSuplo" action="{siteurl}/suplo/new/" enctype="application/x-www-form-urlencoded" method="post">
 			<div class="row">
 
                 <div class="small-1 columns">
-                    <label for="right-label" class="left inline">Dátum</label>
+                    <label for="right-label" class="left inline">{lang_date}</label>
                 </div>
 
                 <div class="large-4 columns">
@@ -27,7 +27,7 @@
             </div>
 			<div class="row">
                 <div class="small-3 small-centered columns">
-                    <button type="submit">Odoslať suplovanie</button>
+                    <button type="submit">{lang_send}</button>
                 </div>
 			</div>
 		</form>
@@ -38,8 +38,8 @@
 		$("#newSuplo_date").datepicker({
 			dateFormat: "dd.mm.yy",
 			firstDay: 1,
-			dayNamesMin:["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
-			monthNames: ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"],
+            dayNamesMin:["{lang_sundayShor}", "{lang_mondayShort}", "{lang_tuesdayShort}", "{lang_wednesdayShort}", "{lang_thursdayShort}", "{lang_fridayShort}", "{lang_saturdayShort}"],
+            monthNames: ["{lang_january}", "{lang_february}", "{lang_march}", "{lang_april}", "{lang_may}", "{lang_june}", "{lang_july}", "{lang_august}", "{lang_september}", "{lang_october}", "{lang_november}", "{lang_december}"],
             beforeShowDay: $.datepicker.noWeekends
 		});
 	});

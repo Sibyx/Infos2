@@ -74,7 +74,7 @@ class newsletterManager {
         $cache = $this->newsletterList->getSuploMails();
         $email = new Email($this->registry);
         $email->setSender();
-        $email->setSubject('Suplovanie na ' . $date->format("j. n. Y"));
+        $email->setSubject('{lang_suplo} ' . $date->format("j. n. Y"));
         $email->buildFromTemplate('newSuplo.html');
         $tags['siteurl'] = $this->registry->getSetting('siteurl');
         $tags['defaultView'] = $this->registry->getSetting('view');
@@ -96,7 +96,7 @@ class newsletterManager {
             $output .= $row;
         }
         $tags['suploTable'] = $output;
-        $tags['suploTitle'] = 'Suplovanie na ' . $date->format("j. n. Y");
+        $tags['suploTitle'] = '{lang_suplo} ' . $date->format("j. n. Y");
         $email->replaceTags($tags);
         while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
             $email->addBCC($row['nwt_email']);
@@ -116,7 +116,7 @@ class newsletterManager {
                 $email->buildFromTemplate('newSuplo.html');
                 $tags['siteurl'] = $this->registry->getSetting('siteurl');
                 $tags['defaultView'] = $this->registry->getSetting('view');
-                $tags['suploTitle'] = 'Suplovanie na ' . $date->format("j. n. Y");
+                $tags['suploTitle'] = '{lang_suplo} ' . $date->format("j. n. Y");
                 $output = '';
                 while ($suploRow = $this->registry->getObject('db')->getRows()) {
                     $suploRecord = new suploRecord($this->registry, $suploRow['id_suplo']);

@@ -58,7 +58,18 @@ class Email {
 				}
 			}
 		}
+        $this->replaceLangTags();
 	}
+
+    private function replaceLangTags() {
+        $langTags = parse_ini_file(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/lang/' . $this->registry->getSetting('lang') . '.lang.ini', false);
+        $this->registry->firephp->log($langTags);
+        foreach($langTags as $tag => $data) {
+            if(!is_array($data)) {
+                $this->page = str_replace('{' . $tag . '}', $data, $this->message);
+            }
+        }
+    }
 	
 	public function setSubject($subject) {
 		$this->mail->Subject = $subject;

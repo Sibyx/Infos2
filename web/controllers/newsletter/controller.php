@@ -29,7 +29,7 @@ class newsletterController {
             $redirectBits = array();
             $redirectBits[] = 'authenticate';
             $redirectBits[] = 'login';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Musíš byť prihlásený', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
         }
     }
 
@@ -46,13 +46,13 @@ class newsletterController {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Záznam bol pridaný!', 'success');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordAdded}', 'success');
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba!', 'alert');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordAddError}', 'alert');
             }
         }
         else {
@@ -62,7 +62,7 @@ class newsletterController {
 
     private function uiNew() {
         $tags = array();
-        $tags['title'] = "Prihlásienie na odber - Infos2";
+        $tags['title'] = "{lang_newsletterSubscribe} - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $this->registry->getObject('template')->buildFromTemplate('newNewsletterRecord');
@@ -84,20 +84,20 @@ class newsletterController {
                     $redirectBits = array();
                     $redirectBits[] = 'profile';
                     $redirectBits[] = 'settings';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Záznam bol upravený!', 'success');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordEdited}', 'success');
                 }
                 else {
                     $redirectBits = array();
                     $redirectBits[] = 'profile';
                     $redirectBits[] = 'settings';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri posielaní na databázu!', 'alert');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordEditError}', 'alert');
                 }
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Záznam neexistuje!', 'alert');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistNewsletterRecord}', 'alert');
             }
         }
         else {
@@ -110,7 +110,7 @@ class newsletterController {
         $newsletterRecord = new NewsletterRecord($this->registry, $id);
         $data = $newsletterRecord->toArray();
         $tags = array();
-        $tags['title'] = "Uprava odberu - Infos2";
+        $tags['title'] = "{lang_newsletterSubscribtionEdit} - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $this->registry->getObject('template')->buildFromTemplate('editNewsletterRecord');
@@ -155,20 +155,20 @@ class newsletterController {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Záznam bol odstránený!', 'success');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordDeleted}', 'success');
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri posielaní na databázu!', 'alert');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordDeleteError}', 'alert');
             }
         }
         else {
             $redirectBits = array();
             $redirectBits[] = 'profile';
             $redirectBits[] = 'settings';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Záznam neexistuje!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistNewsletterRecord}', 'alert');
         }
     }
 }

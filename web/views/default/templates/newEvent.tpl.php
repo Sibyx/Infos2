@@ -2,14 +2,14 @@
 <section class="row">
     <div class="large-12 columns">
         <header>
-            <h2>Nová udalosť</h2>
+            <h2>{lang_newEvent}</h2>
         </header>
         <form id="formNewEvent" name="formNewEvent" action="{siteurl}/events/new/" enctype="application/x-www-form-urlencoded" method="post" class="custom">
             <!-- Datum -->
             <div class="row">
 
                 <div class="large-1 columns">
-                    <label class="left inline">Dátum</label>
+                    <label class="left inline">{lang_date}</label>
                 </div>
 
                 <div class="large-11 columns">
@@ -22,13 +22,12 @@
             <div class="row">
 
                 <div class="large-1 columns">
-                    <label class="left inline">Čas</label>
+                    <label class="left inline">{lang_date}</label>
                 </div>
 
                 <div class="large-5 columns">
                     <select id="newEvent_time">
-                        <option value="8">Veľká prestávka</option>
-                        <option value="custom">Vlastné</option>
+                        <option value="custom">{lang_custom}</option>
                     </select>
                 </div>
 
@@ -43,7 +42,7 @@
 
             <div class="row">
                 <div class="large-1 columns">
-                    <label class="left inline">Titulok</label>
+                    <label class="left inline">{lang_title}</label>
                 </div>
                 <div class="large-11 columns">
                     <input type="text" id="newEvent_title" name="newEvent_title" required />
@@ -52,7 +51,7 @@
 
             <div class="row">
                 <div class="large-1 columns">
-                    <label class="left inline">Miesto</label>
+                    <label class="left inline">{lang_place}</label>
                 </div>
                 <div class="large-11 columns">
                     <input type="text" id="newEvent_location" name="newEvent_location" required />
@@ -67,7 +66,7 @@
 
             <div class="row">
                 <div class="small-3 small-centered columns">
-                    <button type="submit">Odoslať udalosť</button>
+                    <button type="submit">{lang_send}</button>
                 </div>
             </div>
         </form>
@@ -78,8 +77,8 @@
         $("#newEvent_date").datepicker({
             dateFormat: "dd.mm.yy",
             firstDay: 1,
-            dayNamesMin:["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
-            monthNames: ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"]
+            dayNamesMin:["{lang_sundayShor}", "{lang_mondayShort}", "{lang_tuesdayShort}", "{lang_wednesdayShort}", "{lang_thursdayShort}", "{lang_fridayShort}", "{lang_saturdayShort}"],
+            monthNames: ["{lang_january}", "{lang_february}", "{lang_march}", "{lang_april}", "{lang_may}", "{lang_june}", "{lang_july}", "{lang_august}", "{lang_september}", "{lang_october}", "{lang_november}", "{lang_december}"]
         });
 
         $('#newEvent_startTime').timepicker();

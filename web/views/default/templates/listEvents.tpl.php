@@ -3,7 +3,7 @@
     <div class="large-12 collumns">
         <header class="row">
             <div class="small-12 columns">
-                <h2>Udalosti</h2>
+                <h2>{lang_events}</h2>
             </div>
         </header>
         <div class="row">
@@ -11,9 +11,9 @@
                 <table style="width: 100%">
                     <thead>
                     <tr>
-                        <td>Názov</td>
-                        <td>Čas</td>
-                        <td>Miesto</td>
+                        <td>{lang_title}</td>
+                        <td>{lang_time}</td>
+                        <td>{lang_place}</td>
                     </tr>
                     </thead>
                     <tbody>

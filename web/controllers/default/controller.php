@@ -16,13 +16,13 @@ class defaultController {
 			}
 		}
 		else {
-			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), 'Prosím najprv sa autorizuj!', 'alert');
+			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), '{lang_pleaseLogIn}', 'alert');
 		}
 	}
 	
 	private function uiIndex() {
 		$tags = array();
-		$tags['title'] = 'Infos Dashboard';
+		$tags['title'] = 'Dashboard - ' . $this->registry->getSetting('sitename');
 		$tags = array_merge(
 			$tags,
 			$this->createUserboard(),
@@ -43,7 +43,7 @@ class defaultController {
 		$pagination = $announcements->listActualAnnouncements();
 		$output = '';
 		if ($pagination->getNumRowsPage() == 0) {
-			$output .= '<article class="text-center">Žiadne oznamy</article>' . "\n";
+			$output .= '<article class="text-center">{lang_noAnnouncements}</article>' . "\n";
 		}
 		else {
 			while ($row = $this->registry->getObject('db')->resultsFromCache($pagination->getCache())) {
@@ -95,7 +95,7 @@ class defaultController {
         $cache = $suploRecords->getCurrentUser(new DateTime);
         $output = '';
         if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
-            $output .= '<tr><th colspan="5" class="text-center">Dnes</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{lang_today}</th></tr>' . "\n";
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
@@ -109,7 +109,7 @@ class defaultController {
             }
         }
         else {
-            $output .= '<tr><th colspan="5" class="text-center">Dnes nesupluješ!</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{lang_noSubstitutionForYouToday}</th></tr>' . "\n";
         }
         $tags = array();
         $tags['suploToday'] = $output;
@@ -118,7 +118,7 @@ class defaultController {
         $cache = $suploRecords->getCurrentUser(new DateTime(date('Y-m-d', time()+86400)));
         $output = '';
         if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
-            $output .= '<tr><th colspan="5" class="text-center">Zajtra</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{lang_tomorrow}</th></tr>' . "\n";
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
                 $data = $suploRecord->toArray();
@@ -132,7 +132,7 @@ class defaultController {
             }
         }
         else {
-            $output .= '<tr><th colspan="5" class="text-center">Zajtra nesupluješ!</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{lang_noSubstitutionForYouTomorrow}</th></tr>' . "\n";
         }
         $tags['suploTomorow'] = $output;
         return $tags;
@@ -179,7 +179,7 @@ class defaultController {
             }
         }
         else {
-            $output .= '<tr><th colspan="5" class="text-center">Tento mesiac si ešte nesuploval!</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{noSuploForThisMonth}</th></tr>' . "\n";
         }
         $tags = array();
         $tags['suploHistory'] = $output;

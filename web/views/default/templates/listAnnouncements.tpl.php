@@ -5,10 +5,10 @@
             <div class="boardPanel large-12 columns">
                 <header class="row">
                     <div class="small-10 columns">
-                        <a href="{siteurl}/announcements/"><h2>Oznamy</h2></a>
+                        <a href="{siteurl}/announcements/"><h2>{lang_announcements}</h2></a>
                     </div>
                     <div class="small-2 columns text-right">
-                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="Pridat oznam" style="margin-top: 13px"/></a>
+                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="{lang_addAnnouncement}" style="margin-top: 13px"/></a>
                     </div>
                 </header>
                 {announcements}

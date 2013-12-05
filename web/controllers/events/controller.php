@@ -35,7 +35,7 @@ class eventsController {
             $redirectBits = array();
             $redirectBits[] = 'authenticate';
             $redirectBits[] = 'login';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Musíš byť prihlásený', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
         }
     }
 
@@ -54,13 +54,13 @@ class eventsController {
                     $newsletter = new newsletterManager($this->registry, 'newEvent', $event->toArray());
                     $redirectBits = array();
                     $redirectBits[] = 'events';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola vytvorená!', 'success');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_eventCreated}', 'success');
                 }
                 else {
                     $redirectBits = array();
                     $redirectBits[] = 'events';
                     $redirectBits[] = 'new';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri vytváraní udalosti :(', 'alert');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorCreatingEvent}', 'alert');
                 }
             }
             else {
@@ -70,13 +70,13 @@ class eventsController {
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť udalosť.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na vytvorenie udalosti!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
     }
 
     private function uiNew() {
         $tags = array();
-        $tags['title'] = "Nová udalosť";
+        $tags['title'] = "{lang_newEvent}" . $this->registry->getSetting('sitename');
         $tags['dateFormated'] = date("j.n.Y");
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
@@ -93,18 +93,18 @@ class eventsController {
                 $event->remove();
                 $redirectBits = array();
                 $redirectBits[] = 'events';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola odstránená!', 'success');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_eventDeleted}', 'success');
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'events';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
             }
         }
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť udalosť.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na odstránenie udalosti!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
     }
 
@@ -114,7 +114,7 @@ class eventsController {
         if ($event->isValid()) {
             $data = $event->toArray();
             $tags = array();
-            $tags['title'] = $data['title'];
+            $tags['title'] = $data['title'] . $this->registry->getSetting('sitename');
             $tags['eventId'] = $data['id'];
             $tags['description'] = $data['text'];
             $tags['startDate'] = $data['startDate']->format("j. n. Y - H:i");
@@ -127,7 +127,7 @@ class eventsController {
         else {
             $redirectBits = array();
             $redirectBits[] = 'events';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
         }
     }
 
@@ -148,19 +148,19 @@ class eventsController {
                         $newsletter = new newsletterManager($this->registry, 'newEvent', $event->toArray());
                         $redirectBits = array();
                         $redirectBits[] = 'events';
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť bola upravená!', 'success');
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_eventEdited}', 'success');
                     }
                     else {
                         $redirectBits = array();
                         $redirectBits[] = 'events';
                         $redirectBits[] = 'new';
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nastala chyba pri upravovaní udalosti :(', 'alert');
+                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorEditingEvent}', 'alert');
                     }
                 }
                 else {
                     $redirectBits = array();
                     $redirectBits[] = 'events';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
                 }
             }
             else {
@@ -170,7 +170,7 @@ class eventsController {
         else {
             $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť udalosť.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Nemáš oprávenie na upravenie udalosti!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
     }
 
@@ -180,7 +180,7 @@ class eventsController {
         if ($event->isValid()) {
             $data = $event->toArray();
             $tags = array();
-            $tags['title'] = "Upraviť udalosť";
+            $tags['title'] = "{lang_editEvent}" . $this->registry->getSetting('sitename');
             $tags['dateFormated'] = $data['startDate']->format("j.n.Y");
             $tags['eventId'] = $data['id'];
             $tags['startTime'] = $data['startDate']->format("H:i");
@@ -197,13 +197,13 @@ class eventsController {
         else {
             $redirectBits = array();
             $redirectBits[] = 'events';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Udalosť neexistuje!', 'alert');
+            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
         }
     }
 
     private function listEvents() {
         $tags = array();
-        $tags['title'] = "Udalosti";
+        $tags['title'] = "{lang_events}" . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $this->registry->getObject('template')->buildFromTemplate('listEvents');

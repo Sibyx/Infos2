@@ -16,18 +16,18 @@
 </head>
 <body>
 <table>
-    <caption>Výkaz nadčasov a suplovania</caption>
+    <caption>{lang_suploHistoryHeader}</caption>
     <thead>
     <tr>
-        <td colspan="3" class="text-center">Mesiac: {month}</td>
-        <td colspan="2" class="text-center">Meno učiteľa: {teacherName}</td>
+        <td colspan="3" class="text-center">{lang_month}: {month}</td>
+        <td colspan="2" class="text-center">{lang_teacherName}: {teacherName}</td>
     </tr>
     <tr>
-        <th>Dátum</th>
-        <th>Trieda</th>
-        <th>Predmet</th>
-        <th>Za vyučujúceho</th>
-        <th>Poznámka</th>
+        <th>{lang_date}</th>
+        <th>{lang_class}</th>
+        <th>{lang_subject}</th>
+        <th>{lang_instead}</th>
+        <th>{lang_note}</th>
     </tr>
     </thead>
     <tbody>
@@ -35,10 +35,10 @@
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="5" class="text-center">Suplované a nadčasové hodiny chcem: preplatiť / dať na NV</td>
+        <td colspan="5" class="text-center">{lang_suploHistoryMessage}</td>
     </tr>
     <tr>
-        <td colspan="4" class="text-right">Podpis:</td>
+        <td colspan="4" class="text-right">{lang_signature}:</td>
         <td colspan="1" style="border-bottom: 1px dotted #000000"></td>
     </tr>
     </tfoot>

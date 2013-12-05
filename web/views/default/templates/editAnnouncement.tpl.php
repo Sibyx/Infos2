@@ -5,12 +5,12 @@
 		<form id="formEditAnn" name="formEditAnn" action="{siteurl}/announcements/edit/{id_ann}" enctype="application/x-www-form-urlencoded" method="post">
 			<div class="row">
                 <div class="large-12 columns">
-                    <input type="text" id="editAnn_title" name="editAnn_title" placeholder="Titulok" required value="{ann_title}"/>
+                    <input type="text" id="editAnn_title" name="editAnn_title" placeholder="{lang_title}" required value="{ann_title}"/>
                 </div>
 			</div>
             <div class="row">
                 <div class="large-12 columns">
-                    <input type="text" id="editAnn_deadline" name="editAnn_deadline" placeholder="Zobrazovať do" required value="{ann_deadline}"/>
+                    <input type="text" id="editAnn_deadline" name="editAnn_deadline" placeholder="{lang_displayTo}" required value="{ann_deadline}"/>
                 </div>
             </div>
 			<div class="row">
@@ -20,7 +20,7 @@
 			</div>
 			<div class="row">
                 <div class="small-3 small-centered columns">
-                    <button type="submit" style="margin-top: 20px;">Odoslať úpravu</button>
+                    <button type="submit" style="margin-top: 20px;">{lang_send}</button>
                 </div>
 			</div>
 		</form>
@@ -31,8 +31,8 @@
         $("#editAnn_deadline").datepicker({
             dateFormat: "dd.mm.yy",
             firstDay: 1,
-            dayNamesMin:["Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
-            monthNames: ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"]
+            dayNamesMin:["{lang_sundayShor}", "{lang_mondayShort}", "{lang_tuesdayShort}", "{lang_wednesdayShort}", "{lang_thursdayShort}", "{lang_fridayShort}", "{lang_saturdayShort}"],
+            monthNames: ["{lang_january}", "{lang_february}", "{lang_march}", "{lang_april}", "{lang_may}", "{lang_june}", "{lang_july}", "{lang_august}", "{lang_september}", "{lang_october}", "{lang_november}", "{lang_december}"]
         });
     });
 	tinymce.init({
