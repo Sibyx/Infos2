@@ -112,7 +112,7 @@
                     <h2>{lang_suploHistory}</h2>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/suplo/monthSummary" target="_blank"><img src="{siteurl}/views/{defaultView}/images/print.png" alt="{lang_print}" style="margin-top: 12px"/></a>
+                    <a href="{siteurl}/suplo/monthSummary" target="_blank"><img src="{siteurl}/views/{defaultView}/images/print.png" alt="{lang_print}" title="{lang_print}" style="margin-top: 12px"/></a>
                 </div>
             </header>
             <table style="width: 100%">

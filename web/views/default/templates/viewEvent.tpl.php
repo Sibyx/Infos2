@@ -12,8 +12,8 @@
     </div>
 
     <div class="large-2 columns">
-        <a href="{siteurl}/events/edit/{eventId}"><img src="{siteurl}/views/{defaultView}/images/edit.png" alt="{lang_editEvent}"/></a>
-        <a href="{siteurl}/events/remove/{eventId}"><img src="{siteurl}/views/{defaultView}/images/delete.png" alt="{lang_deleteEvent}" style="margin-left: 10px"/></a>
+        <a href="{siteurl}/events/edit/{eventId}"><img src="{siteurl}/views/{defaultView}/images/edit.png" alt="{lang_editEvent}" title="{lang_editEvent}"/></a>
+        <a href="{siteurl}/events/remove/{eventId}"><img src="{siteurl}/views/{defaultView}/images/delete.png" alt="{lang_deleteEvent}" title="{lang_deleteEvent}" style="margin-left: 10px"/></a>
     </div>
 </div>
 
