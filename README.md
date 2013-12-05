@@ -19,7 +19,7 @@ TO-DO
 LOCALIZATION
 --------------
 - Slovak            [100%]
-- English           [0%]
+- English           [90%]
 - Russian           [0%]
 
 SUMMARY
