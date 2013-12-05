@@ -71,7 +71,7 @@
                     <a href="{siteurl}/events/"><h2>{lang_events}</h2></a>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="{lang_addEvent}" style="margin-top: 13px"/></a>
+                    <a href="{siteurl}/events/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="{lang_addEvent}" title="{lang_addEvent}" style="margin-top: 13px"/></a>
                 </div>
             </header>
             <table style="width: 100%">
