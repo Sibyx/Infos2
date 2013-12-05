@@ -10,16 +10,23 @@ I, successfully, created a modern information system which effectively shares in
 
 TO-DO
 --------------
-- newsletter
-- profiles
-- footer
 - about controller
+- English localization
+- Russian localization
+- aSc Agenda support
+- install script
+
+LOCALIZATION
+--------------
+- Slovak            [100%]
+- English           [0%]
+- Russian           [0%]
 
 SUMMARY
 --------------
 - **AUTH**			[100%]
 
-- **USER**			[50%]
+- **USER**			[90%]
 
 - **INDEX**			[100%]
 
@@ -30,6 +37,10 @@ SUMMARY
 - **DOCS**			[100%]
 
 - **ANNOUNCEMENTS**	[100%]
+
+- **LOCALIZATION**	[100%]
+
+- **NEWSLETTER**	[100%]
 
 - **ABOUT**	        [0%]
 
