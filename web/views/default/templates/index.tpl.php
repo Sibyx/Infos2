@@ -8,7 +8,7 @@
                         <a href="{siteurl}/announcements/"><h2>{lang_announcements}</h2></a>
                     </div>
                     <div class="small-2 columns text-right">
-                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="{lang_addAnnouncement}" style="margin-top: 13px"/></a>
+                        <a href="{siteurl}/announcements/new"><img src="{siteurl}/views/{defaultView}/images/add.png" title="{lang_addAnnouncement}" alt="{lang_addAnnouncement}" style="margin-top: 13px"/></a>
                     </div>
                 </header>
                 {announcements}
@@ -32,9 +32,9 @@
 			</table>
 			<hr />
             <div class="text-right">
-                <a href="https://gymmt.edupage.org/login/index.php" target="_blank"><img src="{siteurl}/views/{defaultView}/images/izk.png" alt="Žiacka knižka" class="icon"/></a>
-                <a href="{siteurl}/profile/settings"><img src="{siteurl}/views/{defaultView}/images/settings.png" alt="{lang_settings}" class="icon"/></a>
-                <a href="{siteurl}/authenticate/logout"><img src="{siteurl}/views/{defaultView}/images/logout.png" alt="{lang_logout}" class="icon"/></a>
+                <a href="https://gymmt.edupage.org/login/index.php" target="_blank"><img src="{siteurl}/views/{defaultView}/images/izk.png" alt="Žiacka knižka" title="Žiacka knižka" class="icon"/></a>
+                <a href="{siteurl}/profile/settings"><img src="{siteurl}/views/{defaultView}/images/settings.png" alt="{lang_settings}" title="{lang_settings}" class="icon"/></a>
+                <a href="{siteurl}/authenticate/logout"><img src="{siteurl}/views/{defaultView}/images/logout.png" alt="{lang_logout}" title="{lang_logout}" class="icon"/></a>
             </div>
 
 		</section>
@@ -45,7 +45,7 @@
                     <a href="{siteurl}/suplo/"><h2>{lang_suplo}</h2></a>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/suplo/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="{lang_addSuplo}" style="margin-top: 13px"/></a>
+                    <a href="{siteurl}/suplo/new"><img src="{siteurl}/views/{defaultView}/images/add.png" alt="{lang_addSuplo}" title="{lang_addSuplo}" style="margin-top: 13px"/></a>
                 </div>
             </header>
             <table style="width: 100%">
