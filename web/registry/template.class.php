@@ -59,6 +59,11 @@ class Template {
             }
         }
     }
+
+	public function getLocaleValue($tag) {
+		$langTags = parse_ini_file(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/lang/' . $this->registry->getSetting('lang') . '.lang.ini', false);
+		return $langTags[$tag];
+	}
 	
 	public function parseOutput() {
 		return $this->page;

@@ -96,7 +96,7 @@ class newsletterManager {
             $output .= $row;
         }
         $tags['suploTable'] = $output;
-        $tags['suploTitle'] = '{lang_suplo} ' . $date->format("j. n. Y");
+        $tags['suploTitle'] = $this->registry->getObject('template')->getLocaleValue("lang_suplo") . ' ' . $date->format("j. n. Y");
         $email->replaceTags($tags);
         while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
             $email->addBCC($row['nwt_email']);
