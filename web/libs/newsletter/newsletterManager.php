@@ -74,7 +74,7 @@ class newsletterManager {
         $cache = $this->newsletterList->getSuploMails();
         $email = new Email($this->registry);
         $email->setSender();
-        $email->setSubject('{lang_suplo} ' . $date->format("j. n. Y"));
+        $email->setSubject($this->registry->getObject('template')->getLocaleValue("lang_suplo") . ' ' . $date->format("j. n. Y"));
         $email->buildFromTemplate('newSuplo.html');
         $tags['siteurl'] = $this->registry->getSetting('siteurl');
         $tags['defaultView'] = $this->registry->getSetting('view');
@@ -96,7 +96,7 @@ class newsletterManager {
             $output .= $row;
         }
         $tags['suploTable'] = $output;
-        $tags['suploTitle'] = $this->registry->getObject('template')->getLocaleValue("lang_suplo") . ' ' . $date->format("j. n. Y");
+        $tags['suploTitle'] = '{lang_suplo} ' . $date->format("j. n. Y");
         $email->replaceTags($tags);
         while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
             $email->addBCC($row['nwt_email']);
@@ -112,7 +112,7 @@ class newsletterManager {
             if ($this->registry->getObject('db')->numRows() > 0) {
                 $email = new Email($this->registry);
                 $email->setSender();
-                $email->setSubject('Suplovanie na ' . $date->format("j. n. Y"));
+                $email->setSubject($this->registry->getObject('template')->getLocaleValue("lang_suplo") . $date->format("j. n. Y"));
                 $email->buildFromTemplate('newSuplo.html');
                 $tags['siteurl'] = $this->registry->getSetting('siteurl');
                 $tags['defaultView'] = $this->registry->getSetting('view');
