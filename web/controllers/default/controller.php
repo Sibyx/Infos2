@@ -4,36 +4,42 @@ class defaultController {
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
-		if ($this->registry->getObject('auth')->isLoggedIn()) {
-			$urlBits = $this->registry->getObject('url')->getURLBits();
-			switch(isset($urlBits[1]) ? $urlBits[1] : '') {
-				case 'time':
-					$this->getCurrentTime();
+		$urlBits = $this->registry->getObject('url')->getURLBits();
+		switch(isset($urlBits[1]) ? $urlBits[1] : '') {
+			case 'time':
+				$this->getCurrentTime();
 				break;
-				default:				
-					$this->uiIndex();
+			default:
+				$this->uiIndex();
 				break;
-			}
-		}
-		else {
-			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), '{lang_pleaseLogIn}', 'alert');
 		}
 	}
 	
 	private function uiIndex() {
-		$tags = array();
-		$tags['title'] = 'Dashboard - ' . $this->registry->getSetting('sitename');
-		$tags = array_merge(
-			$tags,
-			$this->createUserboard(),
-			$this->createAnnouncements(),
-            $this->createSuplo(),
-            $this->createEvents(),
-            $this->createSuploHistory()
-		);
-		$this->registry->getObject('template')->buildFromTemplate('index');
-		$this->registry->getObject('template')->replaceTags($tags);
-		echo $this->registry->getObject('template')->parseOutput();
+		if ($this->registry->getObject('auth')->isLoggedIn()) {
+			$tags = array();
+			$tags['title'] = 'Dashboard - ' . $this->registry->getSetting('sitename');
+			$tags = array_merge(
+				$tags,
+				$this->createUserboard(),
+				$this->createAnnouncements(),
+				$this->createSuplo(),
+				$this->createEvents(),
+				$this->createSuploHistory()
+			);
+			$this->registry->getObject('template')->buildFromTemplate('dashboard');
+			$this->registry->getObject('template')->replaceTags($tags);
+			echo $this->registry->getObject('template')->parseOutput();
+		}
+		else {
+			$this->registry->getObject('template')->buildFromTemplate('index');
+			$tags = array();
+			$tags['title'] = $this->registry->getSetting('sitename');
+			$tags['loginUrl'] = filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl());
+
+			$this->registry->getObject('template')->replaceTags($tags);
+			echo $this->registry->getObject('template')->parseOutput();
+		}
 	}
 	
 	private function createAnnouncements() {
