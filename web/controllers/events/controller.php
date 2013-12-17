@@ -76,7 +76,7 @@ class eventsController {
 
     private function uiNew() {
         $tags = array();
-        $tags['title'] = "{lang_newEvent}" . $this->registry->getSetting('sitename');
+        $tags['title'] = "{lang_newEvent} - " . $this->registry->getSetting('sitename');
         $tags['dateFormated'] = date("j.n.Y");
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
@@ -114,7 +114,7 @@ class eventsController {
         if ($event->isValid()) {
             $data = $event->toArray();
             $tags = array();
-            $tags['title'] = $data['title'] . $this->registry->getSetting('sitename');
+            $tags['title'] = $data['title'];
             $tags['eventId'] = $data['id'];
             $tags['description'] = $data['text'];
             $tags['startDate'] = $data['startDate']->format("j. n. Y - H:i");
@@ -203,7 +203,7 @@ class eventsController {
 
     private function listEvents() {
         $tags = array();
-        $tags['title'] = "{lang_events}" . $this->registry->getSetting('sitename');
+        $tags['title'] = "{lang_events} - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->getObject('template')->parseOutput();
         $this->registry->getObject('template')->buildFromTemplate('listEvents');

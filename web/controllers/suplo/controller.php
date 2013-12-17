@@ -68,7 +68,7 @@ class suploController {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
             $result = array();
             $result['text'] = $output;
-            $result['header'] = "{lang_suplo} " . $date->format("j. n. Y");
+            $result['header'] = $this->registry->getObject('template')->getLocaleValue("lang_suplo") . " " . $date->format("j. n. Y");
             echo json_encode($result);
         }
         else {
