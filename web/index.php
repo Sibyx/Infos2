@@ -35,8 +35,10 @@
 	while ($controller = $registry->getObject('db')->getRows()) {
 		$controllers[] = $controller['id_controller'];
 	}
-	$registry->getObject('auth')->checkForAuthentication();
 	$controller = $registry->getObject('url')->getURLBit(0);
+	if ($controller != 'api') {
+		$registry->getObject('auth')->checkForAuthentication();
+	}
 	if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
 		if(in_array($controller, $controllers)) {
 			require_once(FRAMEWORK_PATH . 'controllers/' . $controller . '/controller.php');

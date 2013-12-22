@@ -41,6 +41,16 @@ class Authenticate {
 			$this->loggedIn = false;
 		}
 	}
+
+	public function apiAuth($user, $password) {
+		$password = $this->registry->getSetting('salt') . $password . '-' . $user;
+		if ($this->registry->getSetting('apiPassword') == $password && $this->registry->getSetting('apiUser') == $user) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	public function isLoggedIn() {
 		return $this->loggedIn;
