@@ -17,27 +17,27 @@ class APIDelegate {
 		$this->caller = $caller;
 		$this->registry = $registry;
 		$urlBits = $this->registry->getObject('url')->getUrlBits();
-		if (isset($urlBits[2])) {
-			switch ($urlBits[2]) {
-				case 'record':
-					$this->aRecord();
-					break;
-				case 'actualSuplo':
-					$this->actualSuplo();
-					break;
-				default:
-					$this->caller->notFound();
-					break;
-			}
-		}
-		else {
-			$this->aSuplo();
+		switch (isset($urlBits[2]) ? $urlBits[2] : '') {
+			case 'record':
+				$this->aRecord();
+				break;
+			case 'actualSuplo':
+				$this->actualSuplo();
+				break;
+			default:
+				$this->aSuplo($urlBits['2']);
+				break;
 		}
 	}
 
-	private function aSuplo() {
-		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$this->getSuplo($_GET['date']);
+	private function validateDate($date, $format = 'Y-m-d') {
+		$d = DateTime::createFromFormat($format, $date);
+		return $d && $d->format($format) == $date;
+	}
+
+	private function aSuplo($date) {
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && $this->validateDate($date)) {
+			$this->getSuplo($date);
 		}
 		else {
 			header('HTTP/1.0 405 Method Not Allowed');
@@ -82,12 +82,12 @@ class APIDelegate {
 
 	private function getActualSuplo() {
 		$result = array();
-		$this->registry->getObject('db')->executeQuery("SELECT DISTINCT DATE_FORMAT(sup_date,'%d. %m. %Y') AS `dateFriendly` FROM suplo WHERE sup_date >= NOW()");
+		$this->registry->getObject('db')->executeQuery("SELECT DISTINCT sup_date FROM suplo WHERE sup_date >= NOW()");
 		if ($this->registry->getObject('db')->numRows() > 0) {
 			$result['empty'] = false;
 			$result['days'] = array();
 			while ($row = $this->registry->getObject('db')->getRows()) {
-				$result['days'][] = $row['dateFriendly'];
+				$result['days'][] = $row['sup_date'];
 			}
 		}
 		else {
