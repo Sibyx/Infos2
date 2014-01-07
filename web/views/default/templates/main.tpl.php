@@ -47,7 +47,7 @@
 			<div class="large-5 columns">
                 <ul class="inline-list text-left">
                     <li><a href="{siteurl}/about">{lang_aboutProject}</a></li>
-                    <li><a href="{siteurl}/about/blog">{lang_aboutBlog}</a></li>
+                    <li><a target="_blank" href="{siteurl}/about/blog">{lang_aboutBlog}</a></li>
                     <li><a href="{siteurl}/about/bug">{lang_reportBug}</a></li>
                 </ul>
 			</div>

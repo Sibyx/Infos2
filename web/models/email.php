@@ -37,6 +37,7 @@ class Email {
 		}
 		else {
 			$this->mail->SetFrom($email, $name);
+			$this->mail->addReplyTo($email, $name);
 			return true;
 		}
 	}
@@ -77,7 +78,7 @@ class Email {
 	public function send() {
 		$this->mail->CharSet="UTF-8";
 		$this->mail->MsgHTML($this->message);
-		$this->mail->Send();
+		return $this->mail->Send();
 	}
 }
 ?>
