@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="large-3 columns">
 				<img src="{siteurl}/views/{defaultView}/images/logo.png" alt="Infos" style="height:30px; width: auto; margin:5px;"/>
-			    <p class="text-right white"><small style="font-size: x-small">by <a href="http://jakubdubec.me" target="_blank" rel="author">Jakub Dubec</a> &copy; 2013</small></p>
+			    <p class="text-right white"><small style="font-size: x-small">by <a href="http://jakubdubec.me" target="_blank" rel="author">Jakub Dubec</a> &copy; 2014</small></p>
             </div>
 			<div class="large-5 columns">
                 <ul class="inline-list text-left">
