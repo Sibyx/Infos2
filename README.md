@@ -10,11 +10,11 @@ I, successfully, created a modern information system which effectively shares in
 
 TO-DO
 --------------
-- about controller
 - English localization
 - Russian localization
 - aSc Agenda support
 - install script
+- automatic error reporting
 
 LOCALIZATION
 --------------
@@ -42,7 +42,7 @@ SUMMARY
 
 - **NEWSLETTER**	[100%]
 
-- **ABOUT**	        [0%]
+- **ABOUT**	        [60%]
 
 COLORS
 --------------
