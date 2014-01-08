@@ -34,6 +34,13 @@ class Template {
 		$tags['defaultView'] = $this->registry->getSetting('view');
 		$tags['sitename'] = $this->registry->getSetting('sitename');
 		$tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
+		if ($this->registry->getObject('auth')->isLoggedIn()) {
+			$tags['userFullName'] = $this->registry->getObject('auth')->getUser()->getFullName();
+		}
+		else {
+			$tags['userFullName'] = 'No logged in';
+		}
+
         if (file_exists(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/userreport.tpl.php')) {
             $tags['userreport'] = file_get_contents(FRAMEWORK_PATH . 'views/' . $this->registry->getSetting('view') . '/templates/userreport.tpl.php');
         }

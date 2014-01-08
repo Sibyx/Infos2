@@ -82,7 +82,7 @@ class APIDelegate {
 
 	private function getActualSuplo() {
 		$result = array();
-		$this->registry->getObject('db')->executeQuery("SELECT DISTINCT sup_date FROM suplo WHERE sup_date >= NOW()");
+		$this->registry->getObject('db')->executeQuery("SELECT DISTINCT sup_date FROM suplo WHERE sup_date >= CURDATE()");
 		if ($this->registry->getObject('db')->numRows() > 0) {
 			$result['empty'] = false;
 			$result['days'] = array();

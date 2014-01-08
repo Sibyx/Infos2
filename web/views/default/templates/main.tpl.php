@@ -34,6 +34,20 @@
 	<!-- Jebnuty explorer! -->
 	<!--[if lt IE 8]><script type="text/javascript">alert("Your browser is obsolete, please use Mozilla Firefox!");</script><![endif]-->
 	<!--[if IE]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<script>
+		var _paq = _paq || [];
+		_paq.push(['setCustomVariable',
+			// Index, the number from 1 to 5 where this custom variable name is stored
+			1,
+			// Name, the name of the variable, for example: Gender, VisitorType
+			"UserName",
+			// Value, for example: "Male", "Female" or "new", "engaged", "customer"
+			"{userFullName}",
+			// Scope of the custom variable, "visit" means the custom variable applies to the current visit
+			"visit"
+		]);
+	</script>
 	
 </head>
 <body>
