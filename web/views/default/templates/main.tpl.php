@@ -40,6 +40,7 @@
 		var _paq = _paq || [];
 		_paq.push(['setCustomVariable',
 			1,
+			"UserName",
 			"{userFullName}",
 			"visit"
 		]);
