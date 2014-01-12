@@ -21,10 +21,10 @@
 		<div class="panel">
 			<h2><small class="gray">Systémová správa</small></h2>
 			<p class="text-justify">
-				Bola pridaná úvodná stránka. Zatiaľ neobsahuje všetky informácie ale bude obsahovať odkazy systému.
+				Systém bol uvedený do plnej prevádzky a bola deaktivovaná spätná kompatibilita s Infosom1. Bol pridaný videonávod.
 			</p>
 			<footer class="text-right">
-				<small>11.12.2013 o 19:28</small>
+				<small>12.1.2014 o 16:05</small>
 			</footer>
 		</div>
 	</div>
@@ -38,6 +38,30 @@
 		</div>
 	</div>
 </section>
+
+<section class="row">
+	<div class="large-12 columns">
+		<header>
+			<h2>Videonávod -  Ako na Infos2 za 5 minút a 8 sekúnd</h2>
+		</header>
+		<div class="flex-video widescreen easyhtml5video" style="position:relative;max-width:1920px;">
+			<video controls="controls" poster="{siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg" style="width:100%" title="1920">
+				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.m4v" type="video/mp4" />
+				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.webm" type="video/webm" />
+				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.ogv" type="video/ogg" />
+				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.mp4" />
+				<object type="application/x-shockwave-flash" data="{siteurl}/views/{defaultView}/swf/flashfox.swf" width="1920" height="1080" style="position:relative;">
+					<param name="movie" value="{siteurl}/views/{defaultView}/swf/flashfox.swf" />
+					<param name="allowFullScreen" value="true" />
+					<param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster={siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg&amp;src={siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.m4v" />
+					<embed src="{siteurl}/views/{defaultView}/swf/flashfox.swf" width="1920" height="1080" style="position:relative;"  flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster={siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg&amp;src={siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.m4v"	allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
+					<img alt="Ako na Infos2 za 5 minút a 8 sekúnd" src="{siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg" style="position:absolute;left:0;" width="100%" title="Video playback is not supported by your browser" />
+				</object>
+			</video>
+		</div>
+	</div>
+</section>
+
 
 <section class="row">
 	<div class="large-12 columns">
