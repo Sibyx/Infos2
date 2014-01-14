@@ -112,9 +112,14 @@
                     <h2>{lang_suploHistory}</h2>
                 </div>
                 <div class="small-2 columns text-right">
-                    <a href="{siteurl}/suplo/monthSummary" target="_blank"><img src="{siteurl}/views/{defaultView}/images/print.png" alt="{lang_print}" title="{lang_print}" style="margin-top: 12px"/></a>
+                    <a href="{siteurl}/suplo/suploSummary/{actualSeason}" target="_blank" id="printSummary"><img src="{siteurl}/views/{defaultView}/images/print.png" alt="{lang_print}" title="{lang_print}" style="margin-top: 12px"/></a>
                 </div>
             </header>
+			<form id="formSuploHistory" name="formSuploHistory" action="{siteurl}/suplo/suploSummary" data-action-url="{siteurl}/suplo/suploSummary/">
+				<select name="suploHistory_season" id="suploHistory_season">
+					{suploHistory_seasons}
+				</select>
+			</form>
             <table style="width: 100%">
                 <thead>
                 <tr>
@@ -125,8 +130,8 @@
                     <td>{lang_instead}</td>
                 </tr>
                 </thead>
-                <tbody>
-                {suploHistory}
+                <tbody id="suploHistory">
+					{suploHistory}
                 </tbody>
             </table>
 		</section>
@@ -134,6 +139,6 @@
 </div>
 
 <script>
-	var t = window.setInterval(updateClock, 1000);
+	//var t = window.setInterval(updateClock, 1000);
 </script>
 {userreport}

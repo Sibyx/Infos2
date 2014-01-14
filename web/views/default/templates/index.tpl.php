@@ -21,10 +21,10 @@
 		<div class="panel">
 			<h2><small class="gray">Systémová správa</small></h2>
 			<p class="text-justify">
-				Systém bol uvedený do plnej prevádzky a bola deaktivovaná spätná kompatibilita s Infosom1. Bol pridaný videonávod.
+				História suplovania sa už dá filtrovať podľa mesiaca a neukazuje len históriu za aktuálny mesiac.
 			</p>
 			<footer class="text-right">
-				<small>12.1.2014 o 16:05</small>
+				<small>14.1.2014 o 20:39</small>
 			</footer>
 		</div>
 	</div>

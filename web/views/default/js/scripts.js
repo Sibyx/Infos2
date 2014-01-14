@@ -66,6 +66,28 @@ $(document).ready(function() {
             }
         });
     });
+
+	$("#suploHistory_season").change(function(){
+		var form = $(this).parent();
+		$("#printSummary").attr("href", form.attr("data-action-url") + $(this).val());
+		form.attr("action", form.attr("data-action-url") + $(this).val());
+		form.submit();
+	});
+
+	$("#formSuploHistory").submit(function(e){
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: $(this).attr('action'),
+			dataType: 'html',
+			success: function(data) {
+				$("#suploHistory").html(data);
+			},
+			error: function () {
+				alert("Error occured while loading substitution records");
+			}
+		});
+	});
 	
 	
 	$("#formContact").submit(function(e){

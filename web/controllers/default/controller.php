@@ -170,7 +170,7 @@ class defaultController {
         $suploRecords = new suploRecords($this->registry);
 
         $output = '';
-        $cache = $suploRecords->getCurrentUserHistory();
+        $cache = $suploRecords->getUserSuploHistory(date("m-Y"));
         if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
@@ -185,10 +185,22 @@ class defaultController {
             }
         }
         else {
-            $output .= '<tr><th colspan="5" class="text-center">{noSuploForThisMonth}</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{lang_noSuploForThisMonth}</th></tr>' . "\n";
         }
+
+		$suploHistory_seasons = '';
+		$suploHistory_seasons .= '<option value="' . date("m-Y") . '" selected>Aktuálne obdobie</option>' . "\n";
+		$suploHistory_seasons .= '<option disabled>---</option>' . "\n";
+		$cache = $suploRecords->avaibleSuploSeasons();
+		if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+			while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+				$suploHistory_seasons .= '<option value="' . $row['season_value'] . '">' . $row['season_title'] . '</option>' . "\n";
+			}
+		}
+
         $tags = array();
         $tags['suploHistory'] = $output;
+		$tags['suploHistory_seasons'] = $suploHistory_seasons;
         return $tags;
     }
 	

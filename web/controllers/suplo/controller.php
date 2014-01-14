@@ -19,9 +19,9 @@ class suploController {
                 case 'suploExists':
                     $this->suploExists($urlBits[2]);
                     break;
-                case 'monthSummary':
-                    $this->uiSummary();
-                    break;
+				case 'suploSummary':
+					$this->suploSummary($urlBits[2]);
+					break;
 				
 				default:
 					$this->viewSuplo(date('Y-m-d'));
@@ -184,12 +184,41 @@ class suploController {
         echo json_encode($result);
     }
 
-    private function uiSummary() {
+	private function suploSummary($season) {
+		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+			require_once(FRAMEWORK_PATH . 'models/suploRecords.php');
+			require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
+			$suploRecords = new suploRecords($this->registry);
+
+			$output = '';
+			$cache = $suploRecords->getUserSuploHistory($season);
+			if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+				while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+					$suploRecord = new suploRecord($this->registry, $row['id_suplo']);
+					$data = $suploRecord->toArray();
+					$output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
+					$output .= '<td>' . $data['dateFriendly'] . '.</td>' . "\n";
+					$output .= '<td>' . $data['hour'] . '.</td>' . "\n";
+					$output .= '<td>' . $suploRecord->getClassesShort() . '</td>' . "\n";
+					$output .= '<td>' . $data['subject'] . '</td>' . "\n";
+					$output .= '<td>' . $data['missing']->name . '</td>' . "\n";
+					$output .= '</tr>' . "\n";
+				}
+			}
+
+			echo $output;
+		}
+		else {
+			$this->printSummary($season);
+		}
+	}
+
+    private function printSummary($season) {
         require_once(FRAMEWORK_PATH . 'models/suploRecords.php');
         require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
         $suploRecords = new suploRecords($this->registry);
         $output = '';
-        $cache = $suploRecords->getCurrentUserHistory();
+        $cache = $suploRecords->getUserSuploHistory($season);
         if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
             while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
                 $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
@@ -208,7 +237,10 @@ class suploController {
         }
         $tags = array();
         $tags['suploHistory'] = $output;
-        $tags['month'] = date("F Y");
+		$date_explode = explode('-', $season);
+		$month = new DateTime();
+		$month->setDate($date_explode[1], $date_explode[0], 1);
+        $tags['month'] = $month->format("F Y");
         $tags['teacherName'] = $this->registry->getObject('auth')->getUser()->getFullName();
         $tags['title'] = "{lang_suploHistoryHeader} - " . $this->registry->getSetting('sitename');
         $this->registry->getObject('template')->buildFromTemplate('suploSummary', false);
