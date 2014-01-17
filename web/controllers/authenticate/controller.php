@@ -45,7 +45,7 @@ class AuthenticateController {
 	private function logout() {
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
 			$this->registry->getObject('auth')->logout();
-			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogout}', 'success');
+			//$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogout}', 'success');
 		}
 		else {
 			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), '{lang_noLoggedIn}', 'alert');

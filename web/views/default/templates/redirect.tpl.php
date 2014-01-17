@@ -33,6 +33,7 @@
 		
 	</div>
 </section>
+{logoutGoogle}
 <script>
 	var count = 3;
 	var counter = setInterval(redirect, 1000);

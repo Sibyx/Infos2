@@ -66,6 +66,7 @@ class Registry {
 		$tags['url'] = $url;
 		$tags['title'] = 'Redirect';
 		$tags['meta-description'] = "Redirect";
+		$tags['logoutGoogle'] = "";
 		$this->getObject('template')->buildFromTemplate('redirect');
 		$this->getObject('template')->replaceTags($tags);
 		echo $this->getObject('template')->parseOutput();

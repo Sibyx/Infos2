@@ -65,6 +65,16 @@ class Authenticate {
 		unset($_SESSION['token']);
 		$this->loggedIn = false;
 		$this->registry->getObject('google')->getGoogleClient()->revokeToken();
+		$tags = array();
+		$tags['class'] = 'success';
+		$tags['message'] = "{lang_successfulLogout}";
+		$tags['url'] = $this->registry->buildURL(array());
+		$tags['title'] = 'Logout';
+		$tags['meta-description'] = "Logout";
+		$tags['logoutGoogle'] = '<iframe src="https://accounts.google.com/logout" class="hide"></iframe>';
+		$this->registry->getObject('template')->buildFromTemplate('redirect');
+		$this->registry->getObject('template')->replaceTags($tags);
+		echo $this->registry->getObject('template')->parseOutput();
 	}
 	
 }
