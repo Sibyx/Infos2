@@ -57,7 +57,7 @@ class APIDelegate {
 			$row = array();
 			$row['hour'] = $data['hour'];
 			$row['missing'] = $data['missing']->name;
-			$row['classes'] = $record->getClassesShort();
+			$row['classes'] = $data['classes'];
 			$row['subject'] = $data['subject'];
 			$row['classroom'] = $data['classroom'];
 			$row['owner'] = $data['owner']->name;

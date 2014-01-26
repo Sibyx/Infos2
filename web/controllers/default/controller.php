@@ -201,6 +201,7 @@ class defaultController {
         $tags = array();
         $tags['suploHistory'] = $output;
 		$tags['suploHistory_seasons'] = $suploHistory_seasons;
+		$tags['actualSeason'] = date("m-Y");
         return $tags;
     }
 	

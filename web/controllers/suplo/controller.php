@@ -233,7 +233,7 @@ class suploController {
             }
         }
         else {
-            $output .= '<tr><th colspan="5" class="text-center">{noSuploForThisMonth}</th></tr>' . "\n";
+            $output .= '<tr><th colspan="5" class="text-center">{lang_noSuploForThisMonth}</th></tr>' . "\n";
         }
         $tags = array();
         $tags['suploHistory'] = $output;

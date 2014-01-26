@@ -21,10 +21,10 @@
 		<div class="panel">
 			<h2><small class="gray">Systémová správa</small></h2>
 			<p class="text-justify">
-				História suplovania sa už dá filtrovať podľa mesiaca a neukazuje len históriu za aktuálny mesiac.
+				Na základe požiadavok sa teraz po odhlásení z Infosu, užívateľ odhlási aj z Google účtu.
 			</p>
 			<footer class="text-right">
-				<small>14.1.2014 o 20:39</small>
+				<small>17.1.2014 o 19:33</small>
 			</footer>
 		</div>
 	</div>
