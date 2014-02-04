@@ -5,15 +5,6 @@
 		</li>
 		<li class="toggle-topbar"><a href="#"><img src="{siteurl}/views/{defaultView}/images/menu.png" alt="{lang_menu}"/></a></li>
 	</ul>
-
-	<section class="top-bar-section">
-		<ul class="right">
-			<li class="divider"></li>
-			<li class="has-form">
-				<a href="{loginUrl}" class="button success">Prihlásiť sa</a>
-			</li>
-		</ul>
-	</section>
 </nav>
 
 <br />

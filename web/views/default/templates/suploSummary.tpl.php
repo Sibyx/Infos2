@@ -44,8 +44,10 @@
     </tfoot>
 </table>
 <script>
+	_paq.push(['trackGoal', 3]);
     window.print();
 </script>
+{userreport}
 <!-- This page was generated with my custom PHP framework -->
 </body>
 </html>

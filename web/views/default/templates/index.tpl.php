@@ -21,10 +21,10 @@
 		<div class="panel">
 			<h2><small class="gray">Systémová správa</small></h2>
 			<p class="text-justify">
-				Na základe požiadavok sa teraz po odhlásení z Infosu, užívateľ odhlási aj z Google účtu.
+				Zmeny v scriptoch na zasielanie noviniek na e-mail. Paznaky v maile boli úspešne odstránené. Tiež bol celý newsletter doladený a optimalizovaný.
 			</p>
 			<footer class="text-right">
-				<small>17.1.2014 o 19:33</small>
+				<small>30.1.2014 o 21:28</small>
 			</footer>
 		</div>
 	</div>
@@ -83,23 +83,3 @@
 		</article>
 	</div>
 </section>
-<!--
-<section class="row">
-	<div class="large-6 columns">
-		<header>
-			<h2>Verejné oznamy</h2>
-		</header>
-		<p class="text-center">
-			<span class="label">Zatiaľ prázdne</span>
-		</p>
-	</div>
-	<div class="large-6 columns">
-		<header>
-			<h2>Verejné udalosti</h2>
-		</header>
-		<p class="text-center">
-			<span class="label">Zatiaľ prázdne</span>
-		</p>
-	</div>
-</section>
--->
