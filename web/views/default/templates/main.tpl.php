@@ -49,7 +49,7 @@
 </head>
 <body>
 	{content}
-	<footer>
+	<footer id="footer">
 		<div class="row">
 			<div class="large-3 columns">
 				<img src="{siteurl}/views/{defaultView}/images/logo.png" alt="Infos" style="height:30px; width: auto; margin:5px;"/>
