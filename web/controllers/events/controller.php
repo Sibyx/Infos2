@@ -27,7 +27,7 @@ class eventsController {
                     $this->viewEvent($urlBits[2]);
                     break;
                 default:
-                    $this->listEvents(intval($urlBits));
+                    $this->listEvents(intval($urlBits[1]));
                     break;
             }
         }

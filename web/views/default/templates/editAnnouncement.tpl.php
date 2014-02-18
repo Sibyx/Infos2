@@ -37,7 +37,7 @@
     });
 	tinymce.init({
 		selector: "#editAnn_text",
-		plugins: ["autolink link charmap anchor","searchreplace visualblocks code ","insertdatetime table paste"],
+		plugins: ["autolink link charmap anchor hr","searchreplace visualblocks code ","insertdatetime table paste"],
 		toolbar: "styleselect | bold italic underline| link",
 		entity_encoding : "raw",
 		height: "250",

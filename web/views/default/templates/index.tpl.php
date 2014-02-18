@@ -1,7 +1,7 @@
 <nav class="top-bar" data-topbar>
 	<ul class="title-area">
 		<li class="name">
-			<h1><a href="{siteurl}"><img src="{siteurl}/views/{defaultView}/images/logo.png" style="height: 30px;" alt="{lang_logo}"/></a></h1>
+			<a href="{siteurl}"><h1><img src="{siteurl}/views/{defaultView}/images/logo.png" style="height: 30px;" alt="{lang_logo}"/></h1></a>
 		</li>
 		<li class="toggle-topbar"><a href="#"><img src="{siteurl}/views/{defaultView}/images/menu.png" alt="{lang_menu}"/></a></li>
 	</ul>
