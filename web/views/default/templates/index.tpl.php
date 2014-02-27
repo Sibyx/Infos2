@@ -16,6 +16,16 @@
 	</section>
 </nav>
 <br />
+
+<section class="row">
+    <div class="large-12 columns">
+        <div class="alert-box warning" style="margin-top: 20px;">
+            <p style="margin-bottom: 0;">Dňa 27. februára od 21:00 až do ranných hodín bude z dôvodu údržby a opravy chýb Infos2 odstavený. Informácie o suplovaní budú naďalej dostupné na stránke školy.</p>
+            <a href="#" class="close" style="color: black;">&times;</a>
+        </div>
+    </div>
+</section>
+
 <section class="row">
 	<div class="large-7 columns">
 		<div class="panel">
