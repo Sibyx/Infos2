@@ -5,7 +5,6 @@
  * Objekt sprostredkujuci pristup k GoogleAPI
  * CHANGELOG:
  * 	- v1.0 [04.06.2013]: createTime
- * TODO: create support for google api objects, remove arrays
 */
 
 require_once 'Google/Client.php';
