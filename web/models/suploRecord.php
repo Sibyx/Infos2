@@ -19,7 +19,7 @@ class suploRecord {
 
 	public function __construct(Registry $registry, $id = 0) {
 		$this->registry = $registry;
-        $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
+        $this->googleCalendarService = new Google_Service_Calendar($this->registry->getObject('google')->getGoogleClient());
 
         require_once(FRAMEWORK_PATH . 'libs/person/person.php');
 		$this->owner = new Person;
@@ -162,7 +162,7 @@ class suploRecord {
 	public function save() {
         if ($this->id == 0) {
 
-            $event = new Google_Event();
+            $event = new Google_Service_Calendar_Event();
             $event->setSummary($this->hour . ". hodina - " .  $this->subject);
             $event->setLocation($this->classroom);
 
@@ -176,11 +176,11 @@ class suploRecord {
                 $endTime = new DateTime($this->date->format("Y-m-d"));
                 $endTime->setTime($row['endHour'], $row['endMinute'], $row['endSecond']);
 
-                $start = new Google_EventDateTime();
+                $start = new Google_Service_Calendar_EventDateTime();
                 $start->setDateTime($startTime->format("c"));
                 $event->setStart($start);
 
-                $end = new Google_EventDateTime();
+                $end = new Google_Service_Calendar_EventDateTime();
                 $end->setDateTime($endTime->format("c"));
                 $event->setEnd($end);
 
@@ -212,12 +212,14 @@ class suploRecord {
                         return false;
                     }
                 }
-                catch (Google_ServiceException $e) {
+                catch (Google_Service_Exception $e) {
                     $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', "Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri suplovaní: " . $this->owner->name . " za " . $this->missing->name);
+               		return false;
                 }
                 catch(Google_Exception $e) {
                     $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', "Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri suplovaní: " . $this->owner->name . " za " . $this->missing->name);
-                }
+                	return false;
+				}
 
             }
             else {

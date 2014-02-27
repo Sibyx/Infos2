@@ -24,16 +24,15 @@ class Event {
     private $location;
     private $googleCalendarService;
     /**
-     * @var Google_Event
+     * @var Google_Service_Calendar_Event
      */
     private $event;
     private $valid;
 
     public function __construct(Registry $registry, $id = 0) {
         $this->registry = $registry;
-        $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
+        $this->googleCalendarService = new Google_Service_Calendar($this->registry->getObject('google')->getGoogleClient());
         if (!empty($id)) {
-            $this->registry->firephp->log($id);
             $this->event = $this->googleCalendarService->events->get($this->registry->getSetting('googleEventCalendar'), $id);
             $this->id = $this->event->getId();
             $this->startDate = new DateTime($this->event->getStart()->dateTime);
@@ -111,15 +110,15 @@ class Event {
 
     public function save() {
         if ($this->id == 0) {
-            $event = new Google_Event();
+            $event = new Google_Service_Calendar_Event();
             $event->setSummary($this->title);
             $event->setLocation($this->location);
 
-            $start = new Google_EventDateTime();
+            $start = new Google_Service_Calendar_EventDateTime();
             $start->setDateTime($this->startDate->format("c"));
             $event->setStart($start);
 
-            $end = new Google_EventDateTime();
+            $end = new Google_Service_Calendar_EventDateTime();
             $end->setDateTime($this->endDate->format('c'));
             $event->setEnd($end);
 
@@ -161,18 +160,18 @@ class Event {
                 $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
             }
 
-            $this->event = new Google_Event();
+            $this->event = new Google_Service_Calendar_Event();
 
             $this->event->setDescription($this->text);
 
             $this->event->setSummary($this->title);
             $this->event->setLocation($this->location);
 
-            $start = new Google_EventDateTime();
+            $start = new Google_Service_Calendar_EventDateTime();
             $start->setDateTime($this->startDate->format("c"));
             $this->event->setStart($start);
 
-            $end = new Google_EventDateTime();
+            $end = new Google_Service_Calendar_EventDateTime();
             $end->setDateTime($this->endDate->format('c'));
             $this->event->setEnd($end);
 

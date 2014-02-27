@@ -8,9 +8,9 @@
  * TODO: create support for google api objects, remove arrays
 */
 
-require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/Google_Client.php';
-require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/contrib/Google_CalendarService.php';
-require_once FRAMEWORK_PATH . '/libs/GoogleClientApi/src/contrib/Google_Oauth2Service.php';
+require_once 'Google/Client.php';
+require_once 'Google/Service/Calendar.php';
+require_once 'Google/Service/Oauth2.php';
 
 class googleApi {
 
@@ -30,6 +30,7 @@ class googleApi {
 			'https://www.googleapis.com/auth/userinfo.email'
 		);
 		$this->client->setScopes($scopes);
+		$this->client->setAccessType('offline');
 	}
 	
 	public function getGoogleClient() {

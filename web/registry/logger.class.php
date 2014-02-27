@@ -44,6 +44,11 @@ class Logger {
 			return false;
 		}
 	}
+
+	private function sendReport() {
+		return true;
+	}
+
 	public function __deconstruct() {
 		fclose($this->file);
 	}

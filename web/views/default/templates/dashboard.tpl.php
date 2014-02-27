@@ -1,13 +1,5 @@
 <h1 class="hide">Infos2</h1>
 
-<section class="row">
-    <div class="large-12 columns">
-        <div class="alert-box warning" style="margin-top: 20px;">
-            <p style="margin-bottom: 0;">Dňa 27. februára od 21:00 až do ranných hodín bude z dôvodu údržby a opravy chýb Infos2 odstavený. Informácie o suplovaní budú naďalej dostupné na stránke školy.</p>
-        </div>
-    </div>
-</section>
-
 <div class="row">
 	<div class="large-7 columns">
 		<section id="panelAnnouncements">

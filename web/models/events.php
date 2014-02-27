@@ -13,8 +13,8 @@ class Events {
 
     public function __construct(Registry $registry) {
         $this->registry = $registry;
-        $this->googleCalendarService = $this->googleCalendarService = new Google_CalendarService($this->registry->getObject('google')->getGoogleClient());
-    }
+        $this->googleCalendarService  = new Google_Service_Calendar($this->registry->getObject('google')->getGoogleClient());
+	}
 
     public function getLastEvents($limit = 5) {
         require_once(FRAMEWORK_PATH . 'models/event.php');
@@ -27,7 +27,7 @@ class Events {
         $result = array();
         while(true) {
             /**
-             * @var Google_Event $event
+             * @var Google_Service_Calendar_Event $event
              */
             foreach ($events->getItems() as $event) {
                 if (new DateTime($event->getEnd()->getDateTime()) > new DateTime) {
@@ -60,7 +60,7 @@ class Events {
         $result = array();
         while(true) {
             /**
-             * @var Google_Event $event
+             * @var Google_Service_Calendar_Event $event
              */
             foreach ($events->getItems() as $event) {
                 $result[] = new Event($this->registry, $event->getId());

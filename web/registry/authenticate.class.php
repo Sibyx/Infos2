@@ -14,31 +14,48 @@ class Authenticate {
 	private $user;
 	private $loggedIn;
 	private $registry;
-	private $googleOAuth;
 	public $loginFailureReason;
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
-		$this->googleOAuth = new Google_Oauth2Service($this->registry->getObject('google')->getGoogleClient());
 	}
 	
 	public function checkForAuthentication() {
-		if (isset($_SESSION['token'])) {
-			$this->registry->getObject('google')->getGoogleClient()->setAccessToken($_SESSION['token']);
+		if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
+			try {
+				$this->registry->getObject('google')->getGoogleClient()->setAccessToken($_SESSION['token']);
+			}
+			catch (Google_Service_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+			}
+			catch(Google_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+			}
 		}
-		if ($this->registry->getObject('google')->getGoogleClient()->getAccessToken()) {
-			require_once(FRAMEWORK_PATH . 'registry/user.class.php');
-			$this->user = new User($this->registry, $this->googleOAuth->userinfo);
-			if ($this->user->isValid()) {
-				$this->loggedIn = true;
-				$_SESSION['sn_auth_session_uid'] = $this->user->getID();
+		try {
+			if ($this->registry->getObject('google')->getGoogleClient()->getAccessToken()) {
+				$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
+				$token_data = $this->registry->getObject('google')->getGoogleClient()->verifyIdToken()->getAttributes();
+				require_once(FRAMEWORK_PATH . 'registry/user.class.php');
+				$this->registry->firephp->log($token_data['email']);
+				$this->user = new User($this->registry, $token_data);
+				if ($this->user->isValid()) {
+					$this->loggedIn = true;
+					$_SESSION['sn_auth_session_uid'] = $this->user->getID();
+				}
+				else {
+					$this->loggedIn = false;
+				}
 			}
 			else {
 				$this->loggedIn = false;
 			}
 		}
-		else {
-			$this->loggedIn = false;
+		catch (Google_Service_Exception $e) {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+		}
+		catch(Google_Exception $e) {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
 		}
 	}
 
@@ -64,7 +81,7 @@ class Authenticate {
 		unset($_SESSION['sn_auth_session_uid']);
 		unset($_SESSION['token']);
 		$this->loggedIn = false;
-		$this->registry->getObject('google')->getGoogleClient()->revokeToken();
+		//$this->registry->getObject('google')->getGoogleClient()->revokeToken();
 		$tags = array();
 		$tags['class'] = 'success';
 		$tags['message'] = "{lang_successfulLogout}";

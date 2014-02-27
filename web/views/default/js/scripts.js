@@ -127,7 +127,7 @@ $(document).ready(function() {
     $(document).ajaxStop(function() {
         $('#loader').foundation('reveal', 'close');
     });
-	
+
 });
 
 $(window).bind("load", function () {

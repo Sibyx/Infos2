@@ -20,7 +20,7 @@
             </li>
             <li class="divider"></li>
             <li class="has-dropdown">
-                <a href="#">{lang_user}</a>
+                <a href="#">{userFullName}</a>
                 <ul class="dropdown">
                     <li><a href="{siteurl}/profile" target="_blank">{lang_profile}</a></li>
                     <li><a href="{siteurl}/profile/settings">{lang_settings}</a></li>
@@ -31,11 +31,3 @@
         </ul>
     </section>
 </nav>
-
-<section class="row">
-    <div class="large-12 columns">
-        <div class="alert-box warning" style="margin-top: 20px;">
-            <p style="margin-bottom: 0;">Dňa 27. februára od 21:00 až do ranných hodín bude z dôvodu údržby a opravy chýb Infos2 odstavený. Informácie o suplovaní budú naďalej dostupné na stránke školy.</p>
-        </div>
-    </div>
-</section>

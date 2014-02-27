@@ -18,10 +18,10 @@ class AuthenticateController {
 			switch($urlBits[1]) {
 				case 'login':
 					$this->login();
-				break;
+					break;
 				case 'logout':
 					$this->logout();
-				break;
+					break;
 			}
 		}
 	}
@@ -31,17 +31,16 @@ class AuthenticateController {
 			$this->registry->getObject('google')->getGoogleClient()->authenticate($_GET['code']);
 			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 			header('Location: ' . filter_var($this->registry->getObject('url')->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
-			return;
 		}
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
 			$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Authenticate', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' bol prihlásený');
 			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogin}', 'success');
 		}
 		else {
+			$this->registry->getObject('google')->getGoogleClient()->revokeToken();
 			header('Location: ' . filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
-        }
+		}
 	}
-
 	private function logout() {
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
 			$this->registry->getObject('auth')->logout();
