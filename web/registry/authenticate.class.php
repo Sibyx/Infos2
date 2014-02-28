@@ -37,7 +37,6 @@ class Authenticate {
 				$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 				$token_data = $this->registry->getObject('google')->getGoogleClient()->verifyIdToken()->getAttributes();
 				require_once(FRAMEWORK_PATH . 'registry/user.class.php');
-				$this->registry->firephp->log($token_data['email']);
 				$this->user = new User($this->registry, $token_data);
 				if ($this->user->isValid()) {
 					$this->loggedIn = true;

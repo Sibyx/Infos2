@@ -27,6 +27,7 @@ class User {
 		if ($this->registry->getObject('db')->numRows() == 1) {
 			$row = $this->registry->getObject('db')->getRows();
 			try {
+				$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 				$OAuth = new Google_Service_Oauth2($this->registry->getObject('google')->getGoogleClient());
 				$me = $OAuth->userinfo->get();
 				$this->id = $me->getId();
@@ -37,16 +38,17 @@ class User {
 				$this->calendarSuplo = $row['usr_calendarSuplo'];
 				$this->nick = $row['usr_nick'];
 				$this->valid = true;
-				$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 			}
 			catch (Google_Service_Exception $e) {
 				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[user.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+
 			}
 			catch(Google_Exception $e) {
 				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[user.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
 			}
 		}
 		else {
+			$this->registry->getObject('google')->getGoogleClient()->revokeToken();
 			$this->valid = false;
 		}
 	}
