@@ -5,7 +5,7 @@
  * Time: 21:10
  */
 
-class APIDelegate {
+class suploAPIDelegate {
 
 	private $registry;
 	/**

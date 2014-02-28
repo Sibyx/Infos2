@@ -248,7 +248,7 @@ class suploRecord {
 			return true;
 		}
 		else {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', 'SQL chyba pri pokuse o odstránenie suploRecord [' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Suplo', 'SQL chyba pri pokuse o odstránenie suploRecord [' . $this->id . ']');
 			return false;
 		}
 	}

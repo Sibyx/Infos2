@@ -161,7 +161,7 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť oznam.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Edit announcement');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
@@ -212,7 +212,7 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť oznam.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ sa pokúsil upraviť oznam.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
@@ -259,7 +259,7 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť oznam id = [' . $id . ']');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ sa pokúsil odstrániť oznam id = [' . $id . ']');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }

@@ -7,6 +7,7 @@
  * 	- v1.0 [16.10.2012]: createTime
  *	- v1.1 [02.03.2013]
  *	- v2.0 [05.06.2013]: Prerobene na autorizaciu cez GoogleAPI
+ *  - v2.0 [25.02.2014]: Google Client API v1.0.0
 */
 
 class Authenticate {
@@ -24,12 +25,15 @@ class Authenticate {
 		if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
 			try {
 				$this->registry->getObject('google')->getGoogleClient()->setAccessToken($_SESSION['token']);
+				if ($this->registry->getObject('google')->getGoogleClient()->isAccessTokenExpired()) {
+					$this->registry->getObject('google')->getGoogleClient()->refreshToken($_SESSION['token']);
+				}
 			}
 			catch (Google_Service_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 			catch(Google_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 		}
 		try {
@@ -51,10 +55,10 @@ class Authenticate {
 			}
 		}
 		catch (Google_Service_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(getAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 		}
 		catch(Google_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[authenticate.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(getAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 		}
 	}
 
@@ -80,7 +84,6 @@ class Authenticate {
 		unset($_SESSION['sn_auth_session_uid']);
 		unset($_SESSION['token']);
 		$this->loggedIn = false;
-		//$this->registry->getObject('google')->getGoogleClient()->revokeToken();
 		$tags = array();
 		$tags['class'] = 'success';
 		$tags['message'] = "{lang_successfulLogout}";

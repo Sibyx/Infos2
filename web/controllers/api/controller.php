@@ -8,7 +8,7 @@
 class apiController {
 
 	private $registry;
-	private $allowedControllers = array('suplo');
+	private $allowedControllers = array('suplo', 'server');
 	private $requestData;
 
 	public function __construct(Registry $registry) {
@@ -20,7 +20,8 @@ class apiController {
 	private function delegateControl($apiController) {
 		if (!empty($apiController) && in_array($apiController, $this->allowedControllers)) {
 			require_once( FRAMEWORK_PATH . 'controllers/api/' . $apiController . '.php' );
-			$api = new APIDelegate($this->registry, $this);
+			$apiController .= 'APIDelegate';
+			$api = new $apiController($this->registry, $this);
 		}
 		else {
 			header('HTTP/1.0 404 Not Found');

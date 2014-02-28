@@ -6,9 +6,6 @@ class defaultController {
 		$this->registry = $registry;
 		$urlBits = $this->registry->getObject('url')->getURLBits();
 		switch(isset($urlBits[1]) ? $urlBits[1] : '') {
-			case 'time':
-				$this->getCurrentTime();
-				break;
 			default:
 				$this->uiIndex();
 				break;
@@ -204,17 +201,5 @@ class defaultController {
 		$tags['actualSeason'] = date("m-Y");
         return $tags;
     }
-	
-	private function getCurrentTime() {
-		$result = array();
-		$serverTime = new DateTime();
-		$result['serverTimeFormated'] = $serverTime->format("d. m. Y - H:i");
-		$result['serverTime'] = $serverTime->format("c");
-		require_once(FRAMEWORK_PATH . 'models/timetable.php');
-		$timetable = new Timetable($this->registry);
-		$result['current'] = $timetable->getCurrent();
-		$result['next'] = $timetable->getNext();
-		echo json_encode($result);
-	}
 }
 ?>

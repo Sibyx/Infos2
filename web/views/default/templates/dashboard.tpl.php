@@ -141,5 +141,6 @@
 
 <script>
 	var t = window.setInterval(updateClock, 1000);
+	var d = window.setInterval(function() {window.location.reload();}, 300000);
 </script>
 {userreport}

@@ -145,8 +145,8 @@ $(window).bind("load", function () {
 
 function updateClock() {
 	$.ajax({
-		type: 'POST',
-		url: window.location.origin + '/infos2/default/time',
+		type: 'GET',
+		url: window.location.origin + '/infos2/api/server/time',
 		dataType: 'json',
         global: false,
 		success: function(data) {

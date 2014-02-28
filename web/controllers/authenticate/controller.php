@@ -33,7 +33,7 @@ class AuthenticateController {
 			header('Location: ' . filter_var($this->registry->getObject('url')->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
 		}
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
-			$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Authenticate', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' bol prihlásený');
+			$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Authenticate', 'Prihlásenie používateľa');
 			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogin}', 'success');
 		}
 		else {

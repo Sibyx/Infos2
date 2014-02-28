@@ -7,6 +7,7 @@
  * 	- v1.0 [14.04.2013]: createTime
  *	- v1.0 [18.05.2013]: dokumentacia, navratova hodnota
  *  - v1.1 [04.10.2013]: log location
+ *  - v1.2 [28.02.2014]: log user
 */
 class Logger {
 
@@ -37,16 +38,23 @@ class Logger {
 			$values = array();
 			$values[] = $type;
             $values[] = $location;
+			if (is_object($this->registry->getObject('auth'))) {
+				if ($this->registry->getObject('auth')->isLoggedIn()) {
+					$values[] = $this->registry->getObject('auth')->getUser()->getEmail();
+				}
+				else {
+					$values[] = 'No User';
+				}
+			}
+			else {
+				$values[] = 'No User';
+			}
 			$values[] = $this->registry->getObject('db')->sanitizeData($message);
 			return $this->registry->getObject('db')->callRutine('insertLog', $values);
 		}
 		else {
 			return false;
 		}
-	}
-
-	private function sendReport() {
-		return true;
 	}
 
 	public function __deconstruct() {

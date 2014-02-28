@@ -102,11 +102,11 @@ class Announcement {
 				$data['ann_text'] = $this->text;
 				$data['ann_title'] = $this->title;
 				if ($this->registry->getObject('db')->updateRecords('announcement', $data, 'id_announcement = ' . $this->id)) {
-					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Upravený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Upravený oznam "' . $this->title . '"[' . $this->id . ']');
 					return true;
 				}
 				else {
-					$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o úpravu oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o úpravu oznamu "' . $this->title . '"[' . $this->id . ']');
 					return false;
 				}
 			}
@@ -132,11 +132,11 @@ class Announcement {
                 $data['ann_deadline'] = $this->deadline->format("Y-m-d");
 				if ($this->registry->getObject('db')->insertRecords('announcement', $data)) {
 					$this->id = $this->registry->getObject('db')->lastInsertID();
-					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Vytvorený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Vytvorený oznam "' . $this->title . '"[' . $this->id . ']');
 					return true;
 				}
 				else {
-					$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o vytvorenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+					$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o vytvorenie oznamu "' . $this->title . '"[' . $this->id . ']');
 					return false;
 				}
 			}
@@ -155,11 +155,11 @@ class Announcement {
         }
 
         if ($this->registry->getObject('db')->deleteRecords('announcement', "id_announcement = " . $this->id)) {
-            $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Odstránený oznam "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+            $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Announcements', 'Odstránený oznam "' . $this->title . '"[' . $this->id . ']');
             return true;
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o odstránenie oznamu "' . $this->title . '"[' . $this->id . '] používateľom ' . $this->registry->getObject('auth')->getUser()->getFullName());
+            $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Announcements', 'SQL chyba pri pokuse o odstránenie oznamu "' . $this->title . '"[' . $this->id . ']');
             return false;
         }
 	}

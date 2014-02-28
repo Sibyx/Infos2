@@ -68,7 +68,7 @@ class eventsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť udalosť.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil vytvoriť udalosť.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
@@ -102,7 +102,7 @@ class eventsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil odstrániť udalosť.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil odstrániť udalosť.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
@@ -168,7 +168,7 @@ class eventsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil upraviť udalosť.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil upraviť udalosť.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }

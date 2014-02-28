@@ -40,11 +40,11 @@ class User {
 				$this->valid = true;
 			}
 			catch (Google_Service_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[user.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[User]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 
 			}
 			catch(Google_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[user.class]: Google Error " . $e->getCode() . ":" . $e->getMessage() . " pri prihlasovaní $email");
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[User]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 		}
 		else {

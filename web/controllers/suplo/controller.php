@@ -53,7 +53,6 @@ class suploController {
 
         foreach ($suploRecords as $record) {
             $data = $record->toArray();
-            $this->registry->firephp->log($data);
             $row = '<tr data-url="' . $this->registry->getSetting('siteurl') . '/suplo/record/' . $data['id'] . '">' . "\n";
 			$row .= "<td>" . $data['hour'] . "</td>";
 			$row .= "<td>" . $data['missing']->name . "</td>";
@@ -110,7 +109,7 @@ class suploController {
                 }
                 require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
                 $newsletter = new newsletterManager($this->registry, 'newSuplo', $date);
-                $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' vytvoril/upravil suplovanie na ' . $date->format("Y-m-d"));
+                $this->registry->getObject('log')->insertLog('SQL', 'INF', 'Suplo', 'Užívateľ vytvoril/upravil suplovanie na ' . $date->format("Y-m-d"));
                 $redirectBits = array();
                 $redirectBits[] = 'suplo';
                 $redirectBits[] = 'view';
@@ -122,7 +121,7 @@ class suploController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Suplo', 'Užívateľ ' . $this->registry->getObject('auth')->getUser()->getFullName() . ' sa pokúsil vytvoriť/upraviť suplovanie.');
+            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Suplo', 'Užívateľ sa pokúsil vytvoriť/upraviť suplovanie.');
             $redirectBits = array();
             $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
