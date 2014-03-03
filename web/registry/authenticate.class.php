@@ -22,11 +22,12 @@ class Authenticate {
 	}
 	
 	public function checkForAuthentication() {
+		//$this->registry->firephp->log(json_decode($_SESSION['token'])->refresh_token);
 		if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
 			try {
 				$this->registry->getObject('google')->getGoogleClient()->setAccessToken($_SESSION['token']);
 				if ($this->registry->getObject('google')->getGoogleClient()->isAccessTokenExpired()) {
-					$this->registry->getObject('google')->getGoogleClient()->refreshToken($_SESSION['token']);
+					$this->registry->getObject('google')->getGoogleClient()->refreshToken(json_decode($_SESSION['token'])->refresh_token);
 				}
 			}
 			catch (Google_Service_Exception $e) {

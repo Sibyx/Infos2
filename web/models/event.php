@@ -124,9 +124,18 @@ class Event {
 
             $event->setDescription($this->text);
 
-            $this->event = $this->googleCalendarService->events->insert($this->registry->getSetting('googleEventCalendar'), $event);
+			try {
+				$this->event = $this->googleCalendarService->events->insert($this->registry->getSetting('googleEventCalendar'), $event);
+			}
+			catch (Google_Service_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(insert)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			}
+			catch(Google_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(insert)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			}
 
-            if ($this->event->getId() != '') {
+
+			if ($this->event->getId() != '') {
                 $this->id = $this->event->getId();
                 $this->valid = true;
                 //compatibilityMode
@@ -175,9 +184,19 @@ class Event {
             $end->setDateTime($this->endDate->format('c'));
             $this->event->setEnd($end);
 
-            $updatedEvent = $this->googleCalendarService->events->update($this->registry->getSetting('googleEventCalendar'), $this->id, $this->event);
+            try {
+				$updatedEvent = $this->googleCalendarService->events->update($this->registry->getSetting('googleEventCalendar'), $this->id, $this->event);
+			}
+			catch (Google_Service_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(update)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$updatedEvent = $this->event->getUpdated();
+			}
+			catch(Google_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(update)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$updatedEvent = $this->event->getUpdated();
+			}
 
-            if ($updatedEvent->getUpdated() != $this->event->getUpdated()) {
+			if ($updatedEvent->getUpdated() != $this->event->getUpdated()) {
                 $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ upravil udalosť ID = ' . $this->id . ' - ' . $this->title);
                 return true;
             }

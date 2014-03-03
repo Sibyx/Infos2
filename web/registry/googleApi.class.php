@@ -30,6 +30,7 @@ class googleApi {
 		);
 		$this->client->setScopes($scopes);
 		$this->client->setAccessType('offline');
+		$this->client->setApprovalPrompt('force');
 	}
 	
 	public function getGoogleClient() {

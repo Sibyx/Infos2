@@ -27,17 +27,17 @@ class AuthenticateController {
 	}
 
 	private function login() {
-		if (isset($_GET['code'])) {
-			$this->registry->getObject('google')->getGoogleClient()->authenticate($_GET['code']);
-			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
-			header('Location: ' . filter_var($this->registry->getObject('url')->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
-		}
 		if ($this->registry->getObject('auth')->isLoggedIn()) {
 			$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Authenticate', 'Prihlásenie používateľa');
 			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogin}', 'success');
 		}
 		else {
 			header('Location: ' . filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
+		}
+		if (isset($_GET['code'])) {
+			$this->registry->getObject('google')->getGoogleClient()->authenticate($_GET['code']);
+			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
+			header('Location: ' . filter_var($this->registry->getObject('url')->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
 		}
 	}
 	private function logout() {

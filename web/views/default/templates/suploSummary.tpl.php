@@ -44,10 +44,19 @@
     </tfoot>
 </table>
 <script>
+	var _paq = _paq || [];
+	_paq.push(["trackPageView"]);
 	_paq.push(['trackGoal', 3]);
+	_paq.push(["enableLinkTracking"]);
+	(function() {
+		var u=(("https:" == document.location.protocol) ? "https" : "http") + "://gymmt.sk/piwik/";
+		_paq.push(["setTrackerUrl", u+"piwik.php"]);
+		_paq.push(["setSiteId", "1"]);
+		var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+		g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+	})();
     window.print();
 </script>
-{userreport}
 <!-- This page was generated with my custom PHP framework -->
 </body>
 </html>

@@ -23,31 +23,41 @@ class Events {
             'singleEvents' => true,
             'maxResults' => $limit
         );
-        $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
-        $result = array();
-        while(true) {
-            /**
-             * @var Google_Service_Calendar_Event $event
-             */
-            foreach ($events->getItems() as $event) {
-                if (new DateTime($event->getEnd()->getDateTime()) > new DateTime) {
-                    $result[] = new Event($this->registry, $event->getId());
-                }
-            }
-            $pageToken = $events->getNextPageToken();
-            if ($pageToken) {
-                $optParams = array(
-                    'pageToken' => $pageToken,
-                    'orderBy' => 'startTime',
-                    'singleEvents' => true,
-                    'maxResults' => $limit
-                );
-                $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $optParams);
-            } else {
-                break;
-            }
-        }
-        return $result;
+		try {
+			$events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
+			$result = array();
+			while(true) {
+				/**
+				 * @var Google_Service_Calendar_Event $event
+				 */
+				foreach ($events->getItems() as $event) {
+					if (new DateTime($event->getEnd()->getDateTime()) > new DateTime) {
+						$result[] = new Event($this->registry, $event->getId());
+					}
+				}
+				$pageToken = $events->getNextPageToken();
+				if ($pageToken) {
+					$optParams = array(
+						'pageToken' => $pageToken,
+						'orderBy' => 'startTime',
+						'singleEvents' => true,
+						'maxResults' => $limit
+					);
+					$events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $optParams);
+				} else {
+					break;
+				}
+			}
+			return $result;
+		}
+		catch (Google_Service_Exception $e) {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			return false;
+		}
+		catch(Google_Exception $e) {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			return false;
+		}
     }
 
     public function getEvents() {
@@ -56,28 +66,38 @@ class Events {
             'orderBy' => 'startTime',
             'singleEvents' => true
         );
-        $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
-        $result = array();
-        while(true) {
-            /**
-             * @var Google_Service_Calendar_Event $event
-             */
-            foreach ($events->getItems() as $event) {
-                $result[] = new Event($this->registry, $event->getId());
-            }
-            $pageToken = $events->getNextPageToken();
-            if ($pageToken) {
-                $optParams = array(
-                    'pageToken' => $pageToken,
-                    'orderBy' => 'startTime',
-                    'singleEvents' => true
-                );
-                $events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $optParams);
-            } else {
-                break;
-            }
-        }
-        return $result;
+		try {
+			$events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $param);
+			$result = array();
+			while(true) {
+				/**
+				 * @var Google_Service_Calendar_Event $event
+				 */
+				foreach ($events->getItems() as $event) {
+					$result[] = new Event($this->registry, $event->getId());
+				}
+				$pageToken = $events->getNextPageToken();
+				if ($pageToken) {
+					$optParams = array(
+						'pageToken' => $pageToken,
+						'orderBy' => 'startTime',
+						'singleEvents' => true
+					);
+					$events = $this->googleCalendarService->events->listEvents($this->registry->getSetting('googleEventCalendar'), $optParams);
+				} else {
+					break;
+				}
+			}
+			return $result;
+		}
+		catch (Google_Service_Exception $e) {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', "[Events(getEvents)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			return false;
+		}
+		catch(Google_Exception $e) {
+			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', "[Events(getEvents)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			return false;
+		}
     }
 }
 ?>
