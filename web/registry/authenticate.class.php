@@ -22,13 +22,12 @@ class Authenticate {
 	}
 	
 	public function checkForAuthentication() {
-		//$this->registry->firephp->log(json_decode($_SESSION['token'])->refresh_token);
 		if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
 			try {
-				$this->registry->getObject('google')->getGoogleClient()->setAccessToken($_SESSION['token']);
 				if ($this->registry->getObject('google')->getGoogleClient()->isAccessTokenExpired()) {
 					$this->registry->getObject('google')->getGoogleClient()->refreshToken(json_decode($_SESSION['token'])->refresh_token);
 				}
+				$this->registry->getObject('google')->getGoogleClient()->setAccessToken($_SESSION['token']);
 			}
 			catch (Google_Service_Exception $e) {
 				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
@@ -36,10 +35,13 @@ class Authenticate {
 			catch(Google_Exception $e) {
 				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
-		}
-		try {
-			if ($this->registry->getObject('google')->getGoogleClient()->getAccessToken()) {
-				$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
+
+			try {
+				if ($this->registry->getObject('google')->getGoogleClient()->isAccessTokenExpired()) {
+					if ($this->registry->getObject('google')->getGoogleClient()->getAccessToken()) {
+						$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
+					}
+				}
 				$token_data = $this->registry->getObject('google')->getGoogleClient()->verifyIdToken()->getAttributes();
 				require_once(FRAMEWORK_PATH . 'registry/user.class.php');
 				$this->user = new User($this->registry, $token_data);
@@ -51,15 +53,15 @@ class Authenticate {
 					$this->loggedIn = false;
 				}
 			}
-			else {
-				$this->loggedIn = false;
+			catch (Google_Service_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(getAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			}
+			catch(Google_Exception $e) {
+				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(getAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 		}
-		catch (Google_Service_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(getAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
-		}
-		catch(Google_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(getAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+		else {
+			$this->loggedIn = false;
 		}
 	}
 
