@@ -37,11 +37,11 @@ class Authenticate {
 			}
 
 			try {
-				if ($this->registry->getObject('google')->getGoogleClient()->isAccessTokenExpired()) {
+				/*if ($this->registry->getObject('google')->getGoogleClient()->isAccessTokenExpired()) {
 					if ($this->registry->getObject('google')->getGoogleClient()->getAccessToken()) {
 						$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 					}
-				}
+				}*/
 				$token_data = $this->registry->getObject('google')->getGoogleClient()->verifyIdToken()->getAttributes();
 				require_once(FRAMEWORK_PATH . 'registry/user.class.php');
 				$this->user = new User($this->registry, $token_data);
