@@ -63,7 +63,7 @@
                 </ul>
 			</div>
 			<div class="large-4 columns text-right">
-                <a href="https://plus.google.com/113484997719165826845" rel="publisher" class="webicon googleplus large svg" target="_blank">Follow us on Google+</a>
+                <a href="https://plus.google.com/113484997719165826845/about" rel="publisher" class="webicon googleplus large svg" target="_blank">Follow us on Google+</a>
 			</div>
 		</div>
 	</footer>
