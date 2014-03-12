@@ -33,3 +33,7 @@ SetEnvIfNoCase Request_URI \.(ogv|mp4|m4v|webm)$ no-gzip dont-vary
     Order Allow,Deny
     Deny from all
 </Files>
+
+<IfModule php5_module>
+	php_value newrelic.appname "Infos"
+</IfModule>
