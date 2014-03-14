@@ -27,7 +27,7 @@ class User {
 		if ($this->registry->getObject('db')->numRows() == 1) {
 			$row = $this->registry->getObject('db')->getRows();
 			try {
-				$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
+				//$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
 				$OAuth = new Google_Service_Oauth2($this->registry->getObject('google')->getGoogleClient());
 				$me = $OAuth->userinfo->get();
 				$this->id = $me->getId();
