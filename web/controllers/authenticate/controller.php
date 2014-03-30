@@ -13,7 +13,7 @@ class AuthenticateController {
 	
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
-		$urlBits = $this->registry->getObject('url')->getURLBits();
+		$urlBits = $this->registry->url->getURLBits();
 		if (isset($urlBits[1])) {
 			switch($urlBits[1]) {
 				case 'login':
@@ -27,25 +27,25 @@ class AuthenticateController {
 	}
 
 	private function login() {
-		if ($this->registry->getObject('auth')->isLoggedIn()) {
-			$this->registry->getObject('log')->insertLog('SQL', 'INF', 'Authenticate', 'Prihlásenie používateľa');
-			$this->registry->redirectURL($this->registry->buildURL(array()), '{lang_successfulLogin}', 'success');
+		if ($this->registry->auth->isLoggedIn()) {
+			$this->registry->log->insertLog('SQL', 'INF', 'Authenticate', 'Prihlásenie používateľa');
+			$this->registry->url->redirectURL($this->registry->url->buildURL(array()), '{lang_successfulLogin}', 'success');
 		}
 		else {
-			header('Location: ' . filter_var($this->registry->getObject('google')->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
+			header('Location: ' . filter_var($this->registry->google->getGoogleClient()->createAuthUrl()), FILTER_SANITIZE_URL);
 		}
 		if (isset($_GET['code'])) {
-			$this->registry->getObject('google')->getGoogleClient()->authenticate($_GET['code']);
-			$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
-			header('Location: ' . filter_var($this->registry->getObject('url')->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
+			$this->registry->google->getGoogleClient()->authenticate($_GET['code']);
+			$_SESSION['token'] = $this->registry->google->getGoogleClient()->getAccessToken();
+			header('Location: ' . filter_var($this->registry->url->buildURL(array('authenticate', 'login')), FILTER_SANITIZE_URL));
 		}
 	}
 	private function logout() {
-		if ($this->registry->getObject('auth')->isLoggedIn()) {
-			$this->registry->getObject('auth')->logout();
+		if ($this->registry->auth->isLoggedIn()) {
+			$this->registry->auth->logout();
 		}
 		else {
-			$this->registry->redirectURL($this->registry->buildURL(array('authenticate', 'login')), '{lang_noLoggedIn}', 'alert');
+			$this->registry->url->redirectURL($this->registry->url->buildURL(array('authenticate', 'login')), '{lang_noLoggedIn}', 'alert');
 		}
 	}
 }

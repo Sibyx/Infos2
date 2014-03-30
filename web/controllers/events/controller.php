@@ -11,8 +11,8 @@ class eventsController {
 
     public function __construct(Registry $registry) {
         $this->registry = $registry;
-        $urlBits = $this->registry->getObject('url')->getURLBits();
-        if ($this->registry->getObject('auth')->isLoggedIn()) {
+        $urlBits = $this->registry->url->getURLBits();
+        if ($this->registry->auth->isLoggedIn()) {
             switch(isset($urlBits[1]) ? $urlBits[1] : '') {
                 case 'new':
                     $this->newEvent();
@@ -35,12 +35,12 @@ class eventsController {
             $redirectBits = array();
             $redirectBits[] = 'authenticate';
             $redirectBits[] = 'login';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
         }
     }
 
     private  function newEvent() {
-        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if ($this->registry->auth->getUser()->isAdmin()) {
             if (isset($_POST['newEvent_title'])) {
                 require_once(FRAMEWORK_PATH . 'models/event.php');
                 $event = new Event($this->registry);
@@ -50,17 +50,17 @@ class eventsController {
                 $event->setStartDate($_POST['newEvent_date'], $_POST['newEvent_startTime']);
                 $event->setEndDate($_POST['newEvent_date'], $_POST['newEvent_endTime']);
                 if ($event->save()) {
-                    require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                    require_once(FRAMEWORK_PATH . 'include/newsletterManager.php');
                     $newsletter = new newsletterManager($this->registry, 'newEvent', $event->toArray());
                     $redirectBits = array();
                     $redirectBits[] = 'events';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_eventCreated}', 'success');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_eventCreated}', 'success');
                 }
                 else {
                     $redirectBits = array();
                     $redirectBits[] = 'events';
                     $redirectBits[] = 'new';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorCreatingEvent}', 'alert');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_errorCreatingEvent}', 'alert');
                 }
             }
             else {
@@ -68,9 +68,9 @@ class eventsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil vytvoriť udalosť.');
+            $this->registry->log->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil vytvoriť udalosť.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
     }
 
@@ -78,33 +78,33 @@ class eventsController {
         $tags = array();
         $tags['title'] = "{lang_newEvent} - " . $this->registry->getSetting('sitename');
         $tags['dateFormated'] = date("j.n.Y");
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
-        $this->registry->getObject('template')->buildFromTemplate('newEvent');
-        $this->registry->getObject('template')->replaceTags($tags);
-        echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
+        $this->registry->template->buildFromTemplate('events/new');
+        $this->registry->template->replaceTags($tags);
+        echo $this->registry->template->parseOutput();
     }
 
     private function removeEvent($id) {
-        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if ($this->registry->auth->getUser()->isAdmin()) {
             require_once(FRAMEWORK_PATH . 'models/event.php');
             $event = new Event($this->registry, $id);
             if ($event->isValid()) {
                 $event->remove();
                 $redirectBits = array();
                 $redirectBits[] = 'events';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_eventDeleted}', 'success');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_eventDeleted}', 'success');
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'events';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil odstrániť udalosť.');
+            $this->registry->log->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil odstrániť udalosť.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
     }
 
@@ -120,19 +120,19 @@ class eventsController {
             $tags['startDate'] = $data['startDate']->format("j. n. Y - H:i");
             $tags['endDate'] = $data['endDate']->format("j. n. Y - H:i");
             $tags['location'] = $data['location'];
-            $this->registry->getObject('template')->buildFromTemplate('viewEvent', false);
-            $this->registry->getObject('template')->replaceTags($tags);
-            echo $this->registry->getObject('template')->parseOutput();
+            $this->registry->template->buildFromTemplate('events/view', false);
+            $this->registry->template->replaceTags($tags);
+            echo $this->registry->template->parseOutput();
         }
         else {
             $redirectBits = array();
             $redirectBits[] = 'events';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
         }
     }
 
     private function editEvent($id) {
-        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if ($this->registry->auth->getUser()->isAdmin()) {
             if (isset($_POST['editEvent_title'])) {
                 require_once(FRAMEWORK_PATH . 'models/event.php');
                 $event = new Event($this->registry, $id);
@@ -144,23 +144,23 @@ class eventsController {
                     $event->setEndDate($_POST['editEvent_date'], $_POST['editEvent_endTime']);
 
                     if ($event->save()) {
-                        require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                        require_once(FRAMEWORK_PATH . 'include/newsletterManager.php');
                         $newsletter = new newsletterManager($this->registry, 'newEvent', $event->toArray());
                         $redirectBits = array();
                         $redirectBits[] = 'events';
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_eventEdited}', 'success');
+                        $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_eventEdited}', 'success');
                     }
                     else {
                         $redirectBits = array();
                         $redirectBits[] = 'events';
                         $redirectBits[] = 'new';
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorEditingEvent}', 'alert');
+                        $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_errorEditingEvent}', 'alert');
                     }
                 }
                 else {
                     $redirectBits = array();
                     $redirectBits[] = 'events';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
                 }
             }
             else {
@@ -168,9 +168,9 @@ class eventsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil upraviť udalosť.');
+            $this->registry->log->insertLog('SQL', 'WAR', 'Events', 'Užívateľ sa pokúsil upraviť udalosť.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
     }
 
@@ -188,25 +188,25 @@ class eventsController {
             $tags['text'] = $data['text'];
             $tags['location'] = $data['location'];
             $tags['eventTitle'] = $data['title'];
-            $this->registry->getObject('template')->buildFromTemplate('header', false);
-            $tags['header'] = $this->registry->getObject('template')->parseOutput();
-            $this->registry->getObject('template')->buildFromTemplate('editEvent');
-            $this->registry->getObject('template')->replaceTags($tags);
-            echo $this->registry->getObject('template')->parseOutput();
+            $this->registry->template->buildFromTemplate('header', false);
+            $tags['header'] = $this->registry->template->parseOutput();
+            $this->registry->template->buildFromTemplate('editEvent');
+            $this->registry->template->replaceTags($tags);
+            echo $this->registry->template->parseOutput();
         }
         else {
             $redirectBits = array();
             $redirectBits[] = 'events';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistEvent}', 'alert');
         }
     }
 
     private function listEvents() {
         $tags = array();
         $tags['title'] = "{lang_events} - " . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
-        $this->registry->getObject('template')->buildFromTemplate('listEvents');
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
+        $this->registry->template->buildFromTemplate('events/list');
         require_once(FRAMEWORK_PATH . 'models/events.php');
         require_once(FRAMEWORK_PATH . 'models/event.php');
         $events = new Events($this->registry);
@@ -215,6 +215,7 @@ class eventsController {
         foreach ($items as $item) {
             if ($item->isValid()) {
                 $data = $item->toArray();
+				$this->registry->firephp->log($data);
                 $output .= '<tr data-url="' . $this->registry->getSetting('siteurl') . '/events/view/' . $data['id'] . '">' . "\n";
                 $output .= '<td>' . $data['title'] . '</td>';
                 $output .= '<td>' . $data['startDate']->format("j. n. Y G:i") . '</td>';
@@ -223,8 +224,8 @@ class eventsController {
             }
         }
         $tags['events'] = $output;
-        $this->registry->getObject('template')->replaceTags($tags);
-        echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->replaceTags($tags);
+        echo $this->registry->template->parseOutput();
     }
 
 }

@@ -21,17 +21,17 @@ class suploRecords {
      */
     public function getCurrentUser($date) {
         $dateFormated = $date->format("Y-m-d");
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE sup_date = '$dateFormated' AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
+        $cache = $this->registry->db->cacheQuery("SELECT id_suplo FROM suplo WHERE sup_date = '$dateFormated' AND id_user = '" . $this->registry->auth->getUser()->getId() . "'");
         return $cache;
     }
 
     public function getUserSuploHistory($season) {
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE DATE_FORMAT(sup_date, '%m-%Y') = '$season' AND id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "'");
+        $cache = $this->registry->db->cacheQuery("SELECT id_suplo FROM suplo WHERE DATE_FORMAT(sup_date, '%m-%Y') = '$season' AND id_user = '" . $this->registry->auth->getUser()->getId() . "'");
         return $cache;
     }
 
 	public function avaibleSuploSeasons() {
-		$cache = $this->registry->getObject('db')->cacheQuery("SELECT DISTINCT DATE_FORMAT(sup_date, '%m-%Y') AS season_value, DATE_FORMAT(sup_date, '%M / %Y') AS season_title FROM suplo WHERE id_user = '" . $this->registry->getObject('auth')->getUser()->getId() . "' ORDER BY sup_date DESC LIMIT 9");
+		$cache = $this->registry->db->cacheQuery("SELECT DISTINCT DATE_FORMAT(sup_date, '%m-%Y') AS season_value, DATE_FORMAT(sup_date, '%M / %Y') AS season_title FROM suplo WHERE id_user = '" . $this->registry->auth->getUser()->getId() . "' ORDER BY sup_date DESC LIMIT 9");
 		return $cache;
 	}
 
@@ -39,7 +39,7 @@ class suploRecords {
      * @return int
      */
     public function getAll() {
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo, DATE_FORMAT(sup_date, '%d. %m. %Y') FROM suplo");
+        $cache = $this->registry->db->cacheQuery("SELECT id_suplo, DATE_FORMAT(sup_date, '%d. %m. %Y') FROM suplo");
         return $cache;
     }
 }

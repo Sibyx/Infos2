@@ -33,9 +33,9 @@ class Template {
 		$tags['siteurl'] = $this->registry->getSetting('siteurl');
 		$tags['defaultView'] = $this->registry->getSetting('view');
 		$tags['sitename'] = $this->registry->getSetting('sitename');
-		$tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
-		if ($this->registry->getObject('auth')->isLoggedIn()) {
-			$tags['userFullName'] = $this->registry->getObject('auth')->getUser()->getFullName();
+		$tags['currentURL'] = $this->registry->url->getCurrentURL();
+		if ($this->registry->auth->isLoggedIn()) {
+			$tags['userFullName'] = $this->registry->auth->getUser()->getFullName();
 		}
 		else {
 			$tags['userFullName'] = 'No logged in';

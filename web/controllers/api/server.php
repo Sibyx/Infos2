@@ -16,7 +16,7 @@ class serverAPIDelegate {
 	public function __construct(Registry $registry, $caller) {
 		$this->caller = $caller;
 		$this->registry = $registry;
-		$urlBits = $this->registry->getObject('url')->getUrlBits();
+		$urlBits = $this->registry->url->getUrlBits();
 		switch (isset($urlBits[2]) ? $urlBits[2] : '') {
 			case 'time':
 				$this->getServerTime();

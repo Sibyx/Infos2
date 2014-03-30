@@ -39,7 +39,7 @@ class newsletterManager {
 
     private function newAnnouncement($data) {
         $cache = $this->newsletterList->getAnnMails();
-		if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+		if ($this->registry->db->numRowsFromCache($cache) > 0) {
 			$email = new Email($this->registry);
 			$email->setSender();
 			$email->setSubject($data['title']);
@@ -51,7 +51,7 @@ class newsletterManager {
 			$tags['siteurl'] = $this->registry->getSetting('siteurl');
 			$tags['defaultView'] = $this->registry->getSetting('view');
 			$email->replaceTags($tags);
-			while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+			while ($row = $this->registry->db->resultsFromCache($cache)) {
 				$email->addBCC($row['nwt_email']);
 			}
 			$email->send();
@@ -60,7 +60,7 @@ class newsletterManager {
 
     private function newEvent($data) {
         $cache = $this->newsletterList->getEventMails();
-		if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+		if ($this->registry->db->numRowsFromCache($cache) > 0) {
 			$email = new Email($this->registry);
 			$email->setSender();
 			$email->setSubject($data['title']);
@@ -74,7 +74,7 @@ class newsletterManager {
 			$tags['siteurl'] = $this->registry->getSetting('siteurl');
 			$tags['defaultView'] = $this->registry->getSetting('view');
 			$email->replaceTags($tags);
-			while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+			while ($row = $this->registry->db->resultsFromCache($cache)) {
 				$email->addBCC($row['nwt_email']);
 			}
 			$email->send();
@@ -86,10 +86,10 @@ class newsletterManager {
 
         //SuploAll
         $cache = $this->newsletterList->getSuploMails();
-		if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+		if ($this->registry->db->numRowsFromCache($cache) > 0) {
 			$email = new Email($this->registry);
 			$email->setSender();
-			$email->setSubject($this->registry->getObject('template')->getLocaleValue("lang_suplo") . ' ' . $date->format("j. n. Y"));
+			$email->setSubject($this->registry->template->getLocaleValue("lang_suplo") . ' ' . $date->format("j. n. Y"));
 			$email->buildFromTemplate('newSuplo.html');
 			$tags['siteurl'] = $this->registry->getSetting('siteurl');
 			$tags['defaultView'] = $this->registry->getSetting('view');
@@ -113,7 +113,7 @@ class newsletterManager {
 			$tags['suploTable'] = $output;
 			$tags['suploTitle'] = '{lang_suplo} ' . $date->format("j. n. Y");
 			$email->replaceTags($tags);
-			while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+			while ($row = $this->registry->db->resultsFromCache($cache)) {
 				$email->addBCC($row['nwt_email']);
 			}
 			$email->send();
@@ -121,21 +121,21 @@ class newsletterManager {
 
         //SuploSolo
         $cache = $this->newsletterList->getSoloSuploMails();
-		if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
-			while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+		if ($this->registry->db->numRowsFromCache($cache) > 0) {
+			while ($row = $this->registry->db->resultsFromCache($cache)) {
 				$userId = $row['id_user'];
 				$supDate = $date->format("Y-m-d");
-				$this->registry->getObject('db')->executeQuery("SELECT id_suplo FROM suplo WHERE id_user = '$userId' AND sup_date = '$supDate'");
-				if ($this->registry->getObject('db')->numRows() > 0) {
+				$this->registry->db->executeQuery("SELECT id_suplo FROM suplo WHERE id_user = '$userId' AND sup_date = '$supDate'");
+				if ($this->registry->db->numRows() > 0) {
 					$email = new Email($this->registry);
 					$email->setSender();
-					$email->setSubject($this->registry->getObject('template')->getLocaleValue("lang_suplo") . $date->format("j. n. Y"));
+					$email->setSubject($this->registry->template->getLocaleValue("lang_suplo") . $date->format("j. n. Y"));
 					$email->buildFromTemplate('newSuplo.html');
 					$tags['siteurl'] = $this->registry->getSetting('siteurl');
 					$tags['defaultView'] = $this->registry->getSetting('view');
 					$tags['suploTitle'] = '{lang_suplo} ' . $date->format("j. n. Y");
 					$output = '';
-					while ($suploRow = $this->registry->getObject('db')->getRows()) {
+					while ($suploRow = $this->registry->db->getRows()) {
 						$suploRecord = new suploRecord($this->registry, $suploRow['id_suplo']);
 						$data = $suploRecord->toArray();
 						$suploRow = '<tr>' . "\n";

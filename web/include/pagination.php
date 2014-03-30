@@ -36,8 +36,8 @@
 	}
 	
 	public function generatePagination() {
-		$this->registry->getObject('db')->executeQuery($this->query);
-		$this->numRows = $this->registry->getObject('db')->numRows();
+		$this->registry->db->executeQuery($this->query);
+		$this->numRows = $this->registry->db->numRows();
 		$limit = " LIMIT " . ($this->offset * $this->limit) . ", " . $this->limit;
 		if ($this->limit == 0 || $this->limit == '') {
 			$this->executedQuery = $this->query;
@@ -47,11 +47,11 @@
 		}
 		$this->registry->firephp->log("[pagination::generatePagiation]: executedQuery:" . $this->executedQuery); //DEBUG
 		if ($this->method == 'cache') {
-			$this->cache = $this->registry->getObject('db')->cacheQuery($this->executedQuery);
+			$this->cache = $this->registry->db->cacheQuery($this->executedQuery);
 		}
 		elseif ($this->method == 'do') {
-			$this->registry->getObject('db')->executeQuery($this->executedQuery);
-			$this->results = $this->registry->getObject('db')->getRows();
+			$this->registry->db->executeQuery($this->executedQuery);
+			$this->results = $this->registry->db->getRows();
 		}
 		if ($this->limit != 0) {
 			$this->numPages = ceil($this->numRows / $this->limit);
@@ -62,7 +62,7 @@
 		$this->isFirst = ($this->offset == 0) ? true : false;
 		$this->isLast = (($this->offset + 1) == $this->numPages) ? true : false;
 		$this->currentPage = ($this->numPages == 0) ? 0 : $this->offset + 1;
-		$this->numRowsPage = $this->registry->getObject('db')->numRows();
+		$this->numRowsPage = $this->registry->db->numRows();
 		if ($this->numRowsPage == 0) {
 			return false;
 		}

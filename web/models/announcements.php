@@ -7,7 +7,7 @@ class Announcements {
 	}
 	
 	public function listAnnouncements($offset = 0) {
-		require_once(FRAMEWORK_PATH . 'libs/pagination/pagination.class.php');
+		require_once(FRAMEWORK_PATH . 'include/pagination.php');
 		$paginatedMembers = new Pagination($this->registry);
 		$paginatedMembers->setLimit(5);
 		$paginatedMembers->setOffset($offset);
@@ -19,7 +19,7 @@ class Announcements {
 	}
 
     public function listActualAnnouncements() {
-        require_once(FRAMEWORK_PATH . 'libs/pagination/pagination.class.php');
+        require_once(FRAMEWORK_PATH . 'include/pagination.php');
         $paginatedMembers = new Pagination($this->registry);
         $paginatedMembers->setLimit(5);
         $paginatedMembers->setOffset(0);

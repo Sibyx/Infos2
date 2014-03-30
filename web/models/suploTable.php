@@ -33,12 +33,12 @@ class suploTable {
     public function __construct(Registry $registry, $date) {
 		$this->registry = $registry;
         $this->date = $date;
-        $cache = $this->registry->getObject('db')->cacheQuery("SELECT id_suplo FROM suplo WHERE sup_date = '" . $this->date->format("Y-m-d") . "'");
-        $this->numRecords = $this->registry->getObject('db')->numRowsFromCache($cache);
+        $cache = $this->registry->db->cacheQuery("SELECT id_suplo FROM suplo WHERE sup_date = '" . $this->date->format("Y-m-d") . "'");
+        $this->numRecords = $this->registry->db->numRowsFromCache($cache);
         require_once(FRAMEWORK_PATH . "models/suploRecord.php");
         if ($this->numRecords > 0) {
             $this->suploRecords = array();
-            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+            while ($row = $this->registry->db->resultsFromCache($cache)) {
                 $this->suploRecords[] = new suploRecord($this->registry, $row['id_suplo']);
             }
         }
@@ -66,9 +66,9 @@ class suploTable {
     }
 
     public function addRecord($data) {
-        $this->registry->getObject('db')->executeQuery('SELECT id_suplo FROM suplo WHERE sup_nick = "' . $data[1] . '" AND sup_hour = ' . $data[0] . ' AND sup_date = "' . $this->date->format("Y-m-d") . '"');
-        if ($this->registry->getObject('db')->numRows() > 0) {
-            $row = $this->registry->getObject('db')->getRows();
+        $this->registry->db->executeQuery('SELECT id_suplo FROM suplo WHERE sup_nick = "' . $data[1] . '" AND sup_hour = ' . $data[0] . ' AND sup_date = "' . $this->date->format("Y-m-d") . '"');
+        if ($this->registry->db->numRows() > 0) {
+            $row = $this->registry->db->getRows();
             $suploRecord = new suploRecord($this->registry, $row['id_suplo']);
             $recordData = $suploRecord->toArray();
             $suploRecord->setClasses($data[2]);

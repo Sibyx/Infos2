@@ -5,12 +5,7 @@
  * Time: 7:42
  */
 
-class Event {
-    /**
-     * @var Registry
-     */
-    private $registry;
-    private $id;
+class Event extends Model{
     /**
      * @var DateTime
      */
@@ -18,7 +13,7 @@ class Event {
     /**
      * @var DateTime
      */
-    private $endDate;
+	private $endDate;
     private $title;
     private $text;
     private $location;
@@ -27,11 +22,10 @@ class Event {
      * @var Google_Service_Calendar_Event
      */
     private $event;
-    private $valid;
 
     public function __construct(Registry $registry, $id = 0) {
-        $this->registry = $registry;
-        $this->googleCalendarService = new Google_Service_Calendar($this->registry->getObject('google')->getGoogleClient());
+        parent::__construct($registry);
+        $this->googleCalendarService = new Google_Service_Calendar($this->registry->google->getGoogleClient());
         if (!empty($id)) {
             $this->event = $this->googleCalendarService->events->get($this->registry->getSetting('googleEventCalendar'), $id);
             $this->id = $this->event->getId();
@@ -45,21 +39,6 @@ class Event {
         else {
             $this->valid = false;
         }
-    }
-
-    public function isValid() {
-        return $this->valid;
-    }
-
-    public function toArray() {
-        $result = array();
-        $forbidden = array('registry', 'event', 'googleCalendarService');
-        foreach($this as $field => $data) {
-            if(!in_array($field, $forbidden)) {
-                $result[$field] = $data;
-            }
-        }
-        return $result;
     }
 
     /**
@@ -103,8 +82,7 @@ class Event {
     /**
      * @param string $location
      */
-    public function setLocation($location)
-    {
+    public function setLocation($location) {
         $this->location = $location;
     }
 
@@ -128,47 +106,26 @@ class Event {
 				$this->event = $this->googleCalendarService->events->insert($this->registry->getSetting('googleEventCalendar'), $event);
 			}
 			catch (Google_Service_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(insert)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$this->registry->log->insertLog('SQL', 'ERR', 'Event', "[Event(insert)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 			catch(Google_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(insert)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$this->registry->log->insertLog('SQL', 'ERR', 'Event', "[Event(insert)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 
 
 			if ($this->event->getId() != '') {
                 $this->id = $this->event->getId();
                 $this->valid = true;
-                //compatibilityMode
-                if ($this->registry->getSetting('compatibilityMode')) {
-                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-                    $insert = array();
-                    $insert['termin_date'] = $this->startDate->format("Y-m-d");
-                    $insert['termin_text'] = $this->text;
-                    $insert['termin_title'] = $this->title;
-                    $insert['id_termin'] = $this->id;
-                    $this->registry->getObject('db')->insertRecords('terminovnik', $insert);
-                    $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
-                }
-                $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ vytvoril udalosť ID = ' . $this->id . ' - ' . $this->title);
+                $this->registry->log->insertLog('SQL', 'WAR', 'Events', 'Užívateľ vytvoril udalosť ID = ' . $this->id . ' - ' . $this->title);
                 return true;
             }
             else {
-                $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', 'GoogleAPI chyba pri pokuse o vytvorenie udalosti "' . $this->title . '"[' . $this->id . ']');
+                $this->registry->log->insertLog('SQL', 'ERR', 'Events', 'GoogleAPI chyba pri pokuse o vytvorenie udalosti "' . $this->title . '"[' . $this->id . ']');
                 $this->valid = false;
                 return false;
             }
         }
         else {
-            //compatibilityMode
-            if ($this->registry->getSetting('compatibilityMode')) {
-                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-                $changes = array();
-                $changes['termin_text'] = $this->text;
-                $changes['termin_title'] = $this->title;
-                $this->registry->getObject('db')->updateRecords('terminovnik', $changes, 'id_termin = "' . $this->id . '"');
-                $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
-            }
-
             $this->event = new Google_Service_Calendar_Event();
 
             $this->event->setDescription($this->text);
@@ -188,34 +145,28 @@ class Event {
 				$updatedEvent = $this->googleCalendarService->events->update($this->registry->getSetting('googleEventCalendar'), $this->id, $this->event);
 			}
 			catch (Google_Service_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(update)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$this->registry->log->insertLog('SQL', 'ERR', 'Event', "[Event(update)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 				$updatedEvent = $this->event->getUpdated();
 			}
 			catch(Google_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Event', "[Event(update)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$this->registry->log->insertLog('SQL', 'ERR', 'Event', "[Event(update)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 				$updatedEvent = $this->event->getUpdated();
 			}
 
 			if ($updatedEvent->getUpdated() != $this->event->getUpdated()) {
-                $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ upravil udalosť ID = ' . $this->id . ' - ' . $this->title);
+                $this->registry->log->insertLog('SQL', 'WAR', 'Events', 'Užívateľ upravil udalosť ID = ' . $this->id . ' - ' . $this->title);
                 return true;
             }
             else {
-                $this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', 'GoogleAPI chyba pri pokuse o upravenie udalosti "' . $this->title . '"[' . $this->id . ']');
+                $this->registry->log->insertLog('SQL', 'ERR', 'Events', 'GoogleAPI chyba pri pokuse o upravenie udalosti "' . $this->title . '"[' . $this->id . ']');
                 return false;
             }
         }
     }
 
     public function remove() {
-        //compatibilityMode
-        if ($this->registry->getSetting('compatibilityMode')) {
-            $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('compatibilityDB'));
-            $this->registry->getObject('db')->deleteRecords('terminovnik', 'id_termin = "' . $this->id . '"');
-            $this->registry->getObject('db')->setActiveConnection($this->registry->getSetting('mainDB'));
-        }
         $this->googleCalendarService->events->delete($this->registry->getSetting('googleEventCalendar'), $this->id);
-        $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Events', 'Užívateľ odstránil udalosť ID = ' . $this->id . ' - ' . $this->title);
+        $this->registry->log->insertLog('SQL', 'WAR', 'Events', 'Užívateľ odstránil udalosť ID = ' . $this->id . ' - ' . $this->title);
         $this->valid = false;
     }
 }

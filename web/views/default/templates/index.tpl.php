@@ -22,10 +22,10 @@
 		<div class="panel">
 			<h2><small class="gray">Systémová správa</small></h2>
 			<p class="text-justify">
-				Zmeny v scriptoch na zasielanie noviniek na e-mail. Paznaky v maile boli úspešne odstránené. Tiež bol celý newsletter doladený a optimalizovaný.
+				Momentálne sa nachádzate v BETA verzii systému Infos2. V prípade, že chcete normálne vstúpiť do systému, nie za účelom testovania, prosím prejdite na nasledujúci link: <a href="http://gymmt.sk/infos2" target="_self">gymmt.sk/infos2</a>
 			</p>
 			<footer class="text-right">
-				<small>30.1.2014 o 21:28</small>
+				<small>28.03.2014 o 17:05</small>
 			</footer>
 		</div>
 	</div>
@@ -36,29 +36,6 @@
 		</header>
 		<div class="text-center">
 			<a href="{loginUrl}" class="button success">Prihlásiť sa</a>
-		</div>
-	</div>
-</section>
-
-<section class="row">
-	<div class="large-12 columns">
-		<header>
-			<h2>Videonávod -  Ako na Infos2 za 5 minút a 8 sekúnd</h2>
-		</header>
-		<div class="flex-video widescreen easyhtml5video" style="position:relative;max-width:1920px;">
-			<video controls="controls" poster="{siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg" style="width:100%" title="1920">
-				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.m4v" type="video/mp4" />
-				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.webm" type="video/webm" />
-				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.ogv" type="video/ogg" />
-				<source src="{siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.mp4" />
-				<object type="application/x-shockwave-flash" data="{siteurl}/views/{defaultView}/swf/flashfox.swf" width="1920" height="1080" style="position:relative;">
-					<param name="movie" value="{siteurl}/views/{defaultView}/swf/flashfox.swf" />
-					<param name="allowFullScreen" value="true" />
-					<param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster={siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg&amp;src={siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.m4v" />
-					<embed src="{siteurl}/views/{defaultView}/swf/flashfox.swf" width="1920" height="1080" style="position:relative;"  flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster={siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg&amp;src={siteurl}/resources/videos/AkoNaInfos2/AkoNaInfosZa5min.m4v"	allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
-					<img alt="Ako na Infos2 za 5 minút a 8 sekúnd" src="{siteurl}/views/{defaultView}/images/AkoNaInfosZa5min.jpg" style="position:absolute;left:0;" width="100%" title="Video playback is not supported by your browser" />
-				</object>
-			</video>
 		</div>
 	</div>
 </section>

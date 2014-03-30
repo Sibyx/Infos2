@@ -66,5 +66,18 @@ class urlprocessor {
 	    }
 		return $array;
 	}
+
+	public function redirectURL($url, $message = '', $class = '') {
+		$tags = array();
+		$tags['class'] = $class;
+		$tags['message'] = $message;
+		$tags['url'] = $url;
+		$tags['title'] = 'Redirect';
+		$tags['meta-description'] = "Redirect";
+		$tags['logoutGoogle'] = "";
+		$this->registry->template->buildFromTemplate('redirect');
+		$this->registry->template->replaceTags($tags);
+		echo $this->registry->template->parseOutput();
+	}
 }
 ?>

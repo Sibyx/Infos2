@@ -5,24 +5,21 @@
  * Time: 19:14
  */
 
-class NewsletterRecord {
+class NewsletterRecord extends Model{
 
-    private $registry;
-    private $id;
     private $userId;
     private $email;
     private $announcements;
     private $events;
     private $suploMy;
     private $suploAll;
-    private $valid;
 
     public function __construct(Registry $registry, $id = 0) {
-        $this->registry = $registry;
+		parent::__construct($registry);
         if ($id > 0) {
-            $this->registry->getObject('db')->executeQuery("SELECT * FROM newsletter WHERE id_newsletter = $id");
-            if ($this->registry->getObject('db')->numRows() > 0) {
-                $row = $this->registry->getObject('db')->getRows();
+            $this->registry->db->executeQuery("SELECT * FROM newsletter WHERE id_newsletter = $id");
+            if ($this->registry->db->numRows() > 0) {
+                $row = $this->registry->db->getRows();
                 $this->id = $id;
                 $this->userId = $row['id_user'];
                 $this->email = $row['nwt_email'];
@@ -42,22 +39,8 @@ class NewsletterRecord {
         }
     }
 
-    public function isValid() {
-        return $this->valid;
-    }
-
-    public function toArray() {
-        $result = array();
-        foreach($this as $field => $data) {
-            if(!is_object($data) && !is_array($data)) {
-                $result[$field] = $data;
-            }
-        }
-        return $result;
-    }
-
     public function setEmail($value) {
-        $this->email = $this->registry->getObject('db')->sanitizeData($value);
+        $this->email = $this->registry->db->sanitizeData($value);
     }
 
     public function setAnnouncements($value) {
@@ -84,7 +67,7 @@ class NewsletterRecord {
             $update['nwt_events'] = $this->events;
             $update['nwt_suploMy'] = $this->suploMy;
             $update['nwt_suploAll'] = $this->suploAll;
-            if ($this->registry->getObject('db')->updateRecords('newsletter', $update, 'id_newsletter = ' . $this->id)) {
+            if ($this->registry->db->updateRecords('newsletter', $update, 'id_newsletter = ' . $this->id)) {
                 return true;
             }
             else {
@@ -93,13 +76,13 @@ class NewsletterRecord {
         }
         else {
             $insert = array();
-            $insert['id_user'] = $this->registry->getObject('auth')->getUser()->getId();
+            $insert['id_user'] = $this->registry->auth->getUser()->getId();
             $insert['nwt_email'] = $this->email;
             $insert['nwt_announcements'] = $this->announcements;
             $insert['nwt_events'] = $this->events;
             $insert['nwt_suploMy'] = $this->suploMy;
             $insert['nwt_suploAll'] = $this->suploAll;
-            if ($this->registry->getObject('db')->insertRecords('newsletter', $insert)) {
+            if ($this->registry->db->insertRecords('newsletter', $insert)) {
                 return true;
             }
             else {
@@ -109,7 +92,7 @@ class NewsletterRecord {
     }
 
     public function remove() {
-        if ($this->registry->getObject('db')->deleteRecords('newsletter', 'id_newsletter = ' . $this->id)) {
+        if ($this->registry->db->deleteRecords('newsletter', 'id_newsletter = ' . $this->id)) {
             return true;
         }
         else {

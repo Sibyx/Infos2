@@ -5,8 +5,8 @@ class announcementsController {
 
 	public function __construct(Registry $registry){
 		$this->registry = $registry;
-		$urlBits = $this->registry->getObject('url')->getURLBits();
-		if ($this->registry->getObject('auth')->isLoggedIn()) {
+		$urlBits = $this->registry->url->getURLBits();
+		if ($this->registry->auth->isLoggedIn()) {
 			switch(isset($urlBits[1]) ? $urlBits[1] : '') {
 				case 'view':
 					$this->viewAnnouncement(intval($urlBits[2]));
@@ -35,7 +35,7 @@ class announcementsController {
 			$redirectBits = array();
 			$redirectBits[] = 'authenticate';
 			$redirectBits[] = 'login';
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
+			$this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
 		}
 	}
 	
@@ -48,7 +48,7 @@ class announcementsController {
 			$annOutput .= '<div class="">{lang_noAnnouncements}</div>' . "\n";
 		}
 		else {
-			while ($row = $this->registry->getObject('db')->resultsFromCache($pagination->getCache())) {
+			while ($row = $this->registry->db->resultsFromCache($pagination->getCache())) {
                 $article = '';
                 $article .= '<article>' . "\n";
                 $article .= '<header><h3><a href="' . $this->registry->getSetting('siteurl') . '/announcements/view/' . $row['id_announcement'] . '">' . $row['ann_title'] . '</a></h3></header>' . "\n";
@@ -84,13 +84,13 @@ class announcementsController {
 		}
         $tags = array();
         $tags['title'] = '{lang_announcements} - ' . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
         $tags['announcements'] = $annOutput;
         $tags['pagination'] = $pagOutput;
-        $this->registry->getObject('template')->buildFromTemplate('listAnnouncements');
-        $this->registry->getObject('template')->replaceTags($tags);
-        echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->buildFromTemplate('announcements/list');
+        $this->registry->template->replaceTags($tags);
+        echo $this->registry->template->parseOutput();
 	}
 	
 	private function viewAnnouncement($announcementId) {
@@ -113,27 +113,27 @@ class announcementsController {
             $tags['dislikes'] = $likesData['numDislikes'];
             $tags['likers'] = $likesData['likers'];
             $tags['dislikers'] = $likesData['dislikers'];
-            $tags['currentURL'] = $this->registry->getObject('url')->getCurrentURL();
-            $this->registry->getObject('template')->buildFromTemplate('announcement', false);
-            $this->registry->getObject('template')->replaceTags($tags);
+            $tags['currentURL'] = $this->registry->url->getCurrentURL();
+            $this->registry->template->buildFromTemplate('announcements/single', false);
+            $this->registry->template->replaceTags($tags);
             $tags = array();
-            $tags['announcement'] = $this->registry->getObject('template')->parseOutput();
-            $this->registry->getObject('template')->buildFromTemplate('header', false);
-            $tags['header'] = $this->registry->getObject('template')->parseOutput();
+            $tags['announcement'] = $this->registry->template->parseOutput();
+            $this->registry->template->buildFromTemplate('header', false);
+            $tags['header'] = $this->registry->template->parseOutput();
             $tags['title'] = $data['title'] . ' - ' . $this->registry->getSetting('sitename');
-			$this->registry->getObject('template')->buildFromTemplate('viewAnnouncement');
-			$this->registry->getObject('template')->replaceTags($tags);
-			echo $this->registry->getObject('template')->parseOutput();
+			$this->registry->template->buildFromTemplate('announcements/view');
+			$this->registry->template->replaceTags($tags);
+			echo $this->registry->template->parseOutput();
 		}
 		else {
-			$this->registry->getObject('log')->insertLog('SQL', 'WAR', '[AnnouncementController::viewAnnouncement] - Pokus o otvorenie neexistujúceho oznamu');
+			$this->registry->log->insertLog('SQL', 'WAR', 'AnnouncementController]', 'Pokus o otvorenie neexistujúceho oznamu');
 			$redirectBits = array();
-			$this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
+			$this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
 		}
 	}
 	
 	private function newAnnouncement() {
-        if($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if($this->registry->auth->getUser()->isAdmin()) {
             if (isset($_POST['newAnn_title'])) {
                 require_once(FRAMEWORK_PATH . 'models/announcement.php');
                 $announcement = new Announcement($this->registry);
@@ -142,18 +142,18 @@ class announcementsController {
                 $announcement->setDeadline($_POST['newAnn_deadline']);
                 if ($announcement->save()) {
                     $id = $announcement->getId();
-                    require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                    require_once(FRAMEWORK_PATH . 'include/newsletterManager.php');
                     $newsletter = new newsletterManager($this->registry, 'newAnnouncement', $announcement->toArray());
                     $redirectBits = array();
                     $redirectBits[] = 'announcements';
                     $redirectBits[] = 'view';
                     $redirectBits[] = $id;
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_announcementCreated}', 'success');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_announcementCreated}', 'success');
                 }
                 else {
                     $redirectBits[] = 'announcements';
                     $redirectBits[] = 'new';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorCreatingAnnouncement}', 'alert');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_errorCreatingAnnouncement}', 'alert');
                 }
             }
             else {
@@ -161,24 +161,24 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Edit announcement');
+            $this->registry->log->insertLog('SQL', 'WAR', 'Announcements', 'Edit announcement');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 	
 	private function uiNew() {
 		$tags = array();
 		$tags['title'] = '{lang_newAnnouncement} - ' . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
-		$this->registry->getObject('template')->buildFromTemplate('newAnnouncement');
-		$this->registry->getObject('template')->replaceTags($tags);
-		echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
+		$this->registry->template->buildFromTemplate('announcements/new');
+		$this->registry->template->replaceTags($tags);
+		echo $this->registry->template->parseOutput();
 	}
 	
 	private function editAnnouncement($id) {
-        if($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if($this->registry->auth->getUser()->isAdmin()) {
             if (isset($_POST['editAnn_title'])) {
                 require_once(FRAMEWORK_PATH . 'models/announcement.php');
                 $announcement = new Announcement($this->registry, $id);
@@ -187,24 +187,24 @@ class announcementsController {
                     $announcement->setText($_POST['editAnn_text']);
                     $announcement->setDeadline($_POST['editAnn_deadline']);
                     if ($announcement->save()) {
-                        require_once(FRAMEWORK_PATH . 'libs/newsletter/newsletterManager.php');
+                        require_once(FRAMEWORK_PATH . 'include/newsletterManager.php');
                         $newsletter = new newsletterManager($this->registry, 'newAnnouncement', $announcement->toArray());
                         $redirectBits[] = 'announcements';
                         $redirectBits[] = 'view';
                         $redirectBits[] = $announcement->getId();
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_announcementEdited}', 'success');
+                        $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_announcementEdited}', 'success');
                     }
                     else {
                         $redirectBits[] = 'announcements';
                         $redirectBits[] = 'edit';
                         $redirectBits[] = $id;
-                        $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorEditingAnnouncement}', 'alert');
+                        $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_errorEditingAnnouncement}', 'alert');
                     }
                 }
                 else {
-                    $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements',  'Pokus o upravenie neexistujúceho oznamu');
+                    $this->registry->log->insertLog('SQL', 'WAR', 'Announcements',  'Pokus o upravenie neexistujúceho oznamu');
                     $redirectBits = array();
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
                 }
             }
             else {
@@ -212,17 +212,17 @@ class announcementsController {
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ sa pokúsil upraviť oznam.');
+            $this->registry->log->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ sa pokúsil upraviť oznam.');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 	
 	private function uiEdit($id) {
 		$tags = array();
 		$tags['title'] = '{lang_editAnnouncement} - ' . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
 		$announcement = new Announcement($this->registry, $id);
 		$data = $announcement->toArray();
@@ -230,38 +230,38 @@ class announcementsController {
 		$tags['ann_text'] = $data['text'];
 		$tags['id_ann'] = $data['id'];
         $tags['ann_deadline'] = $data['deadline']->format("j.n.Y");
-		$this->registry->getObject('template')->buildFromTemplate('editAnnouncement');
-		$this->registry->getObject('template')->replaceTags($tags);
-		echo $this->registry->getObject('template')->parseOutput();
+		$this->registry->template->buildFromTemplate('announcements/edit');
+		$this->registry->template->replaceTags($tags);
+		echo $this->registry->template->parseOutput();
 	}
 	
 	private function removeAnnouncement($id) {
 		require_once(FRAMEWORK_PATH . 'models/announcement.php');
         require_once(FRAMEWORK_PATH . 'models/likes.php');
-        if ($this->registry->getObject('auth')->getUser()->isAdmin()) {
+        if ($this->registry->auth->getUser()->isAdmin()) {
             $announcement = new Announcement($this->registry, $id);
             $likes = new Likes($this->registry, $id);
             if ($announcement->isValid()) {
                 if ($likes->remove() && $announcement->remove()) {
                     $redirectBits = array();
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_announcementDeleted}', 'success');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_announcementDeleted}', 'success');
                 }
                 else {
                     $redirectBits[] = 'announcements';
                     $redirectBits[] = 'view';
                     $redirectBits[] = $id;
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_errorDeletingAnnouncement}', 'alert');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_errorDeletingAnnouncement}', 'alert');
                 }
             }
             else {
                 $redirectBits[] = 'announcements';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistAnnouncement}', 'alert');
             }
         }
         else {
-            $this->registry->getObject('log')->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ sa pokúsil odstrániť oznam id = [' . $id . ']');
+            $this->registry->log->insertLog('SQL', 'WAR', 'Announcements', 'Užívateľ sa pokúsil odstrániť oznam id = [' . $id . ']');
             $redirectBits = array();
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_noPermission}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_noPermission}', 'alert');
         }
 	}
 

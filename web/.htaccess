@@ -35,5 +35,5 @@ SetEnvIfNoCase Request_URI \.(ogv|mp4|m4v|webm)$ no-gzip dont-vary
 </Files>
 
 <IfModule php5_module>
-	php_value newrelic.appname "Infos"
+	php_value newrelic.appname "InfosBeta"
 </IfModule>

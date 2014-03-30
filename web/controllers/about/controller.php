@@ -3,7 +3,7 @@ class aboutController {
 	
 	public function __construct(Registry $registry){
 		$this->registry = $registry;
-		$urlBits = $this->registry->getObject('url')->getURLBits();
+		$urlBits = $this->registry->url->getURLBits();
 		switch(isset($urlBits[1]) ? $urlBits[1] : '') {
 			case 'blog':
 				$this->aboutBlog();
@@ -20,9 +20,9 @@ class aboutController {
 	private function aboutProject() {
 		$tags = array();
 		$tags['title'] = '{lang_aboutProject} - ' . $this->registry->getSetting('sitename');
-		$this->registry->getObject('template')->buildFromTemplate('aboutProject');
-		$this->registry->getObject('template')->replaceTags($tags);
-		echo $this->registry->getObject('template')->parseOutput();
+		$this->registry->template->buildFromTemplate('about/project');
+		$this->registry->template->replaceTags($tags);
+		echo $this->registry->template->parseOutput();
 	}
 	
 	private function aboutBlog() {
@@ -47,11 +47,11 @@ class aboutController {
 			$email->setRecipient($this->registry->getSetting('supportEmail'));
 			if ($email->send()) {
 				$redirectBits = array();
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Chyba bola úspešne ohlásená! Čoskoro Vás kontaktujeme.', 'success');
+				$this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), 'Chyba bola úspešne ohlásená! Čoskoro Vás kontaktujeme.', 'success');
 			}
 			else {
 				$redirectBits = array();
-				$this->registry->redirectURL($this->registry->buildURL($redirectBits), 'Chybu sa nepodarilo nahlásiť. Skúste to prosím neskôr.', 'alert');
+				$this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), 'Chybu sa nepodarilo nahlásiť. Skúste to prosím neskôr.', 'alert');
 			}
 
 		}
@@ -63,9 +63,9 @@ class aboutController {
 	private function uiBug() {
 		$tags = array();
 		$tags['title'] = '{lang_reportBug} - ' . $this->registry->getSetting('sitename');
-		$this->registry->getObject('template')->buildFromTemplate('reportBug');
-		$this->registry->getObject('template')->replaceTags($tags);
-		echo $this->registry->getObject('template')->parseOutput();
+		$this->registry->template->buildFromTemplate('about/reportBug');
+		$this->registry->template->replaceTags($tags);
+		echo $this->registry->template->parseOutput();
 	}
 }
 ?>

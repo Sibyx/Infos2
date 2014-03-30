@@ -16,7 +16,7 @@ class suploAPIDelegate {
 	public function __construct(Registry $registry, $caller) {
 		$this->caller = $caller;
 		$this->registry = $registry;
-		$urlBits = $this->registry->getObject('url')->getUrlBits();
+		$urlBits = $this->registry->url->getUrlBits();
 		switch (isset($urlBits[2]) ? $urlBits[2] : '') {
 			case 'record':
 				$this->aRecord();
@@ -82,11 +82,11 @@ class suploAPIDelegate {
 
 	private function getActualSuplo() {
 		$result = array();
-		$this->registry->getObject('db')->executeQuery("SELECT DISTINCT sup_date FROM suplo WHERE sup_date >= CURDATE()");
-		if ($this->registry->getObject('db')->numRows() > 0) {
+		$this->registry->db->executeQuery("SELECT DISTINCT sup_date FROM suplo WHERE sup_date >= CURDATE()");
+		if ($this->registry->db->numRows() > 0) {
 			$result['empty'] = false;
 			$result['days'] = array();
-			while ($row = $this->registry->getObject('db')->getRows()) {
+			while ($row = $this->registry->db->getRows()) {
 				$result['days'][] = $row['sup_date'];
 			}
 		}

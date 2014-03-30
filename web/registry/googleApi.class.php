@@ -22,7 +22,7 @@ class googleApi {
 		$this->client->setApplicationName($this->registry->getSetting('googleApplicationName'));
 		$this->client->setClientId($this->registry->getSetting('googleClientId'));
 		$this->client->setClientSecret($this->registry->getSetting('googleClientSecret'));
-		$this->client->setRedirectUri($this->registry->getObject('url')->buildURL(array('authenticate', 'login')));
+		$this->client->setRedirectUri($this->registry->url->buildURL(array('authenticate', 'login')));
 		$scopes = array (
 			'https://www.googleapis.com/auth/calendar',
 			'https://www.googleapis.com/auth/userinfo.profile',

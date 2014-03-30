@@ -13,7 +13,7 @@ class Events {
 
     public function __construct(Registry $registry) {
         $this->registry = $registry;
-        $this->googleCalendarService  = new Google_Service_Calendar($this->registry->getObject('google')->getGoogleClient());
+        $this->googleCalendarService  = new Google_Service_Calendar($this->registry->google->getGoogleClient());
 	}
 
     public function getLastEvents($limit = 5) {
@@ -51,11 +51,11 @@ class Events {
 			return $result;
 		}
 		catch (Google_Service_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			$this->registry->log->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			return false;
 		}
 		catch(Google_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			$this->registry->log->insertLog('SQL', 'ERR', 'Authenticate', "[Authenticate(setAccessToken)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			return false;
 		}
     }
@@ -91,11 +91,11 @@ class Events {
 			return $result;
 		}
 		catch (Google_Service_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', "[Events(getEvents)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			$this->registry->log->insertLog('SQL', 'ERR', 'Events', "[Events(getEvents)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			return false;
 		}
 		catch(Google_Exception $e) {
-			$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Events', "[Events(getEvents)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+			$this->registry->log->insertLog('SQL', 'ERR', 'Events', "[Events(getEvents)]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			return false;
 		}
     }

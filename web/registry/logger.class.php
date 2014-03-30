@@ -38,9 +38,9 @@ class Logger {
 			$values = array();
 			$values[] = $type;
             $values[] = $location;
-			if (is_object($this->registry->getObject('auth'))) {
-				if ($this->registry->getObject('auth')->isLoggedIn()) {
-					$values[] = $this->registry->getObject('auth')->getUser()->getEmail();
+			if (is_object($this->registry->auth)) {
+				if ($this->registry->auth->isLoggedIn()) {
+					$values[] = $this->registry->auth->getUser()->getEmail();
 				}
 				else {
 					$values[] = 'No User';
@@ -49,8 +49,8 @@ class Logger {
 			else {
 				$values[] = 'No User';
 			}
-			$values[] = $this->registry->getObject('db')->sanitizeData($message);
-			return $this->registry->getObject('db')->callRutine('insertLog', $values);
+			$values[] = $this->registry->db->sanitizeData($message);
+			return $this->registry->db->callRutine('insertLog', $values);
 		}
 		else {
 			return false;

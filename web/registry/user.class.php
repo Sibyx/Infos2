@@ -23,12 +23,11 @@ class User {
 		$this->registry = $registry;
 		$email = $googleUserInfo['payload']['email'];
 		$sql = "SELECT * FROM user WHERE usr_email = '$email'";
-		$this->registry->getObject('db')->executeQuery($sql);
-		if ($this->registry->getObject('db')->numRows() == 1) {
-			$row = $this->registry->getObject('db')->getRows();
+		$this->registry->db->executeQuery($sql);
+		if ($this->registry->db->numRows() == 1) {
+			$row = $this->registry->db->getRows();
 			try {
-				//$_SESSION['token'] = $this->registry->getObject('google')->getGoogleClient()->getAccessToken();
-				$OAuth = new Google_Service_Oauth2($this->registry->getObject('google')->getGoogleClient());
+				$OAuth = new Google_Service_Oauth2($this->registry->google->getGoogleClient());
 				$me = $OAuth->userinfo->get();
 				$this->id = $me->getId();
 				$this->firstName = $me->getGivenName();
@@ -40,15 +39,15 @@ class User {
 				$this->valid = true;
 			}
 			catch (Google_Service_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[User]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$this->registry->log->insertLog('SQL', 'ERR', 'Authenticate', "[User]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 
 			}
 			catch(Google_Exception $e) {
-				$this->registry->getObject('log')->insertLog('SQL', 'ERR', 'Authenticate', "[User]: Google Error " . $e->getCode() . ":" . $e->getMessage());
+				$this->registry->log->insertLog('SQL', 'ERR', 'Authenticate', "[User]: Google Error " . $e->getCode() . ":" . $e->getMessage());
 			}
 		}
 		else {
-			$this->registry->getObject('google')->getGoogleClient()->revokeToken();
+			$this->registry->google->getGoogleClient()->revokeToken();
 			$this->valid = false;
 		}
 	}

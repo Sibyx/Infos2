@@ -11,8 +11,8 @@ class profileController {
 
     public function __construct(Registry $registry) {
         $this->registry = $registry;
-        $urlBits = $this->registry->getObject('url')->getURLBits();
-        if ($this->registry->getObject('auth')->isLoggedIn()) {
+        $urlBits = $this->registry->url->getURLBits();
+        if ($this->registry->auth->isLoggedIn()) {
             switch(isset($urlBits[1]) ? $urlBits[1] : '') {
                 case 'me':
                     $this->uiMe();
@@ -29,26 +29,26 @@ class profileController {
             $redirectBits = array();
             $redirectBits[] = 'authenticate';
             $redirectBits[] = 'login';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
         }
     }
 
     private function uiMe() {
-        header('Location: https://plus.google.com/u/1/' . $this->registry->getObject('auth')->getUser()->getId() . '/about');
+        header('Location: https://plus.google.com/u/1/' . $this->registry->auth->getUser()->getId() . '/about');
     }
 
     private function profileSettings() {
         $tags = array();
         $tags['title'] = "{lang_profileSettings} - " . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
-        $this->registry->getObject('template')->buildFromTemplate('profileSettings');
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
+        $this->registry->template->buildFromTemplate('profileSettings');
         require_once(FRAMEWORK_PATH . 'models/newsletterList.php');
         $newsletterList = new NewsletterList($this->registry);
-        $cache = $newsletterList->getNewsletterForUser($this->registry->getObject('auth')->getUser()->getId());
-        if ($this->registry->getObject('db')->numRowsFromCache($cache) > 0) {
+        $cache = $newsletterList->getNewsletterForUser($this->registry->auth->getUser()->getId());
+        if ($this->registry->db->numRowsFromCache($cache) > 0) {
             $output = '';
-            while ($row = $this->registry->getObject('db')->resultsFromCache($cache)) {
+            while ($row = $this->registry->db->resultsFromCache($cache)) {
                 $output .= '<tr>' . "\n";
                 $output .= '<td>' . $row['nwt_email'] . '</td>' . "\n";
                 if ($row['nwt_announcements']) {
@@ -86,8 +86,8 @@ class profileController {
             $output = '<tr><td colspan="6" style="text-align: center;"><span class="label">{lang_noEmailRegistered}</span></td></tr>';
         }
         $tags['newsletterTable'] = $output;
-        $this->registry->getObject('template')->replaceTags($tags);
-        echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->replaceTags($tags);
+        echo $this->registry->template->parseOutput();
     }
 }
 

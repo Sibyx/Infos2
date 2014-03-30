@@ -5,39 +5,34 @@
     //error_reporting(E_ERROR);
 	DEFINE("FRAMEWORK_PATH", dirname(__FILE__) . "/");
 	require(FRAMEWORK_PATH . 'config/config.php');
+	require(FRAMEWORK_PATH . 'include/model.php');
 	require(FRAMEWORK_PATH . 'registry/registry.php');
 	require_once(FRAMEWORK_PATH . 'libs/FirePHPCore/FirePHP.class.php');
 	require_once(FRAMEWORK_PATH . 'libs/FirePHPCore/fb.php');
 	$registry = new Registry();
-	$registry->setDebugging(false);
+	$registry->setDebugging(true);
 	$registry->createAndStoreObject('logger', 'log');
-	$registry->createAndStoreObject('mysqldb', 'db');
-	$registry->getObject('db')->setActiveConnection($registry->getObject('db')->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']));
-	$registry->storeSetting($registry->getObject('db')->getActiveConnection(), "mainDB");
-    $registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
-	$registry->getObject('db')->executeQuery("SELECT * FROM setting");
-	while ($setting = $registry->getObject('db')->getRows()) {
+	$registry->createAndStoreObject('database', 'db');
+	$registry->db->setActiveConnection($registry->db->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']));
+	$registry->storeSetting($registry->db->getActiveConnection(), "mainDB");
+    $registry->db->executeQuery("SET CHARACTER SET utf8");
+	$registry->db->executeQuery("SELECT * FROM setting");
+	while ($setting = $registry->db->getRows()) {
 		$registry->storeSetting($setting['set_value'], $setting['id_setting']);
 	}
-    if ($registry->getSetting('compatibilityMode')) {
-        $registry->getObject('db')->setActiveConnection($registry->getObject('db')->newConnection($config['compatibilityDB']['host'], $config['compatibilityDB']['user'], $config['compatibilityDB']['password'], $config['compatibilityDB']['database']));
-        $registry->storeSetting($registry->getObject('db')->getActiveConnection(), "compatibilityDB");
-        $registry->getObject('db')->executeQuery("SET CHARACTER SET utf8");
-        $registry->getObject('db')->setActiveConnection($registry->getSetting('mainDB'));
-    }
 	$registry->createAndStoreObject('urlprocessor', 'url');
 	$registry->createAndStoreObject('googleApi', 'google');
 	$registry->createAndStoreObject('authenticate', 'auth');
 	$registry->createAndStoreObject('template', 'template');
-	$registry->getObject('url')->getURLData();
+	$registry->url->getURLData();
 	$controllers = array();
-	$registry->getObject('db')->executeQuery("SELECT * FROM controller WHERE ctr_active = 1");
-	while ($controller = $registry->getObject('db')->getRows()) {
+	$registry->db->executeQuery("SELECT * FROM controller WHERE ctr_active = 1");
+	while ($controller = $registry->db->getRows()) {
 		$controllers[] = $controller['id_controller'];
 	}
-	$controller = $registry->getObject('url')->getURLBit(0);
+	$controller = $registry->url->getURLBit(0);
 	if ($controller != 'api') {
-		$registry->getObject('auth')->checkForAuthentication();
+		$registry->auth->checkForAuthentication();
 	}
 	if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
 		if(in_array($controller, $controllers)) {

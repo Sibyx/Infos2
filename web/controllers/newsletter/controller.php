@@ -11,8 +11,8 @@ class newsletterController {
 
     public function __construct(Registry $registry) {
         $this->registry = $registry;
-        $urlBits = $this->registry->getObject('url')->getURLBits();
-        if ($this->registry->getObject('auth')->isLoggedIn()) {
+        $urlBits = $this->registry->url->getURLBits();
+        if ($this->registry->auth->isLoggedIn()) {
             switch(isset($urlBits[1]) ? $urlBits[1] : '') {
                 case 'new':
                     $this->newNewsletterRecord();
@@ -29,7 +29,7 @@ class newsletterController {
             $redirectBits = array();
             $redirectBits[] = 'authenticate';
             $redirectBits[] = 'login';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_pleaseLogIn}', 'alert');
         }
     }
 
@@ -46,13 +46,13 @@ class newsletterController {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordAdded}', 'success');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_newsletterRecordAdded}', 'success');
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordAddError}', 'alert');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_newsletterRecordAddError}', 'alert');
             }
         }
         else {
@@ -63,11 +63,11 @@ class newsletterController {
     private function uiNew() {
         $tags = array();
         $tags['title'] = "{lang_newsletterSubscribe} - " . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
-        $this->registry->getObject('template')->buildFromTemplate('newNewsletterRecord');
-        $this->registry->getObject('template')->replaceTags($tags);
-        echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
+        $this->registry->template->buildFromTemplate('newsletter/new');
+        $this->registry->template->replaceTags($tags);
+        echo $this->registry->template->parseOutput();
     }
 
     private function editNewsletterRecord($id) {
@@ -84,20 +84,20 @@ class newsletterController {
                     $redirectBits = array();
                     $redirectBits[] = 'profile';
                     $redirectBits[] = 'settings';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordEdited}', 'success');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_newsletterRecordEdited}', 'success');
                 }
                 else {
                     $redirectBits = array();
                     $redirectBits[] = 'profile';
                     $redirectBits[] = 'settings';
-                    $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordEditError}', 'alert');
+                    $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_newsletterRecordEditError}', 'alert');
                 }
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistNewsletterRecord}', 'alert');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistNewsletterRecord}', 'alert');
             }
         }
         else {
@@ -111,9 +111,9 @@ class newsletterController {
         $data = $newsletterRecord->toArray();
         $tags = array();
         $tags['title'] = "{lang_newsletterSubscribtionEdit} - " . $this->registry->getSetting('sitename');
-        $this->registry->getObject('template')->buildFromTemplate('header', false);
-        $tags['header'] = $this->registry->getObject('template')->parseOutput();
-        $this->registry->getObject('template')->buildFromTemplate('editNewsletterRecord');
+        $this->registry->template->buildFromTemplate('header', false);
+        $tags['header'] = $this->registry->template->parseOutput();
+        $this->registry->template->buildFromTemplate('newsletter/edit');
         if ($data['suploMy']) {
             $tags['suploMy'] = 'checked';
         }
@@ -143,8 +143,8 @@ class newsletterController {
         }
         $tags['email'] = $data['email'];
         $tags['id'] = $id;
-        $this->registry->getObject('template')->replaceTags($tags);
-        echo $this->registry->getObject('template')->parseOutput();
+        $this->registry->template->replaceTags($tags);
+        echo $this->registry->template->parseOutput();
     }
 
     private function removeNewsletterRecord($id) {
@@ -155,20 +155,20 @@ class newsletterController {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordDeleted}', 'success');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_newsletterRecordDeleted}', 'success');
             }
             else {
                 $redirectBits = array();
                 $redirectBits[] = 'profile';
                 $redirectBits[] = 'settings';
-                $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_newsletterRecordDeleteError}', 'alert');
+                $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_newsletterRecordDeleteError}', 'alert');
             }
         }
         else {
             $redirectBits = array();
             $redirectBits[] = 'profile';
             $redirectBits[] = 'settings';
-            $this->registry->redirectURL($this->registry->buildURL($redirectBits), '{lang_nonexistNewsletterRecord}', 'alert');
+            $this->registry->url->redirectURL($this->registry->url->buildURL($redirectBits), '{lang_nonexistNewsletterRecord}', 'alert');
         }
     }
 }

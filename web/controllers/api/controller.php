@@ -13,7 +13,7 @@ class apiController {
 
 	public function __construct(Registry $registry) {
 		$this->registry = $registry;
-		$apiController = $this->registry->getObject('url')->getURLBit(1);
+		$apiController = $this->registry->url->getURLBit(1);
 		$this->delegateControl($apiController);
 	}
 
@@ -38,7 +38,7 @@ class apiController {
 		else {
 			$user = $_SERVER['PHP_AUTH_USER'];
 			$password = $_SERVER['PHP_AUTH_PW'];
-			if(!$this->registry->getObject('auth')->apiAuth($user, $password)) {
+			if(!$this->registry->auth->apiAuth($user, $password)) {
 				header('HTTP/1.0 401 Unauthorized');
 				exit();
 			}

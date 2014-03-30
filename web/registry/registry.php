@@ -4,9 +4,42 @@
  */
 class Registry {
 
-    private $objects;
 	private $settings;
+
+	/**
+	 * @var Database
+	 */
+	public $db;
+
+	/**
+	 * @var Template
+	 */
+	public $template;
+
+	/**
+	 * @var Authenticate
+	 */
+	public $auth;
+
+	/**
+	 * @var Logger
+	 */
+	public $log;
+
+	/**
+	 * @var UrlProcessor
+	 */
+	public $url;
+
+	/**
+	 * @var FirePHP
+	 */
 	public $firephp;
+
+	/**
+	 * @var GoogleApi
+	 */
+	public $google;
 
     public function __construct(){
 		$this->firephp = FirePHP::getInstance(true);
@@ -18,7 +51,7 @@ class Registry {
      */
     public function createAndStoreObject($object, $key){
 		require_once($object . '.class.php');
-		$this->objects[$key] = new $object($this);
+		$this->$key = new $object($this);
 	}
 
     /**
@@ -35,41 +68,6 @@ class Registry {
      */
     public function getSetting($key){
 		return $this->settings[$key];
-	}
-
-    /**
-     * @param $key
-     * @return mixed
-     */
-    public function getObject($key){
-		return $this->objects[$key];
-	}
-
-    /**
-     * @param array $urlBits
-     * @param string $queryString
-     * @return mixed
-     */
-    public function buildURL($urlBits, $queryString='') {
-		return $this->getObject('url')->buildURL($urlBits, $queryString, false);
-	}
-
-    /**
-     * @param string $url
-     * @param string $message
-     * @param string $class
-     */
-    public function redirectURL($url, $message = '', $class = '') {
-		$tags = array();
-		$tags['class'] = $class;
-		$tags['message'] = $message;
-		$tags['url'] = $url;
-		$tags['title'] = 'Redirect';
-		$tags['meta-description'] = "Redirect";
-		$tags['logoutGoogle'] = "";
-		$this->getObject('template')->buildFromTemplate('redirect');
-		$this->getObject('template')->replaceTags($tags);
-		echo $this->getObject('template')->parseOutput();
 	}
 
     /**

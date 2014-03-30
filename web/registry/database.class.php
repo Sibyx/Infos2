@@ -1,7 +1,7 @@
 <?php
 	/*
 	 * 14.04.2013
-	 * Class MySQLdb v1.2
+	 * Class Database v2
 	 * Objekt ktory sprostredkovava pristup k DB
 	 * CHANGELOG:
 	 * 	- v1.0 [22.08.2012]: createTime
@@ -10,7 +10,7 @@
 	 *	- v1.2 [14.04.2013]: Logger Class
 	 *	- v1.2 [18.05.2013]: navratove hodnoty funkcii
 	*/
-class MySQLdb {
+class Database {
 	private $connections = array();
 	private $activeConnection = 0;
 	private $queryCache = array();
@@ -27,7 +27,7 @@ class MySQLdb {
 		$this->connections[] = new mysqli($host, $user, $password, $database);
 		$connection_id = count($this->connections) - 1;
 		if (mysqli_connect_errno()) {
-			$this->registry->getObject('log')->insertLog('FILE', 'ERR', '[Connection error]: ' . $this->connections[$connection_id]->connect_error);
+			$this->registry->log->insertLog('FILE', 'ERR', 'Database::newConnection', $this->connections[$connection_id]->connect_error);
 			trigger_error('Chyba pri pokuse o pripojenie: ' . $this->connections[$connection_id]->connect_error, E_USER_ERROR);
 		}
 		return $connection_id;
@@ -40,7 +40,7 @@ class MySQLdb {
 	public function executeQuery($query) {
 		$this->registry->firephp->log("[mysqldb::executeQuery]: query: " . $query); //DEBUG
 		if (!$result = $this->connections[$this->activeConnection]->query($query)) {
-			$this->registry->getObject('log')->insertLog('FILE', 'ERR', '[Query error]: ' . $this->connections[$this->activeConnection]->error);
+			$this->registry->log->insertLog('FILE', 'ERR', 'Database::executeQuery', $this->connections[$this->activeConnection]->error);
 			$this->registry->firephp->log("[mysqldb::executeQuery]: error!"); //DEBUG
 			trigger_error('Chyba pri pokuse o vykonanie dotazu: ' . $query . ' - ' . $this->connections[$this->activeConnection]->error, E_USER_ERROR);
 			return false;
@@ -141,7 +141,7 @@ class MySQLdb {
 	public function cacheQuery($queryStr) {
 		$this->registry->firephp->log("[mysqldb::cacheQuery]: query: " . $queryStr); //DEBUG
 		if( !$result = $this->connections[$this->activeConnection]->query($queryStr)) {
-			$this->registry->getObject('log')->insertLog('FILE', 'ERR', '[Cache query error]: ' . $this->connections[$this->activeConnection]->error);
+			$this->registry->log->insertLog('FILE', 'ERR', 'Database::cacheQuery', $this->connections[$this->activeConnection]->error);
 			$this->registry->firephp->log("[mysqldb::cacheQuery]: error: " . $this->connections[$this->activeConnection]->error); //DEBUG
 			trigger_error('Chyba pri vykonani dotazu + jeho ulozeniu do cache: '.$this->connections[$this->activeConnection]->error, E_USER_ERROR);
 			return -1;
