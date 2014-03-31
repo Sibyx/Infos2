@@ -42,7 +42,7 @@ class profileController {
         $tags['title'] = "{lang_profileSettings} - " . $this->registry->getSetting('sitename');
         $this->registry->template->buildFromTemplate('header', false);
         $tags['header'] = $this->registry->template->parseOutput();
-        $this->registry->template->buildFromTemplate('profileSettings');
+        $this->registry->template->buildFromTemplate('profile/settings');
         require_once(FRAMEWORK_PATH . 'models/newsletterList.php');
         $newsletterList = new NewsletterList($this->registry);
         $cache = $newsletterList->getNewsletterForUser($this->registry->auth->getUser()->getId());
