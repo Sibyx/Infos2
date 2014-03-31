@@ -16,10 +16,10 @@ class Like {
     public function __construct(Registry $registry, $announcementId) {
         $this->registry = $registry;
         $this->announcementId = $announcementId;
-        $userId = $this->registry->getObject('auth')->getUser()->getId();
-        $this->registry->getObject('db')->executeQuery("SELECT * FROM likes WHERE id_user = '$userId' AND id_announcement = $announcementId");
-        if ($this->registry->getObject('db')->numRows() > 0) {
-            $row = $this->registry->getObject('db')->getRows();
+        $userId = $this->registry->auth->getUser()->getId();
+        $this->registry->db->executeQuery("SELECT * FROM likes WHERE id_user = '$userId' AND id_announcement = $announcementId");
+        if ($this->registry->db->numRows() > 0) {
+            $row = $this->registry->db->getRows();
             $this->id = $row['id_like'];
             $this->status = $row['lik_status'];
             $this->valid = true;
@@ -42,15 +42,15 @@ class Like {
         if ($this->id > 0) {
             $update = array();
             $update['lik_status'] = $this->status;
-            $this->registry->getObject('db')->updateRecords('likes', $update, 'id_like = ' . $this->id);
+            $this->registry->db->updateRecords('likes', $update, 'id_like = ' . $this->id);
         }
         else {
             $insert = array();
             $insert['id_announcement'] = $this->announcementId;
-            $insert['id_user'] = $this->registry->getObject('auth')->getUser()->getId();
+            $insert['id_user'] = $this->registry->auth->getUser()->getId();
             $insert['lik_status'] = $this->status;
-            $this->registry->getObject('db')->insertRecords('likes', $insert);
-            $this->id = $this->registry->getObject('db')->lastInsertID();
+            $this->registry->db->insertRecords('likes', $insert);
+            $this->id = $this->registry->db->lastInsertID();
         }
     }
 
