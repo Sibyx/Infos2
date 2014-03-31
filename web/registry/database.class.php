@@ -9,13 +9,22 @@
 	 *	- v1.1 [28.03.2013]: lastInsertId(), teraz volanie cez MySQL
 	 *	- v1.2 [14.04.2013]: Logger Class
 	 *	- v1.2 [18.05.2013]: navratove hodnoty funkcii
+	 *  - v2.0 [31.03.2014]: PDO
 	*/
 class Database {
-	private $connections = array();
-	private $activeConnection = 0;
+	/**
+	 * @var PDO
+	 */
+	private $connection;
+	/**
+	 * @var PDOStatement[]
+	 */
 	private $queryCache = array();
 	private $dataCache = array();
 	private $queryCounter = 0;
+	/**
+	 * @var PDOStatement
+	 */
 	private $last;
 	private $registry;
 	
@@ -24,37 +33,34 @@ class Database {
 	}
 	
 	public function newConnection($host, $user, $password, $database) {
-		$this->connections[] = new mysqli($host, $user, $password, $database);
-		$connection_id = count($this->connections) - 1;
-		if (mysqli_connect_errno()) {
-			$this->registry->log->insertLog('FILE', 'ERR', 'Database::newConnection', $this->connections[$connection_id]->connect_error);
-			trigger_error('Chyba pri pokuse o pripojenie: ' . $this->connections[$connection_id]->connect_error, E_USER_ERROR);
+		try {
+			$this->connection = new PDO('mysql:host=' . $host . ';dbname=' . $database, $user, $password);
+			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
-		return $connection_id;
-	}
-	
-	public function setActiveConnection($new) {
-		$this->activeConnection = $new;
+		catch (PDOException $e) {
+			$this->registry->log->insertLog('FILE', 'ERR', 'Database', $e->getCode() . ':' . $e->getMessage());
+			return false;
+		}
+		return true;
 	}
 	
 	public function executeQuery($query) {
 		$this->registry->firephp->log("[mysqldb::executeQuery]: query: " . $query); //DEBUG
-		if (!$result = $this->connections[$this->activeConnection]->query($query)) {
-			$this->registry->log->insertLog('FILE', 'ERR', 'Database::executeQuery', $this->connections[$this->activeConnection]->error);
-			$this->registry->firephp->log("[mysqldb::executeQuery]: error!"); //DEBUG
-			trigger_error('Chyba pri pokuse o vykonanie dotazu: ' . $query . ' - ' . $this->connections[$this->activeConnection]->error, E_USER_ERROR);
+		try {
+			$this->last = $this->connection->query($query);
+		}
+		catch (PDOException $e) {
+			$this->registry->log->insertLog('FILE', 'ERR', 'Database', $e->getCode() . ':' . $e->getMessage());
+			$this->registry->firephp->log("[mysqldb::executeQuery]: error!");
 			return false;
 		}
-		else {
-			$this->last = $result;
-			$this->registry->firephp->log("[mysqldb::executeQuery]: executed!"); //DEBUG
-			$this->queryCounter++;
-			return true;
-		}
+		$this->registry->firephp->log("[mysqldb::executeQuery]: executed!"); //DEBUG
+		$this->queryCounter++;
+		return true;
 	}
 
 	public function getRows() {
-		return $this->last->fetch_array(MYSQLI_ASSOC);
+		return $this->last->fetch(PDO::FETCH_ASSOC);
 	}
 	
 	public function deleteRecords($table, $condition, $limit = '') {
@@ -66,14 +72,10 @@ class Database {
 	public function updateRecords($table, $changes, $condition) {
 		$update = "UPDATE " . $table . " SET";
 		foreach ($changes as $field => $value) {
-			if (is_numeric($value)) {
-				$update .= " " . $field . "=$value,";
-			}
-			else {
-				$update .= " " . $field . "='$value',";
-			}
+			$value = $this->connection->quote($value);
+			$update .= " " . $field . "=$value,";
 		}
-		$update = substr($update, 0, -1);
+		$update = rtrim($update, ',');
 		if ($condition != '') {
 			$update .= " WHERE " . $condition;
 		}
@@ -86,17 +88,11 @@ class Database {
 		
 		foreach ($data as $f => $v) {
 			$fields .= "$f,";
-			if (preg_match('/^[1-9]*[0-9]$/', $v)) {
-				$values .= $v. ",";
-			}
-			else {
-				$values .= "'$v',";
-			}
+			$values .= $this->connection->quote($v). ",";
 		}
 		
-		$fields = substr($fields, 0, -1);
-		$values = substr($values, 0, -1);
-		
+		$fields = rtrim($fields, ',');
+		$values = rtrim($values, ',');
 		$insert = "INSERT INTO $table ($fields) VALUES ($values)";
 		return $this->executeQuery($insert);
 	}
@@ -104,66 +100,49 @@ class Database {
 	public function callRutine($rutine, $data) {
         $values = "";
 		foreach ($data as $v) {
-			if (preg_match('/^[1-9]*[0-9]$/', $v)) {
-				$values .= $v. ",";
-			}
-			else {
-				$values .= "'$v',";
-			}
+			$v = $this->connection->quote($v);
+			$values .= $v. ",";
 		}
-		$values = substr($values, 0, -1);
+		$values = rtrim($values, ',');
 		$call = "CALL $rutine($values)";
 		return $this->executeQuery($call);
 	}
 	
 	public function sanitizeData($value) {
-		if (get_magic_quotes_gpc()) {
-			$value = stripslashes($value);
-		}
-		
-		if (version_compare(phpversion(), "4.3.0") == -1) {
-			$value = $this->connections[$this->activeConnection]->escape_string($value);
-		}
-		else {
-			$value = $this->connections[$this->activeConnection]->real_escape_string($value);
-		}
+		//return $this->connection->quote($value);
 		return $value;
 	}
 	
 	public function numRows() {
-		return $this->last->num_rows;
-	}
-	
-	public function affectedRows() {
-		return $this->last->affected_rows;
+		return $this->last->rowCount();
 	}
 	
 	public function cacheQuery($queryStr) {
 		$this->registry->firephp->log("[mysqldb::cacheQuery]: query: " . $queryStr); //DEBUG
-		if( !$result = $this->connections[$this->activeConnection]->query($queryStr)) {
-			$this->registry->log->insertLog('FILE', 'ERR', 'Database::cacheQuery', $this->connections[$this->activeConnection]->error);
-			$this->registry->firephp->log("[mysqldb::cacheQuery]: error: " . $this->connections[$this->activeConnection]->error); //DEBUG
-			trigger_error('Chyba pri vykonani dotazu + jeho ulozeniu do cache: '.$this->connections[$this->activeConnection]->error, E_USER_ERROR);
-			return -1;
+		try {
+			$result = $this->connection->query($queryStr);
 		}
-		else {
-			$this->queryCache[] = $result;
-			$this->registry->firephp->log("[mysqldb::cacheQuery]: executed!"); //DEBUG
-			return count($this->queryCache)-1;
+		catch (PDOException $e){
+			$this->registry->log->insertLog('FILE', 'ERR', 'Database', $e->getCode() . ':' . $e->getMessage());
+			$this->registry->firephp->log("[mysqldb::cacheQuery]: error!");
+			return false;
 		}
+		$this->queryCache[] = $result;
+		$this->registry->firephp->log("[mysqldb::cacheQuery]: executed!"); //DEBUG
+		return count($this->queryCache)-1;
     }
 	
 	public function numRowsFromCache($cache_id) {
-		return $this->queryCache[$cache_id]->num_rows;
+		return $this->queryCache[$cache_id]->rowCount();
 	}
 	
 	public function resultsFromCache($cache_id) {
-		return $this->queryCache[$cache_id]->fetch_array(MYSQLI_ASSOC);
+		return $this->queryCache[$cache_id]->fetch(PDO::FETCH_ASSOC);
 	}
 	
 	public function cacheData($data) {
 		$this->dataCache[] = $data;
-		return count( $this->dataCache )-1;
+		return count($this->dataCache)-1;
 	}
 	
 	public function dataFromCache($cache_id) {
@@ -171,9 +150,7 @@ class Database {
 	}
 	
 	public function __deconstruct() {
-		foreach ($this->connections as $connection) {
-			$connection->close;
-		}
+		$this->connection = null;
 	}
 	
 	public function lastInsertID() {
@@ -181,9 +158,5 @@ class Database {
 		$row = $this->getRows();
 		return $row['lastId'];
 	}
-
-    public function getActiveConnection() {
-        return $this->activeConnection;
-    }
 }
 ?>

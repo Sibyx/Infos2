@@ -13,8 +13,7 @@
 	$registry->setDebugging(true);
 	$registry->createAndStoreObject('logger', 'log');
 	$registry->createAndStoreObject('database', 'db');
-	$registry->db->setActiveConnection($registry->db->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']));
-	$registry->storeSetting($registry->db->getActiveConnection(), "mainDB");
+	$registry->db->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']);
     $registry->db->executeQuery("SET CHARACTER SET utf8");
 	$registry->db->executeQuery("SELECT * FROM setting");
 	while ($setting = $registry->db->getRows()) {
