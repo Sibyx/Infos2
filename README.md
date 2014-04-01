@@ -10,11 +10,12 @@ I, successfully, created a modern information system which effectively shares in
 
 TO-DO
 --------------
-- English localization
-- Russian localization
 - aSc Agenda support
-- install script
-- automatic error reporting
+- Install script
+- Events improvements
+- Prepared statements in models and database object
+- Localization in cookies
+- SCSS Foundation
 
 LOCALIZATION
 --------------
