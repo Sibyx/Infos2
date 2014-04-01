@@ -1,4 +1,4 @@
-Infos2 - The Intelligent Communication Platform
+Infos2: The Intelligent Communication Platform
 ==============
 An effective and fast information sharing is a hit of the modern age. The access to information from almost everywhere, anytime and without any dependence on the device is today a common thing.
 
@@ -18,9 +18,8 @@ TO-DO
 
 LOCALIZATION
 --------------
-- Slovak            [100%]
+- Slovak            [95%]
 - English           [90%]
-- Russian           [0%]
 
 SUMMARY
 --------------
@@ -32,7 +31,7 @@ SUMMARY
 
 - **SUPLO**			[100%]
 
-- **EVENTS**		[100%]
+- **EVENTS**		[80%]
 
 - **DOCS**			[100%]
 

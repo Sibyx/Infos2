@@ -1,6 +1,6 @@
 {header}
 <section class="row">
-	<div class="large-12 collumns">
+	<div class="large-12 columns">
 		<header class="row">
             <div class="small-12 columns">
                 <h2>{lang_suplo} {dateFormated}</h2>
