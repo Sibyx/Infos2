@@ -6,6 +6,25 @@
                 <h2>{lang_profileSettings}</h2>
             </div>
         </div>
+		<section class="row">
+			<div class="large-12 columns">
+				<header><h3>{lang_language}</h3></header>
+				<form action="{siteurl}/profile/language" method="post" name="formSetLanguage" id="formSetLanguage">
+					<div class="row">
+						<div class="large-2 columns">
+							<label class="hide">{lang_selectLanguage}:</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="large-4 columns">
+							<select id="setLanguage_value" name="setLanguage_value">
+								{languageList}
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
         <section class="row">
             <div class="large-12 columns">
                 <header><h3>{lang_newsletter}</h3></header>
@@ -35,3 +54,10 @@
         </section>
     </div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		$("#setLanguage_value").change(function(){
+			$("#formSetLanguage").submit();
+		});
+	});
+</script>

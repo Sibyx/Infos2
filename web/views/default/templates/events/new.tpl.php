@@ -32,11 +32,11 @@
                 </div>
 
                 <div class="large-3 columns">
-                    <input type="text" id="newEvent_startTime" name="newEvent_startTime" required disabled/>
+                    <input type="text" id="newEvent_startTime" name="newEvent_startTime" required/>
                 </div>
 
                 <div class="large-3 columns">
-                    <input type="text" id="newEvent_endTime" name="newEvent_endTime" required disabled/>
+                    <input type="text" id="newEvent_endTime" name="newEvent_endTime" required/>
                 </div>
             </div>
 

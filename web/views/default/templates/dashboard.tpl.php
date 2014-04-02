@@ -98,10 +98,10 @@
             <table style="width: 100%">
                 <tbody>
                 <tr>
-                    <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> Pracovné normy</a></td>
+                    <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> {lang_directives}</a></td>
                 </tr>
                 <tr>
-                    <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> Formuláre pre žiakov</a></td>
+                    <td><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing"><img src="{siteurl}/views/{defaultView}/images/folder.png" alt="Folder" /> {lang_formTemplates}</a></td>
                 </tr>
                 </tbody>
             </table>

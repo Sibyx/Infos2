@@ -14,8 +14,8 @@
             <li class="has-dropdown">
                 <a href="#">{lang_docs}</a>
                 <ul class="dropdown">
-                    <li><a href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing" target="_blank">Pracovné normy</a></li>
-                    <li><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing">Formuláre pre žiakov</a></li>
+                    <li><a href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbTWZlY2FBTHJhN2M&usp=sharing" target="_blank">{lang_directives}</a></li>
+                    <li><a target="_blank" href="https://drive.google.com/a/gymmt.sk/folderview?id=0B30M7T6N6wkbSmJrczZPX1JYRG8&usp=sharing">{lang_formTemplates}</a></li>
                 </ul>
             </li>
             <li class="divider"></li>

@@ -186,7 +186,7 @@ class defaultController {
         }
 
 		$suploHistory_seasons = '';
-		$suploHistory_seasons .= '<option value="' . date("m-Y") . '" selected>Aktuálne obdobie</option>' . "\n";
+		$suploHistory_seasons .= '<option value="' . date("m-Y") . '" selected>{lang_currentPeriod}</option>' . "\n";
 		$suploHistory_seasons .= '<option disabled>---</option>' . "\n";
 		$cache = $suploRecords->avaibleSuploSeasons();
 		if ($this->registry->db->numRowsFromCache($cache) > 0) {
