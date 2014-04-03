@@ -119,7 +119,7 @@ class profileController {
 	private function setLanguage() {
 		if (isset($_POST['setLanguage_value'])) {
 			if ($this->registry->auth->getUser()->setLanguage($_POST['setLanguage_value'])) {
-				$this->registry->url->redirectURL($this->registry->url->buildURL(array()), '{lang_languageSuccesfullyChanged}', 'success');
+				header("Location: " . $this->registry->url->buildURL(array()));
 			}
 			else {
 				$redirectBits = array();
