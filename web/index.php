@@ -1,7 +1,8 @@
 ﻿<?php
-	ob_start();
 	session_start();
-    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+	ob_start();
+    error_reporting(0);
+    //error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
     //error_reporting(E_ERROR);
 	DEFINE("FRAMEWORK_PATH", dirname(__FILE__) . "/");
 	require(FRAMEWORK_PATH . 'config/config.php');

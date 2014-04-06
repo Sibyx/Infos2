@@ -144,7 +144,7 @@ class suploController {
     private function viewRecord($id) {
         require_once(FRAMEWORK_PATH . 'models/suploRecord.php');
         $suploRecord = new suploRecord($this->registry, $id);
-        $this->registry->template->buildFromTemplate('suplo/records', false);
+        $this->registry->template->buildFromTemplate('suplo/record', false);
         $data = $suploRecord->toArray();
         $tags = array();
         $tags['hour'] = $data['hour'];
