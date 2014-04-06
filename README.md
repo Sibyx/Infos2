@@ -14,8 +14,6 @@ TO-DO
 - Install script
 - Events improvements
 - Prepared statements in models and database object
-- Localization in cookies
-- SCSS Foundation
 
 LOCALIZATION
 --------------
