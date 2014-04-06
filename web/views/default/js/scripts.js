@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+	$(document).foundation();
 	
 	$("body").delegate("tr[data-url]", 'click',function(){
         $.ajax({

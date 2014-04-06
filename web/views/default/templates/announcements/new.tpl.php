@@ -27,21 +27,21 @@
 	</div>
 </section>
 <script type="text/javascript">
-    $(function(){
+	$(document).ready(function() {
         $("#newAnn_deadline").datepicker({
             dateFormat: "dd.mm.yy",
             firstDay: 1,
             dayNamesMin:["{lang_sundayShor}", "{lang_mondayShort}", "{lang_tuesdayShort}", "{lang_wednesdayShort}", "{lang_thursdayShort}", "{lang_fridayShort}", "{lang_saturdayShort}"],
             monthNames: ["{lang_january}", "{lang_february}", "{lang_march}", "{lang_april}", "{lang_may}", "{lang_june}", "{lang_july}", "{lang_august}", "{lang_september}", "{lang_october}", "{lang_november}", "{lang_december}"]
         });
+		tinymce.init({
+			selector: "#newAnn_text",
+			plugins: ["autolink link charmap anchor hr","searchreplace visualblocks code ","insertdatetime table paste"],
+			toolbar: "styleselect | bold italic underline| link",
+			entity_encoding : "raw",
+			height: "250",
+			width: "600"
+		});
     });
-	tinymce.init({
-		selector: "#newAnn_text",
-		plugins: ["autolink link charmap anchor hr","searchreplace visualblocks code ","insertdatetime table paste"],
-		toolbar: "styleselect | bold italic underline| link",
-		entity_encoding : "raw",
-		height: "250",
-		width: "600"
-	});
 </script>
 {userreport}

@@ -73,16 +73,15 @@
     </div>
 </section>
 <script>
-    $(function(){
+	$(document).ready(function() {
         $("#editEvent_date").datepicker({
             dateFormat: "dd.mm.yy",
             firstDay: 1,
             dayNamesMin:["{lang_sundayShor}", "{lang_mondayShort}", "{lang_tuesdayShort}", "{lang_wednesdayShort}", "{lang_thursdayShort}", "{lang_fridayShort}", "{lang_saturdayShort}"],
             monthNames: ["{lang_january}", "{lang_february}", "{lang_march}", "{lang_april}", "{lang_may}", "{lang_june}", "{lang_july}", "{lang_august}", "{lang_september}", "{lang_october}", "{lang_november}", "{lang_december}"]
-        });
-
-        $('#editEvent_startTime').timepicker();
-        $('#editEvent_endTime').timepicker();
+		});
+		$('#editEvent_startTime').timepicker();
+		$('#editEvent_endTime').timepicker();
     });
 </script>
 {userreport}

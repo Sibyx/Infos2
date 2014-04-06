@@ -34,7 +34,7 @@
 	</div>
 </section>
 <script>
-	$(function(){
+	$(document).ready(function() {
 		$("#newSuplo_date").datepicker({
 			dateFormat: "dd.mm.yy",
 			firstDay: 1,

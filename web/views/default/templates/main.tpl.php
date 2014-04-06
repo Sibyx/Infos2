@@ -10,27 +10,21 @@
     <link href="https://plus.google.com/113484997719165826845" rel="publisher" />
 	
 	<!-- CSS -->
-	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/foundation.min.css" />
 	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/normalize.css" />
-	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/fonts.css" />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-    <link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/webicons.css" />
-	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/style.css" />
+	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/jquery-ui.css" />
+	<link rel="stylesheet" href="{siteurl}/views/{defaultView}/css/app.css" />
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{siteurl}/views/{defaultView}/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="{siteurl}/views/{defaultView}/images/favicon.ico" type="image/x-icon">
 		
 	<!-- JS -->
-	<script src="{siteurl}/views/{defaultView}/js/vendor/jquery.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/jquery-ui-timepicker-addon.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/moment.min.js"></script>
-	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-    <script src="https://apis.google.com/js/plusone.js"></script>
-	<script src="{siteurl}/views/{defaultView}/js/vendor/custom.modernizr.js"></script>
 	<script src="{siteurl}/views/{defaultView}/js/html5ext.js"></script>
-    <script src="{siteurl}/views/{defaultView}/js/scripts.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/vendor/modernizr.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/jquery/jquery.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/jquery/jquery-ui.min.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/jquery/jquery-ui-timepicker-addon.min.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/moment.min.js"></script>
 
 	<!-- Jebnuty explorer! -->
 	<!--[if lt IE 8]><script type="text/javascript">alert("Your browser is obsolete, please use Mozilla Firefox!");</script><![endif]-->
@@ -57,7 +51,7 @@
             </div>
 			<div class="large-5 columns">
                 <ul class="inline-list text-left">
-                    <li><a href="{siteurl}/about">{lang_aboutProject}</a></li>
+                    <li><a href="http://infos2.jakubdubec.me">{lang_aboutProject}</a></li>
                     <li><a target="_blank" href="{siteurl}/about/blog">{lang_aboutBlog}</a></li>
                     <li><a href="{siteurl}/about/bug">{lang_reportBug}</a></li>
                 </ul>
@@ -75,10 +69,12 @@
         <img src="{siteurl}/views/{defaultView}/images/ajax-loader.gif" alt="AJAX Loader"/>
     </div>
     <div class="reveal-modal-bg" style="display: none"></div>
-    <script src="{siteurl}/views/{defaultView}/js/foundation.min.js"></script>
-    <script>
-		$(document).foundation();
-	</script>
+
+	<!-- JS -->
+	<script src="{siteurl}/views/{defaultView}/js/foundation.min.js"></script>
+	<script src="{siteurl}/views/{defaultView}/js/scripts.min.js"></script>
+	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+
 	<!-- This page was generated with my custom PHP framework -->
 </body>
 </html>

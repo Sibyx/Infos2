@@ -17,15 +17,10 @@ AddType font/opentype .otf
 AddType font/opentype .woff
 AddType image/svg+xml .svg .svgz
 
-AddType video/ogg .ogv
-AddType video/mp4 .mp4
-AddType video/mp4 .m4v
-AddType video/webm .webm
-SetEnvIfNoCase Request_URI \.(ogv|mp4|m4v|webm)$ no-gzip dont-vary
-
 <FilesMatch "\.(woff|ttf|otf|svg)$">
     <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Origin "*"
+       Header set Access-Control-Allow-Origin "*"
+
     </IfModule>
 </FilesMatch>
 
@@ -37,3 +32,13 @@ SetEnvIfNoCase Request_URI \.(ogv|mp4|m4v|webm)$ no-gzip dont-vary
 <IfModule php5_module>
 	php_value newrelic.appname "InfosBeta"
 </IfModule>
+
+<ifModule mod_headers.c>
+ExpiresActive On
+
+# Expires after 1 month
+<filesMatch ".(pdf|png|jpg|gif|js|css|woff|ttf|otf|svg)$">
+Header set Cache-Control "max-age=2592000"
+</filesMatch>
+
+</ifModule>

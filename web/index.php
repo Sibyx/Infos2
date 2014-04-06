@@ -10,7 +10,7 @@
 	require_once(FRAMEWORK_PATH . 'libs/FirePHPCore/FirePHP.class.php');
 	require_once(FRAMEWORK_PATH . 'libs/FirePHPCore/fb.php');
 	$registry = new Registry();
-	$registry->setDebugging(true);
+	$registry->setDebugging(false);
 	$registry->createAndStoreObject('logger', 'log');
 	$registry->createAndStoreObject('database', 'db');
 	$registry->db->newConnection($config['mainDB']['host'], $config['mainDB']['user'], $config['mainDB']['password'], $config['mainDB']['database']);

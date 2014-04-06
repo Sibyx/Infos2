@@ -1,0 +1,160 @@
+.boardPanel h2 {
+  color: #fff;
+  margin: 0;
+  font-size: 16pt;
+  font-weight: normal;
+  line-height: 40px;
+}
+
+h3 {
+  color: #5a5a5a;
+  font-weight: bold;
+  margin: 0 0 10px;
+  font-size: 1.3em;
+}
+
+.blue {
+  color: #3299BB !important;
+}
+
+.white {
+  color: #fff !important;
+}
+
+.gray {
+  color: #5A5A5A !important;
+}
+
+.red {
+  color: red !important;
+}
+
+.green {
+  color: green !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+a:visited, a{
+  color: inherit;
+  text-decoration: none;
+}
+
+tr[data-url]:hover {
+  cursor: pointer;
+  background: #3299bb;
+}
+
+table {
+  width: 100%;
+}
+
+#timer {
+  font-size: 128pt;
+  font-family: Arial;
+  color: #5a5a5a;
+  margin: 20px 0;
+}
+
+/* DASHBOARD */
+
+.boardPanel > header {
+  background: #3299BB;
+  height: 40px;
+  margin: 0;
+}
+
+.boardPanel , .userPanel {
+  background: #eeeeee;
+  margin: 10px 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#panelUser {
+  background: #3299BB !important;
+  padding: 10px;
+}
+
+/* ANNOUNCEMENTS */
+
+article {
+  padding: 15px 10px;
+}
+
+article hr {
+  margin-bottom: 5px;
+}
+
+article p {
+  line-height: 1.6em;
+  font-size: 12pt;
+  text-align: justify;
+  padding: 2px 10px;
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+/* USER */
+#aktualne {
+  width: 100%;
+  border: 0;
+  margin-top: 5px;
+}
+
+#aktualne td {
+  background: #3299BB;
+  padding: 5px;
+  font-size: 12pt;
+}
+
+#aktualne td:first-child {
+  color: #fff;
+  font-weight: bold;
+}
+
+#aktualne td:last-child {
+  color: #fff;
+  font-style:italic;
+}
+
+#panelUser h2 {
+  color: #fff;
+  font-family: BigNoodleTitling;
+  font-size: 34pt;
+  font-weight: normal;
+  margin: 0;
+}
+
+#panelUser time {
+  font-size: 14pt;
+  margin: 10px 3px;
+  color: #fff;
+  font-family: DigitalDream;
+}
+
+.icon {
+  width: 24px;
+  margin: 0 5px;
+}
+
+/* FOOTER */
+body > footer {
+  margin-top: 50px;
+  min-height: 100px;
+  background: #333333;
+  padding: 20px 0 0;
+  text-align: center;
+}
+
+body > footer .inline-list li a {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #ffffff !important;
+  font-size: small;
+}
+
+body > footer .inline-list li a:hover {
+  text-decoration: none;
+}
