@@ -56,8 +56,13 @@
                     <li><a href="{siteurl}/about/bug">{lang_reportBug}</a></li>
                 </ul>
 			</div>
-			<div class="large-4 columns text-right">
-                <a href="https://plus.google.com/113484997719165826845/about" rel="publisher" class="webicon googleplus large svg" target="_blank">Follow us on Google+</a>
+			<div class="large-4 columns text-right" style="font-size: x-small; color: #fff;">
+                <!-- <a href="https://plus.google.com/113484997719165826845/about" rel="publisher" class="webicon googleplus large svg" target="_blank">Follow us on Google+</a> -->
+				<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+					<img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" />
+				</a>
+				<br />
+				<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Infos2: The Intelligent Communication Platform for Schools</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://infos2.jakubdubec.me" property="cc:attributionName" rel="cc:attributionURL">Jakub Dubec</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/Sibyx/Infos2" rel="dct:source">https://github.com/Sibyx/Infos2</a>.
 			</div>
 		</div>
 	</footer>
