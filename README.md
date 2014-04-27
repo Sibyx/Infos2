@@ -14,6 +14,8 @@ TO-DO
 - Install script
 - Events improvements
 - Prepared statements in models and database object
+- Twig template engine
+- i18n localizations
 
 LOCALIZATION
 --------------
